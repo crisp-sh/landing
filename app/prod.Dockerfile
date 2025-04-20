@@ -20,7 +20,7 @@ RUN \
 
 COPY src ./src
 COPY public ./public
-COPY next.config.cjs .
+COPY ../next.config.cjs .
 COPY tsconfig.json .
 
 # Environment variables must be present at build time
