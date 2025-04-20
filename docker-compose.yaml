@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  next-app:
+    build:
+      context: ./app
+      dockerfile: prod.Dockerfile
+      args:
+        ENV_VARIABLE: ${ENV_VARIABLE}
+        NEXT_PUBLIC_ENV_VARIABLE: ${NEXT_PUBLIC_ENV_VARIABLE}
+    networks:
+      - proxy
+    deploy:
+      restart_policy:
+        condition: any
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.next-app.rule=Host(`crisp.sh`)"
+        - "traefik.http.routers.next-app.entrypoints=websecure"
+        - "traefik.http.routers.next-app.tls=true"
+        - "traefik.http.routers.next-app.tls.certresolver=cloudflare"
+        - "traefik.http.services.next-app.loadbalancer.server.port=3000"
+        - "traefik.docker.network=proxy"
+
+networks:
+  proxy:
