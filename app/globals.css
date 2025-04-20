@@ -52,12 +52,6 @@ body {
   color: white;
 }
 
-@layer base {
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
 /* Hover-activated sheen effect for buttons */
 .hover-sheen {
   position: relative;
