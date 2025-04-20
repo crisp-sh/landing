@@ -30,8 +30,10 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./app # Point to the directory containing the Dockerfile and source
-          file: ./app/prod.Dockerfile # Specify the Dockerfile location
+          # Set context to the repository root, where package.json etc. are located
+          context: . 
+          # Keep file path relative to the root context
+          file: ./app/prod.Dockerfile 
           push: true
           tags: ghcr.io/crisp-sh/landing:latest
           cache-from: type=gha
