@@ -2,12 +2,7 @@ version: "3.8"
 
 services:
   next-app:
-    build:
-      context: ./app
-      dockerfile: prod.Dockerfile
-      args:
-        ENV_VARIABLE: ${ENV_VARIABLE}
-        NEXT_PUBLIC_ENV_VARIABLE: ${NEXT_PUBLIC_ENV_VARIABLE}
+    image: ghcr.io/crisp-sh/landing:latest
     networks:
       - proxy
     deploy:
@@ -24,3 +19,4 @@ services:
 
 networks:
   proxy:
+    external: true
