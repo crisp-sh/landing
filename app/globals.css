@@ -53,9 +53,6 @@ body {
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
   body {
     @apply bg-background text-foreground;
   }
@@ -233,12 +230,6 @@ body {
   }
   60% {
     clip-path: inset(20% 0 80% 0);
-  }
-  80% {
-    clip-path: inset(40% 0 60% 0);
-  }
-  100% {
-    clip-path: inset(60% 0 0 80% 0);
   }
   80% {
     clip-path: inset(40% 0 60% 0);
