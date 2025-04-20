@@ -8,7 +8,7 @@ FROM base AS builder
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
-COPY app/package.json app/yarn.lock* app/package-lock.json* app/pnpm-lock.yaml* app/.npmrc* ./
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
 # Omit --production flag for TypeScript devDependencies
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
@@ -18,10 +18,10 @@ RUN \
   else echo "Warning: Lockfile not found. It is recommended to commit lockfiles to version control." && yarn install; \
   fi
 
-COPY app/src ./src
-COPY app/public ./public
-COPY app/next.config.js .
-COPY app/tsconfig.json .
+COPY src ./src
+COPY public ./public
+COPY next.config.js .
+COPY tsconfig.json .
 
 # Environment variables must be present at build time
 # https://github.com/vercel/next.js/discussions/14030
