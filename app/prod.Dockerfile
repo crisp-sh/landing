@@ -5,10 +5,12 @@ FROM node:18-alpine AS base
 # Step 1. Rebuild the source code only when needed
 FROM base AS builder
 
-WORKDIR /app
+# Set workdir for the builder stage
+WORKDIR /build_root
 
 # Install dependencies based on the preferred package manager
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
+# Copy dependency definition files from the ./app dir in the context
+COPY app/package.json app/yarn.lock* app/package-lock.json* app/pnpm-lock.yaml* app/.npmrc* ./
 # Omit --production flag for TypeScript devDependencies
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
@@ -18,21 +20,27 @@ RUN \
   else echo "Warning: Lockfile not found. It is recommended to commit lockfiles to version control." && yarn install; \
   fi
 
-COPY src ./src
-COPY public ./public
-COPY next.config.mjs .
-COPY tsconfig.json .
+# Copy application code and config from the ./app dir in the context
+# Copy the actual Next.js app directory
+COPY app/app ./app 
+# Copy other necessary directories/files from ./app in the context
+COPY app/src ./src # If you have a src dir inside ./app
+COPY app/components ./components # Copy components if they are directly under ./app
+COPY app/lib ./lib # Copy lib if directly under ./app
+COPY app/public ./public
+COPY app/next.config.cjs .
+COPY app/tsconfig.json .
+COPY app/globals.css .
+COPY app/layout.tsx ./app/ # Copy layout into the ./app dir inside container
+COPY app/page.tsx ./app/ # Copy root page into the ./app dir inside container
+COPY app/fonts ./fonts # Copy fonts
+COPY "app/(legal)" ./'(legal)' # Copy legal pages group
 
 # Environment variables must be present at build time
-# https://github.com/vercel/next.js/discussions/14030
 ARG ENV_VARIABLE
 ENV ENV_VARIABLE=${ENV_VARIABLE}
 ARG NEXT_PUBLIC_ENV_VARIABLE
 ENV NEXT_PUBLIC_ENV_VARIABLE=${NEXT_PUBLIC_ENV_VARIABLE}
-
-# Next.js collects completely anonymous telemetry data about general usage. Learn more here: https://nextjs.org/telemetry
-# Uncomment the following line to disable telemetry at build time
-# ENV NEXT_TELEMETRY_DISABLED 1
 
 # Build Next.js based on the preferred package manager
 RUN \
@@ -42,24 +50,20 @@ RUN \
   else npm run build; \
   fi
 
-# Note: It is not necessary to add an intermediate step that does a full copy of `node_modules` here
-
 # Step 2. Production image, copy all the files and run next
 FROM base AS runner
 
-WORKDIR /app
+WORKDIR /app # Final app location
 
 # Don't run production as root
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 USER nextjs
 
-COPY --from=builder /app/public ./public
-
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# Copy built assets from the builder stage (adjust source paths)
+COPY --from=builder /build_root/public ./public
+COPY --from=builder --chown=nextjs:nodejs /build_root/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /build_root/.next/static ./.next/static
 
 # Environment variables must be redefined at run time
 ARG ENV_VARIABLE
@@ -69,7 +73,5 @@ ENV NEXT_PUBLIC_ENV_VARIABLE=${NEXT_PUBLIC_ENV_VARIABLE}
 
 # Uncomment the following line to disable telemetry at run time
 # ENV NEXT_TELEMETRY_DISABLED 1
-
-# Note: Don't expose ports here, Compose will handle that for us
 
 CMD ["node", "server.js"]
