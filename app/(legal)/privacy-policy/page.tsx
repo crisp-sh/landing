@@ -510,6 +510,7 @@ export default function PrivacyPolicyPage() {
               </tr>
               <tr>
                 <td>L. Sensitive personal Information</td>
+                {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
                 <td></td>
                 <td className="text-center">NO</td>
               </tr>
@@ -579,7 +580,8 @@ export default function PrivacyPolicyPage() {
         </ul>
         <h3>How to Exercise Your Rights</h3>
         <p>
-          To exercise these rights, you can contact us by visiting <a href="#"><Placeholder>crisp.sh/data-request</Placeholder></a>, by visiting <a href="#"><Placeholder>crisp.sh/contact</Placeholder></a>, or by referring to the contact details at the bottom of this document.
+          To exercise these rights, you can contact us by visiting {/* biome-ignore lint/a11y/useValidAnchor: <explanation> */}
+                    <a href="#"><Placeholder>crisp.sh/data-request</Placeholder></a>, by visiting <a href="#"><Placeholder>crisp.sh/contact</Placeholder></a>, or by referring to the contact details at the bottom of this document.
         </p>
         <p>
           Under certain US state data protection laws, you can designate an authorized agent to make a request on your behalf. We may deny a request from an authorized agent that does not submit proof that they have been validly authorized to act on your behalf in accordance with applicable laws.
@@ -637,13 +639,12 @@ export default function PrivacyPolicyPage() {
         </p>
         <p className="!mt-0">
           <Placeholder>crisp.sh</Placeholder><br />
-          <Placeholder>__________</Placeholder><br />
-          <Placeholder>__________</Placeholder>
         </p>
 
         <h2 id="request">17. HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA WE COLLECT FROM YOU?</h2>
         <p>
-          Based on the applicable laws of your country or state of residence in the US, you may have the right to request access to the personal information we collect from you, details about how we have processed it, correct inaccuracies, or delete your personal information. You may also have the right to withdraw your consent to our processing of your personal information. These rights may be limited in some circumstances by applicable law. To request to review, update, or delete your personal information, please visit: <a href="#"><Placeholder>crisp.sh/data-request</Placeholder></a>.
+          Based on the applicable laws of your country or state of residence in the US, you may have the right to request access to the personal information we collect from you, details about how we have processed it, correct inaccuracies, or delete your personal information. You may also have the right to withdraw your consent to our processing of your personal information. These rights may be limited in some circumstances by applicable law. To request to review, update, or delete your personal information, please visit: {/* biome-ignore lint/a11y/useValidAnchor: <explanation> */}
+                                                                                               <a href="#"><Placeholder>crisp.sh/data-request</Placeholder></a>.
         </p>
 
       </article>

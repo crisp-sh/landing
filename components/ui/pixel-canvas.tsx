@@ -125,7 +125,7 @@ class PixelCanvasElement extends HTMLElement {
   private timeInterval = 1000 / 60
   private timePrevious: number = performance.now()
   private reducedMotion: boolean
-  private _initialized: boolean = false
+  private _initialized = false
   private _resizeObserver: ResizeObserver | null = null
   private _parent: Element | null = null
 
@@ -365,7 +365,8 @@ const PixelCanvas = React.forwardRef<
 
   // Cast the custom element type to 'any' to bypass strict JSX checking for this specific element
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const CustomElement = 'pixel-canvas' as any;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      const CustomElement = 'pixel-canvas' as any;
 
   return (
     <CustomElement
