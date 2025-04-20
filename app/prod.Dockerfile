@@ -1,77 +1,76 @@
 # syntax=docker.io/docker/dockerfile:1
 
-FROM node:18-alpine AS base
+# Base image for installing dependencies
+FROM node:20-alpine AS base
+WORKDIR /app
+# Install pnpm
+RUN npm install -g pnpm
 
-# Step 1. Rebuild the source code only when needed
+# Builder stage: Install dependencies and build the Next.js app
 FROM base AS builder
+WORKDIR /app
 
-# Set workdir for the builder stage
-WORKDIR /build_root
+# Copy package.json and lock file first to leverage Docker cache
+COPY package.json pnpm-lock.yaml ./
+# Copy Prisma schema if you have one (adjust path if necessary)
+# COPY prisma ./prisma/
 
-# Install dependencies based on the preferred package manager
-# Copy dependency definition files from the ./app dir in the context
-COPY app/package.json app/yarn.lock* app/package-lock.json* app/pnpm-lock.yaml* app/.npmrc* ./
-# Omit --production flag for TypeScript devDependencies
-RUN \
-  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-  elif [ -f package-lock.json ]; then npm ci; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i; \
-  # Allow install without lockfile, so example works even without Node.js installed locally
-  else echo "Warning: Lockfile not found. It is recommended to commit lockfiles to version control." && yarn install; \
-  fi
+# Install dependencies using pnpm
+RUN pnpm install --frozen-lockfile
 
-# Copy application code and config from the ./app dir in the context
-# Copy the actual Next.js app directory
-COPY app/app ./app 
-# Copy other necessary directories/files from ./app in the context
-COPY app/src ./src # If you have a src dir inside ./app
-COPY app/components ./components # Copy components if they are directly under ./app
-COPY app/lib ./lib # Copy lib if directly under ./app
-COPY app/public ./public
-COPY app/next.config.cjs .
-COPY app/tsconfig.json .
-COPY app/globals.css .
-COPY app/layout.tsx ./app/ # Copy layout into the ./app dir inside container
-COPY app/page.tsx ./app/ # Copy root page into the ./app dir inside container
-COPY app/fonts ./fonts # Copy fonts
-COPY "app/(legal)" ./'(legal)' # Copy legal pages group
+# Copy the rest of the application code
+# Copy the source directories
+COPY app ./app/
+COPY components ./components/
+COPY lib ./lib/
+COPY hooks ./hooks/
+COPY styles ./styles/
+# Copy public directory and config files
+COPY public ./public/
+COPY next.config.mjs .
+COPY tsconfig.json .
+COPY postcss.config.mjs .
+COPY components.json .
 
-# Environment variables must be present at build time
-ARG ENV_VARIABLE
-ENV ENV_VARIABLE=${ENV_VARIABLE}
-ARG NEXT_PUBLIC_ENV_VARIABLE
-ENV NEXT_PUBLIC_ENV_VARIABLE=${NEXT_PUBLIC_ENV_VARIABLE}
+# Build the Next.js application
+# Pass build-time environment variables if needed
+# ARG NEXT_PUBLIC_API_URL
+# ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+RUN pnpm build
 
-# Build Next.js based on the preferred package manager
-RUN \
-  if [ -f yarn.lock ]; then yarn build; \
-  elif [ -f package-lock.json ]; then npm run build; \
-  elif [ -f pnpm-lock.yaml ]; then pnpm build; \
-  else npm run build; \
-  fi
+# Pruning stage: Install only production dependencies
+FROM base AS pruner
+WORKDIR /app
+COPY --from=builder /app/package.json /app/pnpm-lock.yaml ./
+COPY --from=builder /app/node_modules ./node_modules
+RUN pnpm prune --prod
 
-# Step 2. Production image, copy all the files and run next
-FROM base AS runner
+# Runner stage: Create the final image
+FROM node:20-alpine AS runner
+WORKDIR /app
 
-WORKDIR /app # Final app location
+# Set environment variables (adjust as needed)
+ENV NODE_ENV=production
+# Example: Set a default port, can be overridden
+ENV PORT=3000
+EXPOSE 3000
 
-# Don't run production as root
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-USER nextjs
+# You may need libraries like openssl if your application uses them
+# RUN apk add --no-cache openssl
 
-# Copy built assets from the builder stage (adjust source paths)
-COPY --from=builder /build_root/public ./public
-COPY --from=builder --chown=nextjs:nodejs /build_root/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /build_root/.next/static ./.next/static
+# Copy necessary files from previous stages
+COPY --from=builder /app/public ./public
+# Copy the standalone Next.js server output
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+# Copy the static assets
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# Copy production node_modules
+COPY --from=pruner /app/node_modules ./node_modules
 
-# Environment variables must be redefined at run time
-ARG ENV_VARIABLE
-ENV ENV_VARIABLE=${ENV_VARIABLE}
-ARG NEXT_PUBLIC_ENV_VARIABLE
-ENV NEXT_PUBLIC_ENV_VARIABLE=${NEXT_PUBLIC_ENV_VARIABLE}
+# User for running the application (optional but recommended)
+# RUN addgroup --system --gid 1001 nodejs
+# RUN adduser --system --uid 1001 nextjs
+# USER nextjs
 
-# Uncomment the following line to disable telemetry at run time
-# ENV NEXT_TELEMETRY_DISABLED 1
-
+# Command to run the application
 CMD ["node", "server.js"]
