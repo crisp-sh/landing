@@ -7,11 +7,12 @@ import { HoverGlitchText } from "@/components/hover-glitch-text";
 // import { EerieNav } from "@/components/eerie-nav";
 import { HoverButton } from "@/components/hover-button";
 import dynamic from "next/dynamic";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import { Balloons } from "@/components/ui/balloons";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ReactingEyeball } from "@/components/ui/reacting-eyeball";
 import { AnimatedLogo } from "@/components/ui/animated-logo";
+import { useRouter } from "next/navigation";
 
 const PixelCanvas = dynamic(
   () => import("@/components/ui/pixel-canvas").then((mod) => mod.PixelCanvas),
@@ -32,15 +33,18 @@ interface BalloonsRef {
 
 export default function Home() {
   const isMobile = useIsMobile();
-  const balloonsRef = React.useRef<BalloonsRef>(null);
-  const textBalloonsRef = React.useRef<BalloonsRef>(null);
+  const router = useRouter();
+  const balloonsRef = useRef<BalloonsRef>(null);
+  const textBalloonsRef = useRef<BalloonsRef>(null);
   const [isSubscribing, setIsSubscribing] = useState(false);
   const [showSuccessCheck, setShowSuccessCheck] = useState(false);
 
-  const handleLaunchDefaultBalloons = React.useCallback(() => {
-    console.log("handleLaunchDefaultBalloons called");
+  const handleJoinInitiative = useCallback(() => {
     balloonsRef.current?.launchAnimation();
-  }, []);
+    const redirectTimeout = setTimeout(() => {
+      router.push('/onlyprompt');
+    }, 3000);
+  }, [router]);
 
   const handleLaunchTextBalloons = React.useCallback(() => {
     textBalloonsRef.current?.launchAnimation();
@@ -144,7 +148,7 @@ export default function Home() {
                 data-driven insights. Your future is our business.
               </p>
               <div className="mt-10">
-                <HoverButton onClick={handleLaunchDefaultBalloons}>
+                <HoverButton onClick={handleJoinInitiative}>
                   <span className="uppercase">Join the initiative</span>
                 </HoverButton>
               </div>
