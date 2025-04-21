@@ -75,6 +75,7 @@ const HoverButton = React.forwardRef<HTMLButtonElement, HoverButtonProps>(({ cla
   return (
     <button
       ref={buttonRef}
+      data-cursor-hoverable="true"
       className={cn(
         "relative isolate px-8 py-3 rounded-none",
         "text-foreground font-medium text-base leading-6",

@@ -1,22 +1,82 @@
 "use client";
 import { motion } from "framer-motion";
-import { ArrowRight, Eye, Shield, Zap } from "lucide-react";
+import { ArrowRight, Check, Eye, Loader2, Shield, Zap } from "lucide-react";
 // import Link from "next/link";
 import Image from "next/image";
 import { HoverGlitchText } from "@/components/hover-glitch-text";
 // import { EerieNav } from "@/components/eerie-nav";
 import { HoverButton } from "@/components/hover-button";
 import dynamic from "next/dynamic";
+import React, { useState, useCallback } from "react";
+import { Balloons } from "@/components/ui/balloons";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { ReactingEyeball } from "@/components/ui/reacting-eyeball";
 
 const PixelCanvas = dynamic(
   () => import("@/components/ui/pixel-canvas").then((mod) => mod.PixelCanvas),
   { ssr: false },
 );
 
+interface TextBalloonConfig {
+  text: string;
+  color: string;
+  fontSize: number;
+}
+
+const darkBalloonColors = ["#111827", "#1F2937", "#374151", "#4B5563", "#6B7280"];
+
+interface BalloonsRef {
+  launchAnimation: () => void;
+}
+
 export default function Home() {
+  const isMobile = useIsMobile();
+  const balloonsRef = React.useRef<BalloonsRef>(null);
+  const textBalloonsRef = React.useRef<BalloonsRef>(null);
+  const [isSubscribing, setIsSubscribing] = useState(false);
+  const [showSuccessCheck, setShowSuccessCheck] = useState(false);
+
+  const handleLaunchDefaultBalloons = React.useCallback(() => {
+    console.log("handleLaunchDefaultBalloons called");
+    balloonsRef.current?.launchAnimation();
+  }, []);
+
+  const handleLaunchTextBalloons = React.useCallback(() => {
+    textBalloonsRef.current?.launchAnimation();
+  }, []);
+
+  const handleSubscribe = useCallback(async () => {
+    if (isSubscribing) return;
+    setIsSubscribing(true);
+
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    textBalloonsRef.current?.launchAnimation();
+
+    setIsSubscribing(false);
+    setShowSuccessCheck(true);
+
+    setTimeout(() => {
+      setShowSuccessCheck(false);
+    }, 5000);
+  }, [isSubscribing]);
+
   return (
     <div className="flex min-h-screen flex-col bg-black text-white">
+      <Balloons ref={balloonsRef} type="default" />
+      <Balloons
+        ref={textBalloonsRef}
+        type="text"
+        text="JOINED"
+        color="#515151"
+        fontSize={isMobile ? 50 : 200}
+      />
+
       <main className="flex-1 pt-16">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[-1]">
+           <ReactingEyeball />
+        </div>
+
         <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0 bg-gradient-to-b from-black via-black/95 to-black" />
 
@@ -89,10 +149,8 @@ export default function Home() {
                 data-driven insights. Your future is our business.
               </p>
               <div className="mt-10">
-                <HoverButton>
-                  <span className="uppercase">
-                    Join the initiative
-                  </span>
+                <HoverButton onClick={handleLaunchDefaultBalloons}>
+                  <span className="uppercase">Join the initiative</span>
                 </HoverButton>
               </div>
             </motion.div>
@@ -223,10 +281,27 @@ export default function Home() {
                     type="email"
                     placeholder="Enter your email"
                     className="w-full max-w-md rounded-none border border-white/20 bg-black/50 px-4 py-2 text-white placeholder-white/40 backdrop-blur-sm focus:border-white/40 focus:outline-none"
+                    disabled={isSubscribing || showSuccessCheck}
                   />
-                  <HoverButton className="w-full max-w-md">
-                    <span className="font-medium font-manifold uppercase">Subscribe</span>
-                    <ArrowRight className="ml-2 h-4 w-4 inline-block transition-transform duration-300 group-hover:translate-x-1" />
+                  <HoverButton
+                    onClick={handleSubscribe}
+                    className="w-full max-w-md"
+                    disabled={isSubscribing || showSuccessCheck}
+                  >
+                    <div className="flex items-center justify-center">
+                      {isSubscribing ? (
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                      ) : showSuccessCheck ? (
+                        <Check className="h-5 w-5 text-green-500" />
+                      ) : (
+                        <>
+                          <span className="font-medium font-manifold uppercase">
+                            Subscribe
+                          </span>
+                          <ArrowRight className="ml-2 h-4 w-4 inline-block transition-transform duration-300 group-hover:translate-x-1" />
+                        </>
+                      )}
+                    </div>
                   </HoverButton>
                 </form>
                 <p className="mt-4 text-xs font-extralight text-white/40">

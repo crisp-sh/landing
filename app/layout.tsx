@@ -6,6 +6,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Inter } from "next/font/google";
 import { EerieNav } from "@/components/eerie-nav";
 import { Footer } from "@/components/footer";
+import { EerieCursor } from "@/components/ui/eerie-cursor";
+
 const manifold = localFont({
   src: [
     { path: "./fonts/ManifoldCF-Thin.woff2", weight: "100", style: "normal" },
@@ -50,6 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${manifold.variable} ${inter.variable} font-manifold`}>
+        <EerieCursor />
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
