@@ -1,12 +1,17 @@
 "use client";
 import { motion } from "framer-motion";
 import { ArrowRight, Eye, Shield, Zap } from "lucide-react";
-import Link from "next/link";
+// import Link from "next/link";
 import Image from "next/image";
 import { HoverGlitchText } from "@/components/hover-glitch-text";
-import { EerieNav } from "@/components/eerie-nav";
+// import { EerieNav } from "@/components/eerie-nav";
 import { HoverButton } from "@/components/hover-button";
-import { PixelCanvas } from "@/components/ui/pixel-canvas";
+import dynamic from "next/dynamic";
+
+const PixelCanvas = dynamic(
+  () => import("@/components/ui/pixel-canvas").then((mod) => mod.PixelCanvas),
+  { ssr: false },
+);
 
 export default function Home() {
   return (
