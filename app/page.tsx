@@ -11,6 +11,7 @@ import React, { useState, useCallback } from "react";
 import { Balloons } from "@/components/ui/balloons";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ReactingEyeball } from "@/components/ui/reacting-eyeball";
+import { AnimatedLogo } from "@/components/ui/animated-logo";
 
 const PixelCanvas = dynamic(
   () => import("@/components/ui/pixel-canvas").then((mod) => mod.PixelCanvas),
@@ -110,13 +111,7 @@ export default function Home() {
                       ease: "easeInOut",
                     }}
                   >
-                    <Image
-                      src="/logo.svg"
-                      alt="Crisp Logo"
-                      width={320}
-                      height={320}
-                      className="h-full w-full object-contain"
-                    />
+                    <AnimatedLogo className="h-full w-full object-contain" />
                   </motion.div>
                 </motion.div>
               </div>
