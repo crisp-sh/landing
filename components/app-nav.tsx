@@ -3,15 +3,14 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { WatchfulEye } from "./watchful-eye"
-import { HoverGlitchText } from "./hover-glitch-text"
 import Image from "next/image"
 import Link from "next/link"
 
-interface EerieNavProps {
+interface AppNavProps {
   logo: string
 }
 
-export function EerieNav({ logo }: EerieNavProps) {
+export function AppNav({ logo }: AppNavProps) {
   const [currentTime, setCurrentTime] = useState("")
   const [isGlitching, setIsGlitching] = useState(false)
 
@@ -50,11 +49,11 @@ export function EerieNav({ logo }: EerieNavProps) {
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full border-b border-white/10 bg-black/80 backdrop-blur-sm transition-all duration-300 ${
+      className={`fixed top-0 w-full border-b border-white/10 bg-black/80 backdrop-blur-sm transition-all duration-300 ${
         isGlitching ? "translate-x-[1px]" : ""
       }`}
     >
-      <div className="container relative flex h-16 items-center justify-between">
+      <div className="container relative flex h-16 items-center justify-between z-50">
         {/* Logo and company name */}
         <div className="flex items-center gap-2">
           <motion.div
@@ -103,9 +102,9 @@ export function EerieNav({ logo }: EerieNavProps) {
         </div>
 
         {/* Decorative elements */}
-        {/* <div className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-        <div className="absolute bottom-0 left-1/4 h-3 w-px bg-white/10" />
-        <div className="absolute bottom-0 right-1/4 h-3 w-px bg-white/10" /> */}
+        {/* <div className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" /> */}
+        {/* <div className="absolute bottom-0 left-1/4 h-3 w-px bg-white/10" /> */}
+        {/* <div className="absolute bottom-0 right-1/4 h-3 w-px bg-white/10" /> */}
       </div>
     </header>
   )

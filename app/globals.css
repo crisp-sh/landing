@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
+/* @layer base {
   body {
     @apply cursor-none;
   }
-}
+} */
 
 :root {
   --background: 0 0% 100%;
@@ -426,7 +426,7 @@ body {
 .hover-glitch-text {
   position: relative;
   display: inline-block;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 /* Base hover glitch effect */

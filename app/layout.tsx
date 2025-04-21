@@ -8,7 +8,7 @@ import { EerieNav } from "@/components/eerie-nav";
 import { Footer } from "@/components/footer";
 import { EerieCursor } from "@/components/ui/eerie-cursor";
 
-const manifold = localFont({
+export const manifold = localFont({
   src: [
     { path: "./fonts/ManifoldCF-Thin.woff2", weight: "100", style: "normal" },
     { path: "./fonts/ManifoldCF-Light.woff2", weight: "300", style: "normal" },
@@ -46,23 +46,27 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  cursor,
 }: Readonly<{
   children: React.ReactNode;
+  cursor: React.ReactNode;
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${manifold.variable} ${inter.variable} font-manifold`}>
-        <EerieCursor />
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <EerieNav logo="/logo.svg" />
-          {children}
-          <Footer />
-        </ThemeProvider>
+      <body className={`relative ${manifold.variable} ${inter.variable} font-manifold`}>
+        <div className="flex min-h-screen flex-col">
+          {cursor}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <EerieNav logo="/logo.svg" />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </ThemeProvider>
+        </div>
       </body>
     </html>
   );

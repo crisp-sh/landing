@@ -13,6 +13,8 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { ReactingEyeball } from "@/components/ui/reacting-eyeball";
 import { AnimatedLogo } from "@/components/ui/animated-logo";
 import { useRouter } from "next/navigation";
+import { GradientTracing } from "@/components/ui/gradient-tracing";
+import { LOGO_SVG_PATHS } from "@/lib/constants";
 
 const PixelCanvas = dynamic(
   () => import("@/components/ui/pixel-canvas").then((mod) => mod.PixelCanvas),
@@ -63,7 +65,7 @@ export default function Home() {
 
     setTimeout(() => {
       setShowSuccessCheck(false);
-    }, 5000);
+    }, 500);
   }, [isSubscribing]);
 
   return (
@@ -93,31 +95,19 @@ export default function Home() {
               className="mx-auto max-w-3xl text-center"
             >
               <div className="mx-auto mb-12 flex justify-center">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 1.5 }}
-                  className="relative h-32 w-32 md:h-40 md:w-40"
-                >
-                  <motion.div
-                    animate={{
-                      filter: [
-                        "drop-shadow(0 0 0px rgba(255,255,255,0.3))",
-                        "drop-shadow(0 0 8px rgba(255,255,255,0.7))",
-                        "drop-shadow(0 0 0px rgba(255,255,255,0.3))",
-                      ],
-                      rotate: [0, 0.5, 0, -0.5, 0],
-                    }}
-                    transition={{
-                      duration: 8,
-                      repeat: Number.POSITIVE_INFINITY,
-                      repeatType: "reverse",
-                      ease: "easeInOut",
-                    }}
-                  >
-                    <AnimatedLogo className="h-full w-full object-contain" />
-                  </motion.div>
-                </motion.div>
+                <div className="relative h-32 w-32 md:h-40 md:w-40">
+                  <GradientTracing
+                    width={isMobile ? 128 : 160}
+                    height={isMobile ? 128 : 160}
+                    svgWidth={1357}
+                    svgHeight={1287}
+                    path={LOGO_SVG_PATHS}
+                    strokeWidth={2}
+                    gradientColors={["#F1C40F80", "#F1C40F", "#E67E2280"]}
+                    baseColor="#44444440"
+                    fillColor="#ffffff"
+                  />
+                </div>
               </div>
 
               <h1 className="mb-6 text-4xl font-light tracking-tight sm:text-5xl md:text-6xl">

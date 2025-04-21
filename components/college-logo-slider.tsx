@@ -6,8 +6,9 @@ import { cn } from "@/lib/utils";
 
 const collegeLogos = [
   { src: "/college/berkeley.png", alt: "UC Berkeley Logo" },
+  { src: "/college/uga.png", alt: "University of Georgia Logo" },
   { src: "/college/caltech.svg", alt: "Caltech Logo" },
-  { src: "/college/duke.svg", alt: "Duke University Logo" },
+  { src: "/college/duke.png", alt: "Duke University Logo" },
   { src: "/college/gatech.svg", alt: "Georgia Tech Logo" },
   { src: "/college/usaf.svg", alt: "US Air Force Academy Logo" },
   { src: "/college/yale.svg", alt: "Yale University Logo" },
@@ -22,7 +23,7 @@ interface CollegeLogoSliderProps {
 }
 
 export function CollegeLogoSlider({
-  title = "Trusted by students and professionals at leading institutions:",
+  title = "",
   className,
   duration = 40, // Slower default duration for logos
   gap = 64, // More gap between logos
@@ -31,7 +32,7 @@ export function CollegeLogoSlider({
   return (
     <div className={cn("relative w-full py-8 md:py-12", className)}>
       {title && (
-        <h3 className="text-center text-base md:text-lg text-white/60 mb-8 md:mb-12 font-light uppercase tracking-wider">
+        <h3 className="text-center text-base mx-4 md:text-lg text-white/60 mb-8 md:mb-12 font-light uppercase tracking-wider">
           {title}
         </h3>
       )}

@@ -29,7 +29,7 @@ export function TestimonialsSection({
           <h2 className="max-w-[720px] text-3xl font-semibold leading-tight sm:text-5xl sm:leading-tight font-manifold uppercase">
             {title}
           </h2>
-          <p className="text-md max-w-[600px] font-medium text-muted-foreground sm:text-xl font-extralight font-manifold">
+          <p className="text-md max-w-[600px] font-medium text-muted-foreground sm:text-xl font-manifold">
             {description}
           </p>
         </div>
