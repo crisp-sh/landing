@@ -27,7 +27,7 @@ interface CollegeLogoSliderProps {
 export function CollegeLogoSlider({
   title = "",
   className,
-  duration = 40, // Slower default duration for logos
+  duration = 13, // Slower default duration for logos -> Faster now
   gap = 64, // More gap between logos
   reverse = false,
 }: CollegeLogoSliderProps) {

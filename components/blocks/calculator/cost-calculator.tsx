@@ -34,33 +34,74 @@ export interface ModelInfo { // Export interface for PricingTable
 
 // Define which providers to include
 const ALLOWED_PROVIDERS = [
-  'openai', 
-  'anthropic', 
-  'google', 
-  'mistral', 
-  'meta', 
-  'gemini', // Added based on logos
-  // Add other providers you want to include here
+  'openai',
+  'anthropic',
+  'google',
+  'gemini',
+  'mistral',
+  'meta',
+  'deepseek',
+  'openrouter', // Add openrouter
+  // Add providers for the specific models below if needed
+  // "o3-mini", // Need to confirm provider and add to ALLOWED_PROVIDERS if required
 ];
 
-// Helper to get logo URL based on provider
-const getLogoUrl = (provider: string | null | undefined): string => {
+// // Define specific model IDs to include
+// const ALLOWED_MODELS = [
+//   "claude-3.5-haiku",
+//   "claude-3.5-haiku:beta",
+//   "claude-3.7-sonnet",
+//   "claude-3.7-sonnet:beta",
+//   "claude-3.7-sonnet:thinking",
+//   "deepseek-chat-v3-0324",
+//   "deepseek-r1",
+//   "deepseek-r1-zero",
+//   "deepseek-r1:free",
+//   "gemini-1.5-flash-latest",
+//   "gemini-2.0-flash-001",
+//   "gemini-2.0-flash-thinking-exp",
+//   "gemini-2.5-pro-exp",
+//   "gemma-3-27b-it", // Assuming provider 'google' or 'gemma' is in ALLOWED_PROVIDERS
+//   "gpt-4.1",
+//   "gpt-4.1-mini",
+//   "gpt-4.1-nano",
+//   "gpt-4o",
+//   "gpt-4o-mini",
+//   "llama-3-8b-instruct:free", // Assuming provider 'meta' is in ALLOWED_PROVIDERS
+//   "mistral-7b-instruct:free",
+//   // "o3-mini", // Need to confirm provider and add to ALLOWED_PROVIDERS if required
+// ];
+
+// Helper to get logo URL based on provider AND model ID
+const getLogoUrl = (provider: string | null | undefined, modelId: string): string => {
+  const lowerProvider = provider?.toLowerCase();
+  const lowerModelId = modelId.toLowerCase();
+
+  // Handle OpenRouter specifically
+  if (lowerProvider === 'openrouter') {
+    if (lowerModelId.startsWith('gpt-') || lowerModelId.includes('openai')) return "/logos/openai.svg";
+    if (lowerModelId.startsWith('claude-') || lowerModelId.includes('anthropic')) return "/logos/anthropic.svg";
+    if (lowerModelId.startsWith('gemini-') || lowerModelId.includes('google')) return "/logos/gemini.svg"; // Or google-color.svg
+    if (lowerModelId.startsWith('mistral-') || lowerModelId.includes('mistral')) return "/logos/mistral-color.svg";
+    if (lowerModelId.startsWith('llama-') || lowerModelId.includes('meta-llama')) return "/logos/meta-color.svg";
+    if (lowerModelId.startsWith('deepseek-') || lowerModelId.includes('deepseek')) return "/logos/deepseek-color.svg"; // Assuming deepseek logo exists
+    // Add more OpenRouter mappings as needed
+    return "/logos/openrouter.png"; // Fallback OpenRouter logo if specific mapping missing
+  }
+
+  // Existing logic for other providers
   const logoMap: Record<string, string> = {
     openai: "/logos/openai.svg",
-    azure: "/logos/openai.svg", // Often uses OpenAI models
+    azure: "/logos/openai.svg",
     anthropic: "/logos/anthropic.svg",
     google: "/logos/google-color.svg",
-    gemini: "/logos/gemini.svg", // Specific Gemini logo
+    gemini: "/logos/gemini.svg",
     mistral: "/logos/mistral-color.svg",
     meta: "/logos/meta-color.svg",
-    deepmind: "/logos/deepmind-color.svg", // If distinct
-    aistudio: "/logos/aistudio-color.svg", // If distinct
-    qwen: "/logos/qwen.svg",
-    xai: "/logos/xai.svg",
-    // Add other providers and their corresponding logo paths
+    deepseek: "/logos/deepseek-color.svg", // Ensure this exists
+    // Add other direct provider mappings
   };
-  // Fallback if provider is unknown or logo missing
-  return provider && logoMap[provider.toLowerCase()] ? logoMap[provider.toLowerCase()] : "/logos/default.svg"; // Add a default logo
+  return lowerProvider && logoMap[lowerProvider] ? logoMap[lowerProvider] : "/logos/default.svg"; 
 };
 
 // Helper function to format provider name with correct casing
@@ -131,42 +172,52 @@ const rawModelsData = rawModelsJson as Record<string, RawModelSpec>;
 // Transform raw JSON to UI models array, filtering and mapping
 export const MODELS: ModelInfo[] = Object.entries(rawModelsData)
   .map(([id, rawSpec]): (Omit<ModelInfo, 'name'> & { provider: string | null | undefined }) | null => {
-    // Basic validation: ensure it's a chat model with defined costs
-    if (
-      rawSpec.mode !== "chat" ||
-      rawSpec.input_cost_per_token == null || 
-      rawSpec.output_cost_per_token == null
-    ) {
-      return null; // Skip models that aren't chat or lack essential costs
+    // --- Start Filtering (Order matters slightly) ---
+    // 1. Filter by allowed model ID first
+    // if (!ALLOWED_MODELS.includes(id)) {
+    //   return null;
+    // }
+
+    // Get provider early for logo determination and provider filtering
+    const provider = rawSpec.litellm_provider;
+
+    // 5. Filter by allowed provider (check *after* getting provider)
+    if (!provider || !ALLOWED_PROVIDERS.includes(provider.toLowerCase())) {
+        // console.log(`Filtering out ${id} due to provider: ${provider}`); // Debugging line
+        return null;
     }
 
+    // 2. Filter by mode (only chat models)
+    if (rawSpec.mode !== "chat") {
+      return null;
+    }
+
+    // 3. Filter by defined costs
+    if (rawSpec.input_cost_per_token == null || rawSpec.output_cost_per_token == null) {
+      return null;
+    }
+
+    // 4. Filter out models with zero essential costs
     const inputCost = rawSpec.input_cost_per_token || 0;
     const outputCost = rawSpec.output_cost_per_token || 0;
     const cacheCost = rawSpec.cache_read_input_token_cost ?? rawSpec.output_cost_per_reasoning_token ?? 0;
-    const provider = rawSpec.litellm_provider;
-
-    // Skip if essential costs are zero (likely not a priced model)
     if (inputCost === 0 && outputCost === 0 && cacheCost === 0) {
         return null;
     }
-    
-    // Skip if provider is missing or not in the allowed list
-    if (!provider || !ALLOWED_PROVIDERS.includes(provider.toLowerCase())) {
-        return null;
-    }
+    // --- End Filtering ---
 
-    // Return intermediate object before final mapping
+    // Map to intermediate object - pass id to getLogoUrl
     return {
       id,
       provider,
-      logoUrl: getLogoUrl(provider),
+      logoUrl: getLogoUrl(provider, id), // Pass id here
       inputCost: inputCost,
       outputCost: outputCost,
       cacheCost: cacheCost,
     };
   })
-  .filter((model): model is (Omit<ModelInfo, 'name'> & { provider: string }) => model !== null) // Filter out nulls and ensure provider is string
-  .map(model => ({ // Add the formatted name in the final step
+  .filter((model): model is (Omit<ModelInfo, 'name'> & { provider: string }) => model !== null) // Filter out nulls
+  .map(model => ({ // Add the formatted name
       ...model,
       name: formatModelName(model.id, model.provider),
   }));
@@ -181,7 +232,11 @@ if (MODELS.length === 0) {
 
 
 export default function CostCalculator() {
-  const [model, setModel] = useState<ModelInfo | null>(MODELS.length > 0 ? MODELS[0] : null);
+  // Find the default model (GPT 4.1)
+  const defaultModel = MODELS.find(m => m.id === 'gpt-4.1');
+  
+  // Initialize state with the default model if found, otherwise the first model, or null
+  const [model, setModel] = useState<ModelInfo | null>(defaultModel || (MODELS.length > 0 ? MODELS[0] : null));
   const [inTokens, setInTokens] = useState<number>(1695);
   const [outTokens, setOutTokens] = useState<number>(2048);
   const [cacheTokens, setCacheTokens] = useState<number>(0);
@@ -196,7 +251,7 @@ export default function CostCalculator() {
      // Initialize model if MODELS exist but model state is somehow null
      // This might happen briefly on first render or if state logic changes
      if (MODELS.length > 0) {
-         setModel(MODELS[0]);
+         setModel(defaultModel || MODELS[0]); // Use default or first
      }
      // Return null or a loading indicator while state updates
      return <div className="p-4 text-center text-muted-foreground">Loading model...</div>; // Or return null
@@ -206,7 +261,7 @@ export default function CostCalculator() {
   const costIn = inTokens * model.inputCost;
   const costOut = outTokens * model.outputCost;
   const costCache = cacheTokens * model.cacheCost;
-  const total = costIn + costOut + costCache;
+  const subtotal = costIn + costOut + costCache;
 
   // Helper to format currency with more precision
   const formatCurrency = (value: number) => {
@@ -322,7 +377,7 @@ export default function CostCalculator() {
           <Separator className="my-2 bg-muted" decorative={true} />
           <div className="flex justify-between items-center font-bold pt-2 text-xl">
             <span className="text-green-500">Total Estimated Cost:</span>
-            <span className="font-mono text-green-500">{formatCurrency(total)}</span>
+            <span className="font-mono text-green-500">{formatCurrency(subtotal)}</span>
           </div>
         </div>
       </div>
