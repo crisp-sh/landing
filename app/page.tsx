@@ -7,7 +7,7 @@ import { HoverGlitchText } from "@/components/hover-glitch-text";
 // import { EerieNav } from "@/components/eerie-nav";
 import { HoverButton } from "@/components/hover-button";
 import dynamic from "next/dynamic";
-import type React from "react"; 
+import type React from "react";
 import { useState, useCallback, useRef } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ReactingEyeball } from "@/components/ui/reacting-eyeball";
@@ -25,10 +25,11 @@ import { useGSAP } from "@gsap/react";
 import SplitType from "split-type";
 import { Banner1 } from "@/components/banner-one";
 import WaitlistForm from "@/components/waitlist-form";
+import PromptingIsAllYouNeed from "@/components/blocks/prompting";
 
 const PixelCanvas = dynamic(
   () => import("@/components/ui/pixel-canvas").then((mod) => mod.PixelCanvas),
-  { ssr: false },
+  { ssr: false }
 );
 
 export default function Home() {
@@ -43,66 +44,76 @@ export default function Home() {
   const spanRef = useRef<HTMLSpanElement>(null);
 
   // GSAP Animation Hook
-  useGSAP(() => {
-    if (!h1Ref.current || !spanRef.current) return;
+  useGSAP(
+    () => {
+      if (!h1Ref.current || !spanRef.current) return;
 
-    // Split the text into lines
-    const splitH1 = new SplitType(h1Ref.current, { types: 'lines', lineClass: 'line' });
-    const splitSpan = new SplitType(spanRef.current, { types: 'lines', lineClass: 'line' });
+      // Split the text into lines
+      const splitH1 = new SplitType(h1Ref.current, {
+        types: "lines",
+        lineClass: "line",
+      });
+      const splitSpan = new SplitType(spanRef.current, {
+        types: "lines",
+        lineClass: "line",
+      });
 
-    // Manually wrap inner content using for...of
-    if (splitH1.lines) { // Check if lines exist
-      for (const line of splitH1.lines) {
-        const span = document.createElement('span');
-        span.style.display = 'block';
-        span.style.overflow = 'hidden';
-        span.innerHTML = line.innerHTML;
-        line.innerHTML = '';
-        line.appendChild(span);
+      // Manually wrap inner content using for...of
+      if (splitH1.lines) {
+        // Check if lines exist
+        for (const line of splitH1.lines) {
+          const span = document.createElement("span");
+          span.style.display = "block";
+          span.style.overflow = "hidden";
+          span.innerHTML = line.innerHTML;
+          line.innerHTML = "";
+          line.appendChild(span);
+        }
       }
-    }
-    if (splitSpan.lines) { // Check if lines exist
-      for (const line of splitSpan.lines) {
-        const span = document.createElement('span');
-        span.style.display = 'block';
-        span.style.overflow = 'hidden';
-        span.innerHTML = line.innerHTML;
-        line.innerHTML = '';
-        line.appendChild(span);
+      if (splitSpan.lines) {
+        // Check if lines exist
+        for (const line of splitSpan.lines) {
+          const span = document.createElement("span");
+          span.style.display = "block";
+          span.style.overflow = "hidden";
+          span.innerHTML = line.innerHTML;
+          line.innerHTML = "";
+          line.appendChild(span);
+        }
       }
-    }
 
-    // Select the inner spans
-    const h1InnerSpans = h1Ref.current.querySelectorAll('.line > span');
-    const spanInnerSpans = spanRef.current.querySelectorAll('.line > span');
+      // Select the inner spans
+      const h1InnerSpans = h1Ref.current.querySelectorAll(".line > span");
+      const spanInnerSpans = spanRef.current.querySelectorAll(".line > span");
 
-    // Set initial state
-    gsap.set(h1InnerSpans, { y: '110%' });
-    gsap.set(spanInnerSpans, { y: '110%' });
+      // Set initial state
+      gsap.set(h1InnerSpans, { y: "110%" });
+      gsap.set(spanInnerSpans, { y: "110%" });
 
-    // Animate in
-    gsap.to(h1InnerSpans, {
-      y: '0%',
-      duration: 0.8,
-      stagger: 0.1,
-      ease: 'power3.out',
-      delay: 0.5 // Optional delay after initial motion.div animation
-    });
-    gsap.to(spanInnerSpans, {
-      y: '0%',
-      duration: 0.8,
-      stagger: 0.1,
-      ease: 'power3.out',
-      delay: 0.7 // Slightly later delay
-    });
+      // Animate in
+      gsap.to(h1InnerSpans, {
+        y: "0%",
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "power3.out",
+        delay: 0.5, // Optional delay after initial motion.div animation
+      });
+      gsap.to(spanInnerSpans, {
+        y: "0%",
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "power3.out",
+        delay: 0.7, // Slightly later delay
+      });
 
-    // Cleanup function
-    return () => {
-      splitH1.revert();
-      splitSpan.revert();
-    };
-
-  }, { scope: containerRef }); // Scope the animation to the container
+      // Cleanup function
+      return () => {
+        splitH1.revert();
+        splitSpan.revert();
+      };
+    },
+    { scope: containerRef }
+  ); // Scope the animation to the container
 
   const handleJoinInitiative = useCallback(() => {
     console.log("handleJoinInitiative called (using startViewTransition)"); // Log 1
@@ -111,7 +122,7 @@ export default function Home() {
     if (!document.startViewTransition) {
       console.log("View Transitions not supported, navigating directly."); // Log 2
       // Fallback for browsers without support
-      router.push('/onlyprompt');
+      router.push("/onlyprompt");
       return;
     }
 
@@ -119,11 +130,10 @@ export default function Home() {
     // Wrap navigation and animation call in startViewTransition
     document.startViewTransition(() => {
       console.log("Inside startViewTransition callback"); // Log 4
-      router.push('/onlyprompt');
+      router.push("/onlyprompt");
       // Manually trigger the animation function alongside navigation
-      slideInOut(); 
+      slideInOut();
     });
-
   }, [router]); // Dependencies: router only
 
   const handleSubscribe = useCallback(async () => {
@@ -131,7 +141,6 @@ export default function Home() {
     setIsSubscribing(true);
 
     await new Promise((resolve) => setTimeout(resolve, 1500));
-
 
     setIsSubscribing(false);
     setShowSuccessCheck(true);
@@ -142,14 +151,18 @@ export default function Home() {
   }, [isSubscribing]);
 
   return (
-    <div className="flex min-h-screen flex-col bg-black text-white">
-      <main className="flex-1 pt-16">
-
-        <section ref={containerRef} className="relative flex min-h-screen items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0 bg-gradient-to-b from-black via-gray-900/20 to-black" />
-
+    <div className="flex-1 font-manifold">
+        <section
+          className="mx-auto h-screen pt-16 border-white/10 z-[5000] border-b"
+        >
+          <PromptingIsAllYouNeed />
+        </section>
+        <section
+          ref={containerRef}
+          className="relative flex min-h-screen items-center justify-center overflow-hidden"
+        >
+          <div className="absolute inset-0 z-0 bg-gradient-to-b from-black via-gray-900/20 to-black" />
           <div className="absolute inset-0 z-0 bg-gradient-to-b from-black via-black/95 to-black" />
-
           <div className="container relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -172,8 +185,11 @@ export default function Home() {
                   />
                 </div>
               </div>
-              
-              <h1 ref={h1Ref} className="mb-6 text-4xl font-light tracking-tight sm:text-5xl md:text-6xl">
+
+              <h1
+                ref={h1Ref}
+                className="mb-6 text-4xl font-light tracking-tight sm:text-5xl md:text-6xl"
+              >
                 <span className="block">
                   <h1 className="font-regular uppercase font-manifold">
                     We built a system that works
@@ -191,7 +207,7 @@ export default function Home() {
           <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
         </section>
 
-        <section className="py-24">
+        <section className="relative py-16 border-b border-white/10 mx-auto">
           <div className="container">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -201,9 +217,7 @@ export default function Home() {
               className="mx-auto mb-16 max-w-2xl text-center"
             >
               <h2 className="text-3xl font-light tracking-tight">
-                <HoverGlitchText intensity="high" as="span" className="font-medium uppercase">
-                  Our Methodology
-                </HoverGlitchText>
+                Our Methodology
               </h2>
               <p className="mt-4 text-white/60">
                 Precision. Efficiency. Control. The three pillars of our
@@ -217,21 +231,21 @@ export default function Home() {
                   icon: Eye,
                   title: "PRECISION",
                   description:
-                    "Continuous monitoring systems that analyze behavioral patterns with unprecedented accuracy.",
-                  color: "#481515",
+                    "Build with purpose. Build with precision.",
+                  color: "#471548",
                 },
                 {
                   icon: Zap,
                   title: "EFFICIENCY",
                   description:
-                    "Proprietary algorithms that enhance productivity through subtle psychological adjustments.",
-                  color: "#481515",
+                    "Factor in the human element. Build with efficiency.",
+                  color: "#154822",
                 },
                 {
                   icon: Shield,
                   title: "CONTROL",
                   description:
-                    "Preemptive security measures that neutralize threats before they materialize.",
+                    "Privacy is a human right. Build with control.",
                   color: "#481515",
                 },
               ].map((feature) => {
@@ -277,11 +291,10 @@ export default function Home() {
                 );
               })}
             </div>
-          </div>
-          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          </div>      
         </section>
 
-        <section className="relative py-24">
+        <section className="relative pb-16">
           <div className="absolute inset-0 z-0 bg-gradient-to-b from-black via-gray-900/20 to-black" />
           <div className="container relative z-10">
             <div className="mx-auto max-w-3xl text-center">
@@ -291,15 +304,7 @@ export default function Home() {
                 transition={{ duration: 1 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-3xl font-light tracking-tight">
-                  <HoverGlitchText intensity="medium" as="span" className="font-medium uppercase">
-                    Join Our Network
-                  </HoverGlitchText>
-                </h2>
-                <p className="mt-4 text-white/60">
-                  Become part of the system. Enhance your potential. Surrender
-                  to efficiency.
-                </p>
+                
               </motion.div>
 
               <motion.div
@@ -317,7 +322,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-      </main>
     </div>
   );
 }

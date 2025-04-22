@@ -3,25 +3,16 @@
 import { motion } from "framer-motion";
 import {
   Lock,
-  BrainCircuit,
   Bot,
-  ShieldCheck,
-  Box,
-  Settings,
-  Sparkles,
-  Search,
-  Mail,
+  Brain,
+  Cog,
+  DollarSign,
 } from "lucide-react";
-import { HoverButton } from "@/components/hover-button";
 import { HoverGlitchText } from "@/components/hover-glitch-text";
-import { GlowingEffect } from "@/components/ui/glowing-effect";
 import GridItem from "@/components/ui/grid-item";
 import Image from "next/image";
-import { BackgroundCells } from "@/components/ui/background-cells";
 import { CollegeLogoSlider } from "@/components/college-logo-slider";
-import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Spotlight } from "@/components/ui/spotlight-new";
 
@@ -33,6 +24,9 @@ import SplitType from "split-type";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import WaitlistForm from "@/components/waitlist-form";
 import { RetroGrid } from "@/components/ui/retro-grid";
+import { PricingTable } from "@/components/blocks/pricing-table";
+import { features } from "@/lib/constants";
+import { plans } from "@/lib/constants";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -187,21 +181,21 @@ export default function OnlyPromptPage() {
                   <div className="flex -space-x-3">
                     <Avatar className="border-2 border-black w-8 h-8 sm:w-12 sm:h-12">
                       <AvatarImage
-                        src="https://picsum.photos/seed/user13/100"
+                        src="/avatars/two.png"
                         alt="User 1 Avatar"
                       />
                       <AvatarFallback>U1</AvatarFallback>
                     </Avatar>
                     <Avatar className="border-2 border-black w-8 h-8 sm:w-12 sm:h-12">
                       <AvatarImage
-                        src="https://picsum.photos/seed/user4/100"
+                        src="/avatars/three.png"
                         alt="User 2 Avatar"
                       />
                       <AvatarFallback>U2</AvatarFallback>
                     </Avatar>
                     <Avatar className="border-2 border-black w-8 h-8 sm:w-12 sm:h-12">
                       <AvatarImage
-                        src="https://picsum.photos/seed/user31/100"
+                        src="/avatars/one.png"
                         alt="User 3 Avatar"
                       />
                       <AvatarFallback>U3</AvatarFallback>
@@ -217,7 +211,7 @@ export default function OnlyPromptPage() {
               <h3 className="mb-4 lg:text-2xl md:text-xl sm:text-lg font-normal text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400 uppercase">
                 Trusted By Students and Professionals at Leading Institutions:
               </h3>
-              <CollegeLogoSlider reverse={true} title="" />
+              <CollegeLogoSlider />
             </div>
           </div>
         </div>
@@ -225,38 +219,22 @@ export default function OnlyPromptPage() {
 
       <section
         ref={uncannySectionRef}
-        className="container mx-auto px-4 md:px-6 py-16 md:py-24 border-white/10"
+        className="relative h-screen border-white/10"
       >
-        <div className="grid items-center gap-8 md:grid-cols-2 md:gap-12">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center md:text-left"
-          >
-            <h3 className="mb-4 lg:text-3xl md:text-2xl sm:text-xl font-normal text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400 uppercase">
-              Experience Uncanny Intelligence.
-            </h3>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="mx-auto aspect-video w-full max-w-lg overflow-hidden rounded-sm border border-white/10 bg-gray-900/50 p-4 shadow-lg shadow-red-500/10"
-          >
-            <p className="text-sm text-white/50">
-              [Chat Interface Snippet / GIF Placeholder]
-            </p>
-          </motion.div>
-        </div>
+        <PricingTable 
+          features={features}
+          plans={plans}
+          defaultPlan="pro"
+          defaultInterval="monthly"
+          containerClassName="mx-auto"
+          buttonClassName="mx-auto"
+        />
       </section>
 
       <section
         ref={capabilitiesSectionRef}
         id="features"
-        className="px-4 md:px-6 py-16 md:py-24 bg-black/70"
+        className="px-4 md:px-6 py-16 md:py-24 bg-black/70 h-screen"
       >
         <div className="mx-auto w-full max-w-7xl">
           <motion.div
@@ -274,33 +252,33 @@ export default function OnlyPromptPage() {
           <ul className="grid grid-cols-1 grid-rows-none gap-4 md:grid-cols-12 md:grid-rows-3 lg:gap-4 xl:max-h-[34rem] xl:grid-rows-2">
             <GridItem
               area="md:[grid-area:1/1/2/7] xl:[grid-area:1/1/2/5]"
-              icon={<BrainCircuit className="h-4 w-4" />}
-              title="Advanced Reasoning Engine"
-              description="Leverage cutting-edge AI for complex problem-solving and insightful analysis."
+              icon={<DollarSign className="h-4 w-4" />}
+              title="Won't Break the Bank"
+              description="Don't spend more than you need to. We charge for token usage instead of a monthly subscription."
             />
             <GridItem
               area="md:[grid-area:1/7/2/13] xl:[grid-area:2/1/3/5]"
-              icon={<Settings className="h-4 w-4" />}
-              title="Seamless Integration"
-              description="Integrate OnlyPrompt effortlessly into your existing workflows and toolchains."
+              icon={<Cog className="h-4 w-4" />}
+              title="Fully Customizable"
+              description="Preloaded with a range of custom assistants, but you can also create and fine-tune your own."
             />
             <GridItem
               area="md:[grid-area:2/1/3/7] xl:[grid-area:1/5/3/8]"
               icon={<Lock className="h-4 w-4" />}
-              title="Enterprise-Grade Security"
-              description="Built with uncompromising security protocols to protect your sensitive data."
+              title="Privacy-First Approach"
+              description="Your data is yours. We don't sell it, and we don't use it to train our models. We're also GDPR and CCPA compliant."
             />
             <GridItem
               area="md:[grid-area:2/7/3/13] xl:[grid-area:1/8/2/13]"
-              icon={<Sparkles className="h-4 w-4" />}
-              title="Context-Aware Assistance"
-              description="Maintain context across long conversations for truly helpful interactions."
+              icon={<Brain className="h-4 w-4" />}
+              title="Improved Memory"
+              description="Increased memory across long conversations by using custom context-aware caching. Not only does this make the AI more helpful, but it also makes it faster and more efficient ($)."
             />
             <GridItem
               area="md:[grid-area:3/1/4/13] xl:[grid-area:2/8/3/13]"
               icon={<Bot className="h-4 w-4" />}
-              title="Customizable AI Models"
-              description="Tailor models to your specific industry needs and operational requirements."
+              title="On the Cutting Edge"
+              description="Leverage the fastest and greatest AI models from OpenAI, Anthropic, Mistral, NVIDIA, and Google, updated daily."
             />
           </ul>
           {/* </div> */}

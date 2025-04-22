@@ -7,6 +7,7 @@ import { Mail, User, Loader2, Check, Link } from "lucide-react";
 import { HoverButton } from "./hover-button";
 import { Separator } from "./ui/separator";
 import { balloons } from "balloons-js";
+import { Spinner } from "./ui/spinner";
 
 export default function WaitlistForm() {
   const [email, setEmail] = useState<string>("");
@@ -92,7 +93,7 @@ export default function WaitlistForm() {
         </div>
       ) : (
         <form
-          className="w-full max-w-md mx-auto space-y-4"
+          className="w-full max-w-md mx-auto space-y-2"
           onSubmit={handleSubmit}
           method="POST"
         >
@@ -101,13 +102,13 @@ export default function WaitlistForm() {
               Join the waitlist
             </h2>
           </div>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="space-y-2 flex-1">
+          <div className="flex flex-row sm:flex-row gap-2">
+            <div className="space-y-1 flex-1">
               <div className="relative">
                 <Input
                   id="waitlist-first-name"
                   className="peer ps-[4.5rem] h-10 sm:h-12 font-bold tracking-wide uppercase w-full"
-                  placeholder="HELLY"
+                  placeholder="HELENA"
                   type="text"
                   aria-label="First Name"
                   value={firstName}
@@ -149,7 +150,7 @@ export default function WaitlistForm() {
             <div className="relative">
               <Input
                 id="waitlist-subscribe"
-                className="peer ps-9 h-10 sm:h-12 font-bold tracking-wide uppercase"
+                className="peer ps-[4.5rem] h-10 sm:h-12 font-bold tracking-wide uppercase w-full"
                 placeholder="HELLY.R@LUMON.INDUSTRIES"
                 type="email"
                 aria-label="Email"
@@ -157,8 +158,12 @@ export default function WaitlistForm() {
                 onChange={handleEmailChange}
                 required
               />
-              <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-muted-foreground/80 peer-disabled:opacity-50">
-                <Mail size={16} strokeWidth={2} aria-hidden="true" />
+                <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-muted-foreground/50 peer-disabled:opacity-50">
+                <span className="text-[10px] font-semibold tracking-widest">
+                  EMAIL
+                  <br />
+                  ADDR
+                </span>
               </div>
             </div>
           </div>
@@ -167,11 +172,7 @@ export default function WaitlistForm() {
             className="w-full uppercase h-12 font-extralight flex items-center justify-center"
             disabled={isLoading}
           >
-            {isLoading ? (
-              <Loader2 className="h-5 w-5 animate-spin" />
-            ) : (
-              "notify me"
-            )}
+            {isLoading ? <Spinner variant="ellipsis" /> : "notify me"}
           </HoverButton>
         </form>
       )}
