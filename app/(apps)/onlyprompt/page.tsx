@@ -280,7 +280,7 @@ export default function OnlyPromptPage() {
         id="waitlist-2"
         className="min-h-screen h-screen border-b border-white/10 flex items-center"
       >
-        <div className="w-full max-w-[18rem] sm:max-w-xs md:max-w-sm mx-auto px-4 space-y-5 sm:space-y-6 flex flex-col items-center scale-150">
+        <div className="w-full max-w-[18rem] sm:max-w-xs md:max-w-sm mx-auto px-4 space-y-5 sm:space-y-6 flex flex-col items-center">
           <WaitlistForm />
         </div>
       </section>
