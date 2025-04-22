@@ -23,6 +23,7 @@ import { slideInOut } from "@/utils/transitions";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import SplitType from "split-type";
+import { Banner1 } from "@/components/banner-one";
 
 const PixelCanvas = dynamic(
   () => import("@/components/ui/pixel-canvas").then((mod) => mod.PixelCanvas),
@@ -141,11 +142,7 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col bg-black text-white">
-
       <main className="flex-1 pt-16">
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[-1]">
-           <ReactingEyeball />
-        </div>
 
         <section ref={containerRef} className="relative flex min-h-screen items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0 bg-gradient-to-b from-black via-black/95 to-black" />
