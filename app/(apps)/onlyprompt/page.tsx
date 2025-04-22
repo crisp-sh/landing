@@ -1,14 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  Lock,
-  Bot,
-  Brain,
-  Cog,
-  DollarSign,
-} from "lucide-react";
-import { HoverGlitchText } from "@/components/hover-glitch-text";
+import { Lock, Bot, Brain, Cog, DollarSign } from "lucide-react";
 import GridItem from "@/components/ui/grid-item";
 import Image from "next/image";
 import { CollegeLogoSlider } from "@/components/college-logo-slider";
@@ -27,6 +20,8 @@ import { RetroGrid } from "@/components/ui/retro-grid";
 
 // Add import for the calculator component
 import Calculator from "@/components/blocks/calculator";
+import { BackgroundPaths } from "@/components/blocks/background-paths";
+import { TestimonialsSectionDemo } from "@/components/blocks/testimonials-with-marquee-demo";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -144,35 +139,35 @@ export default function OnlyPromptPage() {
   });
 
   return (
-    <div className="flex-1 font-manifold">
-      <section className="min-h-screen border-b border-white/10">
-        <div className="bg-black relative overflow-hidden">
-          <div className="flex flex-col min-h-screen items-center justify-evenly gap-y-8 sm:gap-y-12 py-12 md:py-16">
-            <div className="flex flex-col items-center gap-4 md:gap-6">
-              <div className="text-lg sm:text-xl md:text-2xl font-medium text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400 pointer-events-none">
+    <div className="flex-1 font-manifold bg-inherit">
+      <section className="min-h-screen border-b border-white/10 flex items-center">
+        <div className="bg-black relative overflow-hidden w-full">
+          <div className="flex flex-col min-h-screen items-center justify-center gap-y-6 sm:gap-y-8 py-12 sm:py-16 md:py-20">
+            <div className="flex flex-col items-center gap-4 md:gap-5">
+              <div className="text-sm sm:text-base md:text-lg font-medium text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400 pointer-events-none">
                 <br />
-                <div className="flex flex-row items-center justify-center gap-2 sm:gap-4 mt-10">
+                <div className="flex flex-row items-center justify-center gap-2 sm:gap-3 mt-6 sm:mt-8">
                   <Image
                     src="/onlyprompt-logo-colored-dark.svg"
                     alt="OnlyPrompt Logo"
-                    width={100}
-                    height={100}
-                    className="w-16 sm:w-20 md:w-24"
+                    width={60}
+                    height={60}
+                    className="w-10 sm:w-14 md:w-16"
                   />
                   <Separator
                     orientation="vertical"
-                    className="h-16 sm:h-20 md:h-24 mx-2 sm:mx-4 md:mx-6 bg-transparent"
+                    className="h-10 sm:h-14 md:h-16 mx-2 sm:mx-3 md:mx-4 bg-transparent"
                   />
-                  <div className="relativepointer-events-none">
+                  <div className="relative pointer-events-none">
                     <Spotlight />
                   </div>
-                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tighter text-center bg-clip-text text-transparent bg-gradient-to-b from-orange-200 to-gray-400 pointer-events-none">
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight sm:tracking-tighter text-center bg-clip-text text-transparent bg-gradient-to-b from-orange-200 to-gray-400 pointer-events-none">
                     ONLYPROMPT
                   </h1>
                 </div>
               </div>
             </div>
-            <div className="w-full max-w-sm sm:max-w-md md:max-w-xl mx-auto px-4 space-y-6 sm:space-y-8 flex flex-col items-center">
+            <div className="w-full max-w-[18rem] sm:max-w-xs md:max-w-sm mx-auto px-4 space-y-5 sm:space-y-6 flex flex-col items-center">
               <WaitlistForm />
               <RetroGrid />
 
@@ -180,10 +175,7 @@ export default function OnlyPromptPage() {
                 <div className="flex items-center gap-4">
                   <div className="flex -space-x-3">
                     <Avatar className="border-2 border-black w-8 h-8 sm:w-12 sm:h-12">
-                      <AvatarImage
-                        src="/avatars/two.png"
-                        alt="User 1 Avatar"
-                      />
+                      <AvatarImage src="/avatars/two.png" alt="User 1 Avatar" />
                       <AvatarFallback>U1</AvatarFallback>
                     </Avatar>
                     <Avatar className="border-2 border-black w-8 h-8 sm:w-12 sm:h-12">
@@ -194,10 +186,7 @@ export default function OnlyPromptPage() {
                       <AvatarFallback>U2</AvatarFallback>
                     </Avatar>
                     <Avatar className="border-2 border-black w-8 h-8 sm:w-12 sm:h-12">
-                      <AvatarImage
-                        src="/avatars/one.png"
-                        alt="User 3 Avatar"
-                      />
+                      <AvatarImage src="/avatars/one.png" alt="User 3 Avatar" />
                       <AvatarFallback>U3</AvatarFallback>
                     </Avatar>
                   </div>
@@ -207,8 +196,8 @@ export default function OnlyPromptPage() {
                 </div>
               </div>
             </div>
-            <div className="w-full max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-5xl px-4 text-center">
-              <h3 className="mb-4 lg:text-2xl md:text-xl sm:text-lg font-normal text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400 uppercase">
+            <div className="w-full max-w-xs sm:max-w-md md:max-w-xl lg:max-w-3xl px-4 text-center mt-6 sm:mt-10">
+              <h3 className="mb-3 sm:mb-4 text-xs sm:text-sm md:text-base font-normal text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400 uppercase">
                 Trusted By Students and Professionals at Leading Institutions:
               </h3>
               <CollegeLogoSlider />
@@ -217,36 +206,25 @@ export default function OnlyPromptPage() {
         </div>
       </section>
 
-      {/* Cost Calculator Section */}
-      <section
-        ref={uncannySectionRef}
-        id="cost-calculator"
-        className="relative py-16 md:py-24 border-b border-white/10"
-      >
-        <div className="container mx-auto px-4 md:px-6">
-          <Calculator />
-        </div>
-      </section>
-
       <section
         ref={capabilitiesSectionRef}
         id="features"
-        className="px-4 md:px-6 py-16 md:py-24 bg-black/70 h-screen"
+        className="relative flex flex-col items-center justify-center px-4 md:px-6 py-16 sm:py-20 md:py-24 bg-neutral-950/70 min-h-screen border-b border-white/10 overflow-hidden"
       >
-        <div className="mx-auto w-full max-w-7xl">
+        <BackgroundPaths opacity={0.2} />
+        <div className="relative z-10 w-full max-w-7xl">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-center md:text-left"
+            className="text-center"
           >
-            <h3 className="mb-12 lg:text-3xl md:text-2xl sm:text-xl font-normal text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400 uppercase">
-              Experience Uncanny Intelligence.
+            <h3 className="mb-10 sm:mb-12 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400 uppercase">
+              Intelligence at your fingertips
             </h3>
           </motion.div>
-          {/* <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4"> */}
-          <ul className="grid grid-cols-1 grid-rows-none gap-4 md:grid-cols-12 md:grid-rows-3 lg:gap-4 xl:max-h-[34rem] xl:grid-rows-2">
+          <ul className="relative z-10 grid grid-cols-1 grid-rows-none gap-4 md:grid-cols-12 md:grid-rows-3 lg:gap-4 xl:max-h-[34rem] xl:grid-rows-2">
             <GridItem
               area="md:[grid-area:1/1/2/7] xl:[grid-area:1/1/2/5]"
               icon={<DollarSign className="h-4 w-4" />}
@@ -278,87 +256,32 @@ export default function OnlyPromptPage() {
               description="Leverage the fastest and greatest AI models from OpenAI, Anthropic, Mistral, NVIDIA, and Google, updated daily."
             />
           </ul>
-          {/* </div> */}
         </div>
       </section>
 
       <section
-        ref={whySectionRef}
-        id="security"
-        className="container mx-auto max-w-3xl px-4 md:px-6 py-16 md:py-24 border-b border-white/10"
+        ref={uncannySectionRef}
+        id="cost-calculator"
+        className="relative py-16 sm:py-20 md:py-24 border-b border-white/10"
       >
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          viewport={{ once: true }}
-          className="text-center"
-        >
-          <h2
-            ref={whyH2Ref}
-            className="mb-4 text-3xl font-medium tracking-tight md:text-4xl"
-          >
-            Why OnlyPrompt?
-          </h2>
-          <p ref={whyP1Ref} className="mb-8 text-lg text-white/70">
-            AI with integrity; designed for those who can't risk leaks.
-          </p>
-          <ul
-            ref={whyUlRef}
-            className="mb-8 space-y-2 text-left font-light text-white/80 list-inside list-['-_'] marker:text-red-500"
-          >
-            <li> Uncompromising Security Measures</li>
-            <li> Verifiable Operational Integrity</li>
-            <li> Designed for Sensitive Environments</li>
-            <li> Proactive Threat grayization</li>
-          </ul>
-          <p ref={whyP2Ref} className="text-xl font-medium italic text-red-300">
-            It's not just smart. It's{" "}
-            <HoverGlitchText intensity="high" className="not-italic">
-              always watching
-            </HoverGlitchText>
-            .
-          </p>
-        </motion.div>
+        <div className="container mx-auto px-4 md:px-6">
+          <Calculator />
+        </div>
       </section>
 
       <section
-        ref={endorsementsSectionRef}
-        className="container mx-auto px-4 md:px-6 py-16 md:py-24 border-b border-white/10"
+        id="testimonials"
+        className="border-b border-white/10 last:border-b-0"
       >
-        <h2
-          ref={endorsementsH2Ref}
-          className="mb-12 text-center text-3xl font-medium tracking-tight md:text-4xl"
-        >
-          Endorsements
-        </h2>
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {[1, 2, 3].map((i) => (
-            <motion.div
-              ref={(el) => {
-                endorsementContainerRefs.current[i - 1] = el;
-              }}
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.15 }}
-              viewport={{ once: true }}
-              className="rounded-sm border border-white/10 bg-white/5 p-6 shadow-md"
-            >
-              <p
-                ref={(el) => {
-                  endorsementRefs.current[i - 1] = el;
-                }}
-                className="mb-4 font-light italic text-white/80"
-              >
-                "Quote placeholder {i} - This AI is incredibly secure and
-                intuitive. A game-changer for our research."
-              </p>
-              <p className="text-right text-sm font-semibold text-white/90">
-                - [Name {i}], [Title/Institution {i}]
-              </p>
-            </motion.div>
-          ))}
+        <TestimonialsSectionDemo />
+      </section>
+
+      <section
+        id="waitlist-2"
+        className="min-h-screen h-screen border-b border-white/10 flex items-center"
+      >
+        <div className="w-full max-w-[18rem] sm:max-w-xs md:max-w-sm mx-auto px-4 space-y-5 sm:space-y-6 flex flex-col items-center scale-150">
+          <WaitlistForm />
         </div>
       </section>
     </div>
