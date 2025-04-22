@@ -7,6 +7,7 @@ import { Inter } from "next/font/google";
 import { EerieNav } from "@/components/eerie-nav";
 import { Footer } from "@/components/footer";
 import { EerieCursor } from "@/components/ui/eerie-cursor";
+import { ClientLayoutWrapper } from "@/components/ClientLayoutWrapper";
 
 export const manifold = localFont({
   src: [
@@ -54,19 +55,21 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`relative ${manifold.variable} ${inter.variable} font-manifold`}>
-        <div className="flex min-h-screen flex-col">
-          {cursor}
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <EerieNav logo="/logo.svg" />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </ThemeProvider>
-        </div>
+        <ClientLayoutWrapper>
+          <div className="flex min-h-screen flex-col">
+            {cursor}
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <EerieNav logo="/logo.svg" />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </ThemeProvider>
+          </div>
+        </ClientLayoutWrapper>
       </body>
     </html>
   );

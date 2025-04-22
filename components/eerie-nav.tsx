@@ -5,7 +5,8 @@ import { motion } from "framer-motion"
 import { WatchfulEye } from "./watchful-eye"
 import { HoverGlitchText } from "./hover-glitch-text"
 import Image from "next/image"
-import Link from "next/link"
+import { useTransitionRouter } from "next-view-transitions"
+import { slideInOut } from "@/utils/transitions"
 
 interface EerieNavProps {
   logo: string
@@ -14,6 +15,7 @@ interface EerieNavProps {
 export function EerieNav({ logo }: EerieNavProps) {
   const [currentTime, setCurrentTime] = useState("")
   const [isGlitching, setIsGlitching] = useState(false)
+  const router = useTransitionRouter()
 
   // Update time
   useEffect(() => {
@@ -35,22 +37,22 @@ export function EerieNav({ logo }: EerieNavProps) {
     return () => clearInterval(interval)
   }, [])
 
-  // Random glitching effect for the entire nav
-  useEffect(() => {
-    const glitchInterval = setInterval(() => {
-      const shouldGlitch = Math.random() > 0.9
-      if (shouldGlitch) {
-        setIsGlitching(true)
-        setTimeout(() => setIsGlitching(false), 150)
-      }
-    }, 5000)
-
-    return () => clearInterval(glitchInterval)
-  }, [])
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    console.log("Logo clicked");
+    if (!document.startViewTransition) {
+      router.push('/');
+      return;
+    }
+    document.startViewTransition(() => {
+      router.push('/');
+      slideInOut();
+    });
+  };
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full border-b border-white/10 bg-black/80 backdrop-blur-sm transition-all duration-300 ${
+      className={`fixed top-0 z-[1000] w-full border-b border-white/10 bg-black/80 backdrop-blur-sm transition-all duration-300 ${
         isGlitching ? "translate-x-[1px]" : ""
       }`}
     >
@@ -78,15 +80,15 @@ export function EerieNav({ logo }: EerieNavProps) {
                 ease: "easeInOut",
               }}
             >
-              <Link href="/">
-              <Image
-                src={logo || "/placeholder.svg"}
-                alt="Logo"
-                width={80}
-                height={80}
-                className="h-full w-full"
-              />
-              </Link>
+              <a href="/" onClick={handleLogoClick}>
+                <Image
+                  src={logo || "/placeholder.svg"}
+                  alt="Logo"
+                  width={80}
+                  height={80}
+                  className="h-full w-full"
+                />
+              </a>
             </motion.div>
           </motion.div>
         </div>

@@ -25,7 +25,107 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Spotlight } from "@/components/ui/spotlight-new";
 
+// GSAP Imports
+import React, { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import SplitType from "split-type";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import WaitlistForm from "@/components/waitlist-form";
+
+gsap.registerPlugin(ScrollTrigger);
+
+// Helper function for GSAP animation
+const applyLineReveal = (elements: Array<HTMLElement | null>) => {
+  if (elements.some(el => !el)) return () => {};
+
+  const splits = elements.map(el => el ? new SplitType(el, { types: 'lines', lineClass: 'line' }) : null);
+
+  for (const split of splits) {
+    if (!split || !split.lines) continue;
+    for (const line of split.lines) {
+      const span = document.createElement('span');
+      span.style.display = 'block';
+      span.style.overflow = 'hidden';
+      span.innerHTML = line.innerHTML;
+      line.innerHTML = '';
+      line.appendChild(span);
+    }
+  }
+
+  const allInnerSpans = elements.flatMap(el => el ? Array.from(el.querySelectorAll('.line > span')) : []);
+
+  gsap.set(allInnerSpans, { y: '110%' });
+
+  gsap.to(allInnerSpans, {
+    y: '0%',
+    duration: 0.8,
+    stagger: 0.07,
+    ease: 'power3.out',
+    delay: 0.2
+  });
+
+  return () => {
+    for (const split of splits) {
+      split?.revert();
+    }
+  };
+};
+
 export default function OnlyPromptPage() {
+  // Refs for animations
+  const uncannySectionRef = useRef<HTMLDivElement>(null);
+  const uncannyH2Ref = useRef<HTMLHeadingElement>(null);
+  const uncannyPRef = useRef<HTMLParagraphElement>(null);
+
+  const capabilitiesSectionRef = useRef<HTMLDivElement>(null);
+  const capabilitiesH2Ref = useRef<HTMLHeadingElement>(null);
+
+  const whySectionRef = useRef<HTMLDivElement>(null);
+  const whyH2Ref = useRef<HTMLHeadingElement>(null);
+  const whyP1Ref = useRef<HTMLParagraphElement>(null);
+  const whyUlRef = useRef<HTMLUListElement>(null);
+  const whyP2Ref = useRef<HTMLParagraphElement>(null);
+
+  const endorsementsSectionRef = useRef<HTMLDivElement>(null);
+  const endorsementsH2Ref = useRef<HTMLHeadingElement>(null);
+  const endorsementRefs = useRef<(HTMLParagraphElement | null)[]>([]);
+  const endorsementContainerRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Apply animations using hooks scoped to sections
+  useGSAP(() => applyLineReveal([uncannyH2Ref.current, uncannyPRef.current]), { scope: uncannySectionRef });
+  useGSAP(() => applyLineReveal([capabilitiesH2Ref.current]), { scope: capabilitiesSectionRef });
+  useGSAP(() => applyLineReveal([whyH2Ref.current, whyP1Ref.current, whyUlRef.current, whyP2Ref.current]), { scope: whySectionRef });
+  useGSAP(() => applyLineReveal([endorsementsH2Ref.current]), { scope: endorsementsSectionRef });
+  useGSAP(() => {
+    for (let i = 0; i < endorsementRefs.current.length; i++) {
+      const pRef = endorsementRefs.current[i];
+      const container = endorsementContainerRefs.current[i];
+      if (pRef && container) {
+        const split = new SplitType(pRef, { types: 'lines', lineClass: 'line' });
+        if (!split.lines) continue;
+        for (const line of split.lines) {
+          const span = document.createElement('span');
+          span.style.display = 'block';
+          span.style.overflow = 'hidden';
+          span.innerHTML = line.innerHTML;
+          line.innerHTML = '';
+          line.appendChild(span);
+        }
+        const innerSpans = pRef.querySelectorAll('.line > span');
+        gsap.set(innerSpans, { y: '110%' });
+        gsap.to(innerSpans, {
+          scrollTrigger: { trigger: container, start: 'top 80%' },
+          y: '0%',
+          duration: 0.8,
+          stagger: 0.07,
+          ease: 'power3.out',
+          delay: 0.1
+        });
+      }
+    }
+  });
+
   return (
     <div className="flex-1 font-manifold">
       <section className="min-h-screen">
@@ -55,26 +155,7 @@ export default function OnlyPromptPage() {
                   Join the waitlist
                 </h2>
               </div>
-              <form className="w-full max-w-md mx-auto space-y-4">
-                <div className="space-y-2">
-                  <div className="relative">
-                    <Input
-                      id="waitlist-subscribe"
-                      className="peer ps-9 h-10 sm:h-12"
-                      placeholder="hi@yourcompany.com"
-                      type="email"
-                      aria-label="Email"
-                      required
-                    />
-                    <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-muted-foreground/80 peer-disabled:opacity-50">
-                      <Mail size={16} strokeWidth={2} aria-hidden="true" />
-                    </div>
-                  </div>
-                </div>
-                <HoverButton type="submit" className="w-full uppercase h-12 font-extralight">
-                  join us
-                </HoverButton>
-              </form>
+              <WaitlistForm />
               <div className="flex flex-col items-center gap-2">
                 <div className="flex items-center gap-4">
                   <div className="flex -space-x-3">
@@ -91,7 +172,7 @@ export default function OnlyPromptPage() {
                       <AvatarFallback>U3</AvatarFallback>
                     </Avatar>
                   </div>
-                  <span className="font-semibold text-xs sm:text-sm text-gray-400">200+ people on the waitlist</span>
+                  <span className="font-semibold text-xs sm:text-sm text-gray-400">200+ people already on the waitlist</span>
                 </div>
               </div>
             </div>
@@ -107,7 +188,7 @@ export default function OnlyPromptPage() {
         </BackgroundCells>
       </section>
       
-      <section className="container mx-auto px-4 md:px-6 py-16 md:py-24  border-white/10">
+      <section ref={uncannySectionRef} className="container mx-auto px-4 md:px-6 py-16 md:py-24 border-t border-white/10">
         <div className="grid items-center gap-8 md:grid-cols-2 md:gap-12">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -116,12 +197,12 @@ export default function OnlyPromptPage() {
             viewport={{ once: true }}
             className="text-center md:text-left"
           >
-            <h2 className="mb-4 text-3xl font-medium tracking-tight md:text-4xl">
+            <h2 ref={uncannyH2Ref} className="mb-4 text-3xl font-medium tracking-tight md:text-4xl">
               Experience the{" "}
               <HoverGlitchText intensity="low">Uncanny</HoverGlitchText>{" "}
               Intelligence.
             </h2>
-            <p className="text-lg text-white/70">
+            <p ref={uncannyPRef} className="text-lg text-white/70">
               Observe the precision and security in every interaction.
             </p>
           </motion.div>
@@ -140,44 +221,45 @@ export default function OnlyPromptPage() {
       </section>
 
       <section
+        ref={capabilitiesSectionRef}
         id="features"
-        className="px-4 md:px-6 py-16 md:py-24 bg-black/70  border-white/10"
+        className="px-4 md:px-6 py-16 md:py-24 bg-black/70 border-t border-white/10"
       >
         <div className="mx-auto w-full max-w-7xl">
-          <h2 className="mb-12 text-center text-3xl font-medium tracking-tight md:text-4xl">
+          <h2 ref={capabilitiesH2Ref} className="mb-12 text-center text-3xl font-medium tracking-tight md:text-4xl">
             Core Capabilities
           </h2>
           {/* <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4"> */}
           <ul className="grid grid-cols-1 grid-rows-none gap-4 md:grid-cols-12 md:grid-rows-3 lg:gap-4 xl:max-h-[34rem] xl:grid-rows-2">
             <GridItem
               area="md:[grid-area:1/1/2/7] xl:[grid-area:1/1/2/5]"
-              icon={<Box className="h-4 w-4" />}
-              title="Do things the right way"
-              description="Running out of copy so I'll write anything."
+              icon={<BrainCircuit className="h-4 w-4" />}
+              title="Advanced Reasoning Engine"
+              description="Leverage cutting-edge AI for complex problem-solving and insightful analysis."
             />
             <GridItem
               area="md:[grid-area:1/7/2/13] xl:[grid-area:2/1/3/5]"
               icon={<Settings className="h-4 w-4" />}
-              title="The best AI code editor ever."
-              description="Yes, it's true. I'm not even kidding. Ask my mom if you don't believe me."
+              title="Seamless Integration"
+              description="Integrate OnlyPrompt effortlessly into your existing workflows and toolchains."
             />
             <GridItem
               area="md:[grid-area:2/1/3/7] xl:[grid-area:1/5/3/8]"
               icon={<Lock className="h-4 w-4" />}
-              title="You should buy Aceternity UI Pro"
-              description="It's the best money you'll ever spend"
+              title="Enterprise-Grade Security"
+              description="Built with uncompromising security protocols to protect your sensitive data."
             />
             <GridItem
               area="md:[grid-area:2/7/3/13] xl:[grid-area:1/8/2/13]"
               icon={<Sparkles className="h-4 w-4" />}
-              title="This card is also built by Cursor"
-              description="I'm not even kidding. Ask my mom if you don't believe me."
+              title="Context-Aware Assistance"
+              description="Maintain context across long conversations for truly helpful interactions."
             />
             <GridItem
               area="md:[grid-area:3/1/4/13] xl:[grid-area:2/8/3/13]"
-              icon={<Search className="h-4 w-4" />}
-              title="Coming soon on Aceternity UI"
-              description="I'm writing the code as I record this, no shit."
+              icon={<Bot className="h-4 w-4" />}
+              title="Customizable AI Models"
+              description="Tailor models to your specific industry needs and operational requirements."
             />
           </ul>
           {/* </div> */}
@@ -185,8 +267,9 @@ export default function OnlyPromptPage() {
       </section>
 
       <section
+        ref={whySectionRef}
         id="security"
-        className="container mx-auto max-w-3xl px-4 md:px-6 py-16 md:py-24  border-white/10"
+        className="container mx-auto max-w-3xl px-4 md:px-6 py-16 md:py-24 border-t border-white/10"
       >
         <motion.div
           initial={{ opacity: 0 }}
@@ -195,19 +278,19 @@ export default function OnlyPromptPage() {
           viewport={{ once: true }}
           className="text-center"
         >
-          <h2 className="mb-4 text-3xl font-medium tracking-tight md:text-4xl">
+          <h2 ref={whyH2Ref} className="mb-4 text-3xl font-medium tracking-tight md:text-4xl">
             Why OnlyPrompt?
           </h2>
-          <p className="mb-8 text-lg text-white/70">
+          <p ref={whyP1Ref} className="mb-8 text-lg text-white/70">
             AI with integrity; designed for those who can't risk leaks.
           </p>
-          <ul className="mb-8 space-y-2 text-left font-light text-white/80 list-inside list-['-_'] marker:text-red-500">
+          <ul ref={whyUlRef} className="mb-8 space-y-2 text-left font-light text-white/80 list-inside list-['-_'] marker:text-red-500">
             <li> Uncompromising Security Measures</li>
             <li> Verifiable Operational Integrity</li>
             <li> Designed for Sensitive Environments</li>
             <li> Proactive Threat grayization</li>
           </ul>
-          <p className="text-xl font-medium italic text-red-300">
+          <p ref={whyP2Ref} className="text-xl font-medium italic text-red-300">
             It's not just smart. It's{" "}
             <HoverGlitchText intensity="high" className="not-italic">
               always watching
@@ -217,13 +300,14 @@ export default function OnlyPromptPage() {
         </motion.div>
       </section>
 
-      <section className="container mx-auto px-4 md:px-6 py-16 md:py-24">
-        <h2 className="mb-12 text-center text-3xl font-medium tracking-tight md:text-4xl">
+      <section ref={endorsementsSectionRef} className="container mx-auto px-4 md:px-6 py-16 md:py-24 border-t border-white/10">
+        <h2 ref={endorsementsH2Ref} className="mb-12 text-center text-3xl font-medium tracking-tight md:text-4xl">
           Endorsements
         </h2>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {[1, 2, 3].map((i) => (
             <motion.div
+              ref={(el) => { endorsementContainerRefs.current[i - 1] = el; }}
               key={i}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -231,7 +315,10 @@ export default function OnlyPromptPage() {
               viewport={{ once: true }}
               className="rounded-sm border border-white/10 bg-white/5 p-6 shadow-md"
             >
-              <p className="mb-4 font-light italic text-white/80">
+              <p
+                ref={(el) => { endorsementRefs.current[i - 1] = el; }}
+                className="mb-4 font-light italic text-white/80"
+              >
                 "Quote placeholder {i} - This AI is incredibly secure and
                 intuitive. A game-changer for our research."
               </p>
