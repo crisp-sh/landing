@@ -52,7 +52,7 @@ export function EerieNav({ logo }: EerieNavProps) {
 
   return (
     <header
-      className={`fixed top-0 z-[1000] w-full border-b border-white/10 bg-black/80 backdrop-blur-sm transition-all duration-300 ${
+      className={`fixed left-0 right-0 top-[var(--banner-height,0px)] z-[1000] w-full border-b border-white/10 bg-black/80 backdrop-blur-sm transition-all duration-300 ${
         isGlitching ? "translate-x-[1px]" : ""
       }`}
     >
