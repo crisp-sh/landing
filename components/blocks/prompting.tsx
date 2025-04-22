@@ -246,10 +246,11 @@ export function PromptingIsAllYouNeed({ remainingBlocksToEnd = 5 }: PromptingIsA
   const [gameState, setGameState] = useState<'playing' | 'gameOver'>('playing')
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null)
   const animationFrameIdRef = useRef<number | null>(null)
+  const lastCanvasWidthRef = useRef<number>(0)
+  const lastCanvasHeightRef = useRef<number>(0)
 
-  // Define initializeGame within component scope and memoize it
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-    const initializeGame = useCallback(() => {
+  const initializeGame = useCallback(() => {
     const canvas = canvasRef.current
     const ctx = ctxRef.current
     if (!canvas || !ctx) return
@@ -408,6 +409,7 @@ export function PromptingIsAllYouNeed({ remainingBlocksToEnd = 5 }: PromptingIsA
         isVertical: false,
       },
     ]
+    console.log("Game Initialized/Restarted"); // Add log for clarity
   }, [remainingBlocksToEnd])
 
   useEffect(() => {
@@ -418,22 +420,71 @@ export function PromptingIsAllYouNeed({ remainingBlocksToEnd = 5 }: PromptingIsA
     if (!ctx) return
     ctxRef.current = ctx
 
-    const resizeCanvas = () => {
+    const handleResize = () => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+
       const parent = canvas.parentElement
-      if (!parent) {
-        console.warn("Canvas parent not found, falling back to window size.")
-        canvas.width = window.innerWidth
-        canvas.height = window.innerHeight
-      } else {
-        canvas.width = parent.clientWidth
-        canvas.height = parent.clientHeight
+      let targetWidth = parent ? parent.clientWidth : window.innerWidth
+      let targetHeight = parent ? parent.clientHeight : window.innerHeight
+      targetWidth = Math.max(targetWidth, 100)
+      targetHeight = Math.max(targetHeight, 100)
+
+      // Store old dimensions *before* checking for change
+      const oldWidth = lastCanvasWidthRef.current;
+      const oldHeight = lastCanvasHeightRef.current;
+
+      if (
+        targetWidth === oldWidth &&
+        targetHeight === oldHeight
+      ) {
+        return; // No change
       }
 
-      canvas.width = Math.max(canvas.width, 100)
-      canvas.height = Math.max(canvas.height, 100)
+      console.log(`Canvas dimensions changing to: ${targetWidth}x${targetHeight}`);
+      canvas.width = targetWidth;
+      canvas.height = targetHeight;
+      lastCanvasWidthRef.current = targetWidth;
+      lastCanvasHeightRef.current = targetHeight;
+      const oldScale = scaleRef.current; // Store old scale
+      scaleRef.current = Math.min(canvas.width / 1000, canvas.height / 1000);
+      const newScale = scaleRef.current;
 
-      scaleRef.current = Math.min(canvas.width / 1000, canvas.height / 1000)
-      initializeGame()
+      // --- Adapt Game Elements to New Size (if game has started) ---
+      if (oldWidth > 0 && oldHeight > 0) { // Avoid division by zero on first run
+        const widthRatio = targetWidth / oldWidth;
+        const heightRatio = targetHeight / oldHeight;
+        // Use average ratio for size scaling to maintain aspect ratio somewhat
+        const sizeRatio = (widthRatio + heightRatio) / 2; 
+        // const scaleRatio = newScale / oldScale; // Alternative for size scaling
+
+        console.log(`Resizing elements - WidthRatio: ${widthRatio.toFixed(2)}, HeightRatio: ${heightRatio.toFixed(2)}`);
+
+        // Adjust Pixels using for...of
+        for (const pixel of pixelsRef.current) {
+          pixel.x *= widthRatio;
+          pixel.y *= heightRatio;
+          pixel.size *= sizeRatio; 
+        }
+
+        // Adjust Ball
+        const ball = ballRef.current;
+        ball.x *= widthRatio;
+        ball.y *= heightRatio;
+        ball.radius *= sizeRatio;
+        ball.dx *= widthRatio; // Scale velocity with width change
+        ball.dy *= heightRatio; // Scale velocity with height change
+
+        // Adjust Paddles using for...of
+        for (const paddle of paddlesRef.current) {
+          paddle.x *= widthRatio;
+          paddle.y *= heightRatio;
+          paddle.width *= widthRatio; 
+          paddle.height *= heightRatio;
+          paddle.targetY *= paddle.isVertical ? heightRatio : widthRatio;
+        }
+      }
+      // --- End Element Adaptation ---
     }
 
     const updateGame = () => {
@@ -554,16 +605,21 @@ export function PromptingIsAllYouNeed({ remainingBlocksToEnd = 5 }: PromptingIsA
       animationFrameIdRef.current = requestAnimationFrame(gameLoop)
     }
 
-    resizeCanvas()
-    window.addEventListener("resize", resizeCanvas)
-    gameLoop()
+    const initialSetup = () => {
+      handleResize() // Set initial size and scale
+      initializeGame() // Initialize game state ONCE
+    }
+
+    initialSetup() // Run initial setup and game start
+    window.addEventListener("resize", handleResize) // Attach resize listener
+    const id = requestAnimationFrame(gameLoop)
+    animationFrameIdRef.current = id
 
     return () => {
       if (animationFrameIdRef.current) {
         cancelAnimationFrame(animationFrameIdRef.current)
-        animationFrameIdRef.current = null
       }
-      window.removeEventListener("resize", resizeCanvas)
+      window.removeEventListener("resize", handleResize)
     }
   }, [initializeGame, gameState, remainingBlocksToEnd])
 
