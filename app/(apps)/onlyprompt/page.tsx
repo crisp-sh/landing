@@ -32,37 +32,42 @@ import { useGSAP } from "@gsap/react";
 import SplitType from "split-type";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import WaitlistForm from "@/components/waitlist-form";
+import { RetroGrid } from "@/components/ui/retro-grid";
 
 gsap.registerPlugin(ScrollTrigger);
 
 // Helper function for GSAP animation
 const applyLineReveal = (elements: Array<HTMLElement | null>) => {
-  if (elements.some(el => !el)) return () => {};
+  if (elements.some((el) => !el)) return () => {};
 
-  const splits = elements.map(el => el ? new SplitType(el, { types: 'lines', lineClass: 'line' }) : null);
+  const splits = elements.map((el) =>
+    el ? new SplitType(el, { types: "lines", lineClass: "line" }) : null
+  );
 
   for (const split of splits) {
     if (!split || !split.lines) continue;
     for (const line of split.lines) {
-      const span = document.createElement('span');
-      span.style.display = 'block';
-      span.style.overflow = 'hidden';
+      const span = document.createElement("span");
+      span.style.display = "block";
+      span.style.overflow = "hidden";
       span.innerHTML = line.innerHTML;
-      line.innerHTML = '';
+      line.innerHTML = "";
       line.appendChild(span);
     }
   }
 
-  const allInnerSpans = elements.flatMap(el => el ? Array.from(el.querySelectorAll('.line > span')) : []);
+  const allInnerSpans = elements.flatMap((el) =>
+    el ? Array.from(el.querySelectorAll(".line > span")) : []
+  );
 
-  gsap.set(allInnerSpans, { y: '110%' });
+  gsap.set(allInnerSpans, { y: "110%" });
 
   gsap.to(allInnerSpans, {
-    y: '0%',
+    y: "0%",
     duration: 0.8,
     stagger: 0.07,
-    ease: 'power3.out',
-    delay: 0.2
+    ease: "power3.out",
+    delay: 0.2,
   });
 
   return () => {
@@ -93,34 +98,52 @@ export default function OnlyPromptPage() {
   const endorsementContainerRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Apply animations using hooks scoped to sections
-  useGSAP(() => applyLineReveal([uncannyH2Ref.current, uncannyPRef.current]), { scope: uncannySectionRef });
-  useGSAP(() => applyLineReveal([capabilitiesH2Ref.current]), { scope: capabilitiesSectionRef });
-  useGSAP(() => applyLineReveal([whyH2Ref.current, whyP1Ref.current, whyUlRef.current, whyP2Ref.current]), { scope: whySectionRef });
-  useGSAP(() => applyLineReveal([endorsementsH2Ref.current]), { scope: endorsementsSectionRef });
+  useGSAP(() => applyLineReveal([uncannyH2Ref.current, uncannyPRef.current]), {
+    scope: uncannySectionRef,
+  });
+  useGSAP(() => applyLineReveal([capabilitiesH2Ref.current]), {
+    scope: capabilitiesSectionRef,
+  });
+  useGSAP(
+    () =>
+      applyLineReveal([
+        whyH2Ref.current,
+        whyP1Ref.current,
+        whyUlRef.current,
+        whyP2Ref.current,
+      ]),
+    { scope: whySectionRef }
+  );
+  useGSAP(() => applyLineReveal([endorsementsH2Ref.current]), {
+    scope: endorsementsSectionRef,
+  });
   useGSAP(() => {
     for (let i = 0; i < endorsementRefs.current.length; i++) {
       const pRef = endorsementRefs.current[i];
       const container = endorsementContainerRefs.current[i];
       if (pRef && container) {
-        const split = new SplitType(pRef, { types: 'lines', lineClass: 'line' });
+        const split = new SplitType(pRef, {
+          types: "lines",
+          lineClass: "line",
+        });
         if (!split.lines) continue;
         for (const line of split.lines) {
-          const span = document.createElement('span');
-          span.style.display = 'block';
-          span.style.overflow = 'hidden';
+          const span = document.createElement("span");
+          span.style.display = "block";
+          span.style.overflow = "hidden";
           span.innerHTML = line.innerHTML;
-          line.innerHTML = '';
+          line.innerHTML = "";
           line.appendChild(span);
         }
-        const innerSpans = pRef.querySelectorAll('.line > span');
-        gsap.set(innerSpans, { y: '110%' });
+        const innerSpans = pRef.querySelectorAll(".line > span");
+        gsap.set(innerSpans, { y: "110%" });
         gsap.to(innerSpans, {
-          scrollTrigger: { trigger: container, start: 'top 80%' },
-          y: '0%',
+          scrollTrigger: { trigger: container, start: "top 80%" },
+          y: "0%",
           duration: 0.8,
           stagger: 0.07,
-          ease: 'power3.out',
-          delay: 0.1
+          ease: "power3.out",
+          delay: 0.1,
         });
       }
     }
@@ -128,11 +151,11 @@ export default function OnlyPromptPage() {
 
   return (
     <div className="flex-1 font-manifold">
-      <section className="min-h-screen">
-        <BackgroundCells className="bg-black">
-          <div className="flex flex-col h-full items-center justify-between gap-y-8 sm:gap-y-12 pb-12 md:pb-16">
+      <section className="min-h-screen border-b border-white/10">
+        <div className="bg-black relative overflow-hidden">
+          <div className="flex flex-col min-h-screen items-center justify-evenly gap-y-8 sm:gap-y-12 py-12 md:py-16">
             <div className="flex flex-col items-center gap-4 md:gap-6">
-              <h1 className="text-lg sm:text-xl md:text-2xl font-medium text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400 pointer-events-none">
+              <div className="text-lg sm:text-xl md:text-2xl font-medium text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400 pointer-events-none">
                 <br />
                 <div className="flex flex-row items-center justify-center gap-2 sm:gap-4 mt-10">
                   <Image
@@ -142,37 +165,51 @@ export default function OnlyPromptPage() {
                     height={100}
                     className="w-16 sm:w-20 md:w-24"
                   />
-                  <Separator orientation="vertical" className="h-16 sm:h-20 md:h-24 mx-2 sm:mx-4 md:mx-6 bg-transparent" />
+                  <Separator
+                    orientation="vertical"
+                    className="h-16 sm:h-20 md:h-24 mx-2 sm:mx-4 md:mx-6 bg-transparent"
+                  />
+                  <div className="relativepointer-events-none">
+                    <Spotlight />
+                  </div>
                   <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tighter text-center bg-clip-text text-transparent bg-gradient-to-b from-orange-200 to-gray-400 pointer-events-none">
                     ONLYPROMPT
                   </h1>
                 </div>
-              </h1>
+              </div>
             </div>
             <div className="w-full max-w-sm sm:max-w-md md:max-w-xl mx-auto px-4 space-y-6 sm:space-y-8 flex flex-col items-center">
-              <div className="space-y-6 text-center">
-                <h2 className="text-3xl sm:text-2xl font-normal text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400">
-                  Join the waitlist
-                </h2>
-              </div>
               <WaitlistForm />
+              <RetroGrid />
+
               <div className="flex flex-col items-center gap-2">
                 <div className="flex items-center gap-4">
                   <div className="flex -space-x-3">
                     <Avatar className="border-2 border-black w-8 h-8 sm:w-12 sm:h-12">
-                      <AvatarImage src="https://picsum.photos/seed/user13/100" alt="User 1 Avatar" />
+                      <AvatarImage
+                        src="https://picsum.photos/seed/user13/100"
+                        alt="User 1 Avatar"
+                      />
                       <AvatarFallback>U1</AvatarFallback>
                     </Avatar>
                     <Avatar className="border-2 border-black w-8 h-8 sm:w-12 sm:h-12">
-                      <AvatarImage src="https://picsum.photos/seed/user4/100" alt="User 2 Avatar" />
+                      <AvatarImage
+                        src="https://picsum.photos/seed/user4/100"
+                        alt="User 2 Avatar"
+                      />
                       <AvatarFallback>U2</AvatarFallback>
                     </Avatar>
                     <Avatar className="border-2 border-black w-8 h-8 sm:w-12 sm:h-12">
-                      <AvatarImage src="https://picsum.photos/seed/user31/100" alt="User 3 Avatar" />
+                      <AvatarImage
+                        src="https://picsum.photos/seed/user31/100"
+                        alt="User 3 Avatar"
+                      />
                       <AvatarFallback>U3</AvatarFallback>
                     </Avatar>
                   </div>
-                  <span className="font-semibold text-xs sm:text-sm text-gray-400">200+ people already on the waitlist</span>
+                  <span className="font-semibold text-xs sm:text-sm text-gray-400">
+                    200+ people already on the waitlist
+                  </span>
                 </div>
               </div>
             </div>
@@ -183,12 +220,13 @@ export default function OnlyPromptPage() {
               <CollegeLogoSlider reverse={true} title="" />
             </div>
           </div>
-          <Spotlight />
-
-        </BackgroundCells>
+        </div>
       </section>
-      
-      <section ref={uncannySectionRef} className="container mx-auto px-4 md:px-6 py-16 md:py-24 border-t border-white/10">
+
+      <section
+        ref={uncannySectionRef}
+        className="container mx-auto px-4 md:px-6 py-16 md:py-24 border-white/10"
+      >
         <div className="grid items-center gap-8 md:grid-cols-2 md:gap-12">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -197,14 +235,9 @@ export default function OnlyPromptPage() {
             viewport={{ once: true }}
             className="text-center md:text-left"
           >
-            <h2 ref={uncannyH2Ref} className="mb-4 text-3xl font-medium tracking-tight md:text-4xl">
-              Experience the{" "}
-              <HoverGlitchText intensity="low">Uncanny</HoverGlitchText>{" "}
-              Intelligence.
-            </h2>
-            <p ref={uncannyPRef} className="text-lg text-white/70">
-              Observe the precision and security in every interaction.
-            </p>
+            <h3 className="mb-4 lg:text-3xl md:text-2xl sm:text-xl font-normal text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400 uppercase">
+              Experience Uncanny Intelligence.
+            </h3>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -223,12 +256,20 @@ export default function OnlyPromptPage() {
       <section
         ref={capabilitiesSectionRef}
         id="features"
-        className="px-4 md:px-6 py-16 md:py-24 bg-black/70 border-t border-white/10"
+        className="px-4 md:px-6 py-16 md:py-24 bg-black/70"
       >
         <div className="mx-auto w-full max-w-7xl">
-          <h2 ref={capabilitiesH2Ref} className="mb-12 text-center text-3xl font-medium tracking-tight md:text-4xl">
-            Core Capabilities
-          </h2>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center md:text-left"
+          >
+            <h3 className="mb-12 lg:text-3xl md:text-2xl sm:text-xl font-normal text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400 uppercase">
+              Experience Uncanny Intelligence.
+            </h3>
+          </motion.div>
           {/* <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4"> */}
           <ul className="grid grid-cols-1 grid-rows-none gap-4 md:grid-cols-12 md:grid-rows-3 lg:gap-4 xl:max-h-[34rem] xl:grid-rows-2">
             <GridItem
@@ -269,7 +310,7 @@ export default function OnlyPromptPage() {
       <section
         ref={whySectionRef}
         id="security"
-        className="container mx-auto max-w-3xl px-4 md:px-6 py-16 md:py-24 border-t border-white/10"
+        className="container mx-auto max-w-3xl px-4 md:px-6 py-16 md:py-24 border-b border-white/10"
       >
         <motion.div
           initial={{ opacity: 0 }}
@@ -278,13 +319,19 @@ export default function OnlyPromptPage() {
           viewport={{ once: true }}
           className="text-center"
         >
-          <h2 ref={whyH2Ref} className="mb-4 text-3xl font-medium tracking-tight md:text-4xl">
+          <h2
+            ref={whyH2Ref}
+            className="mb-4 text-3xl font-medium tracking-tight md:text-4xl"
+          >
             Why OnlyPrompt?
           </h2>
           <p ref={whyP1Ref} className="mb-8 text-lg text-white/70">
             AI with integrity; designed for those who can't risk leaks.
           </p>
-          <ul ref={whyUlRef} className="mb-8 space-y-2 text-left font-light text-white/80 list-inside list-['-_'] marker:text-red-500">
+          <ul
+            ref={whyUlRef}
+            className="mb-8 space-y-2 text-left font-light text-white/80 list-inside list-['-_'] marker:text-red-500"
+          >
             <li> Uncompromising Security Measures</li>
             <li> Verifiable Operational Integrity</li>
             <li> Designed for Sensitive Environments</li>
@@ -300,14 +347,22 @@ export default function OnlyPromptPage() {
         </motion.div>
       </section>
 
-      <section ref={endorsementsSectionRef} className="container mx-auto px-4 md:px-6 py-16 md:py-24 border-t border-white/10">
-        <h2 ref={endorsementsH2Ref} className="mb-12 text-center text-3xl font-medium tracking-tight md:text-4xl">
+      <section
+        ref={endorsementsSectionRef}
+        className="container mx-auto px-4 md:px-6 py-16 md:py-24 border-b border-white/10"
+      >
+        <h2
+          ref={endorsementsH2Ref}
+          className="mb-12 text-center text-3xl font-medium tracking-tight md:text-4xl"
+        >
           Endorsements
         </h2>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {[1, 2, 3].map((i) => (
             <motion.div
-              ref={(el) => { endorsementContainerRefs.current[i - 1] = el; }}
+              ref={(el) => {
+                endorsementContainerRefs.current[i - 1] = el;
+              }}
               key={i}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -316,7 +371,9 @@ export default function OnlyPromptPage() {
               className="rounded-sm border border-white/10 bg-white/5 p-6 shadow-md"
             >
               <p
-                ref={(el) => { endorsementRefs.current[i - 1] = el; }}
+                ref={(el) => {
+                  endorsementRefs.current[i - 1] = el;
+                }}
                 className="mb-4 font-light italic text-white/80"
               >
                 "Quote placeholder {i} - This AI is incredibly secure and
