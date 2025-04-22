@@ -77,7 +77,7 @@ export default function WaitlistForm() {
   return (
     <>
       {isSuccess ? (
-        <div className="w-full max-w-md mx-auto space-y-4 text-center">
+        <div className="w-full max-w-full mx-auto space-y-4 text-center">
           <h3 className="text-xl font-semibold text-neutral-400">
             Thank you for joining the waitlist!
           </h3>
@@ -93,7 +93,7 @@ export default function WaitlistForm() {
         </div>
       ) : (
         <form
-          className="w-full max-w-md mx-auto space-y-2"
+          className="w-full w-full mx-auto space-y-2"
           onSubmit={handleSubmit}
           method="POST"
         >
@@ -107,7 +107,7 @@ export default function WaitlistForm() {
               <div className="relative">
                 <Input
                   id="waitlist-first-name"
-                  className="peer ps-[4.5rem] h-10 sm:h-12 font-bold bg-background tracking-wide uppercase w-full"
+                  className="peer ps-[3rem] h-10 sm:h-12 font-bold bg-background tracking-wide uppercase w-full"
                   placeholder="HELENA"
                   type="text"
                   aria-label="First Name"
@@ -128,7 +128,7 @@ export default function WaitlistForm() {
               <div className="relative">
                 <Input
                   id="waitlist-last-name"
-                  className="peer ps-[4.5rem] h-10 sm:h-12 font-bold tracking-wide uppercase w-full"
+                  className="peer ps-[3rem] h-10 sm:h-12 font-bold tracking-wide uppercase w-full"
                   placeholder="EAGAN"
                   type="text"
                   aria-label="Last Name"
@@ -150,7 +150,7 @@ export default function WaitlistForm() {
             <div className="relative">
               <Input
                 id="waitlist-subscribe"
-                className="peer ps-[4.5rem] h-10 sm:h-12 font-bold tracking-wide uppercase w-full"
+                className="peer ps-[3rem] h-10 sm:h-12 font-bold tracking-wide uppercase w-full"
                 placeholder="HELLY.R@LUMON.INDUSTRIES"
                 type="email"
                 aria-label="Email"

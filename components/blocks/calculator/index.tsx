@@ -18,9 +18,9 @@ export default function Calculator() {
 
   return (
     <>
-      <h2 className="text-3xl font-semibold mb-6 text-center text-foreground">
-        AI Model Cost Estimator
-      </h2>
+      <h3 className="mb-10 sm:mb-12 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400 uppercase">
+        Cost Calculator
+      </h3>
       <div className="bg-background/70 rounded-md p-6 min-h-[300px] overflow-hidden">
         <AnimatePresence mode="wait">
           {showTable ? (

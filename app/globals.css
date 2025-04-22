@@ -53,9 +53,26 @@
   --ring: 0 0% 83.1%;
 }
 
-body {
-  background-color: black;
-  color: white;
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+@layer utilities {
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee var(--duration, 30s) linear infinite;
+  }
 }
 
 /* --- Reacting Eyeball Styles --- */
@@ -139,21 +156,6 @@ body {
   }
 }
 /* --- End Reacting Eyeball Styles --- */
-
-/* --- Marquee Animation --- */
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(calc(-100% - var(--gap)));
-  }
-}
-
-.animate-marquee {
-  animation: marquee var(--duration) linear infinite;
-}
-/* --- End Marquee Animation --- */
 
 /* Hover-activated sheen effect for buttons */
 .hover-sheen {
