@@ -562,3 +562,13 @@ body {
     clip-path: inset(70% 0 10% 0);
   }
 }
+
+/* Disable default browser animations for view transitions */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+/* Ensure new page appears on top */
+::view-transition-new(root) { z-index: 100; }
+::view-transition-old(root) { z-index: 1; }
