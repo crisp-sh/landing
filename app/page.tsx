@@ -24,6 +24,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import SplitType from "split-type";
 import { Banner1 } from "@/components/banner-one";
+import WaitlistForm from "@/components/waitlist-form";
 
 const PixelCanvas = dynamic(
   () => import("@/components/ui/pixel-canvas").then((mod) => mod.PixelCanvas),
@@ -145,6 +146,8 @@ export default function Home() {
       <main className="flex-1 pt-16">
 
         <section ref={containerRef} className="relative flex min-h-screen items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0 bg-gradient-to-b from-black via-gray-900/20 to-black" />
+
           <div className="absolute inset-0 z-0 bg-gradient-to-b from-black via-black/95 to-black" />
 
           <div className="container relative z-10">
@@ -169,30 +172,15 @@ export default function Home() {
                   />
                 </div>
               </div>
-
+              
               <h1 ref={h1Ref} className="mb-6 text-4xl font-light tracking-tight sm:text-5xl md:text-6xl">
                 <span className="block">
                   <h1 className="font-regular uppercase font-manifold">
                     We built a system that works
                   </h1>
                 </span>
-                <motion.span
-                  ref={spanRef}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 2, delay: 1 }}
-                  className="mt-2 block font-regular font-manifold uppercase"
-                  style={{ overflow: 'hidden' }}
-                >
-                  We{" "}
-                  .
-                </motion.span>
               </h1>
-              <p className="mx-auto mt-8 max-w-xl text-lg font-extralight font-manifold leading-relaxed text-white/70">
-                Optimizing human potential through proprietary algorithms and
-                data-driven insights. Your future is our business.
-              </p>
-              <div className="mt-10">
+              <div className="mt-24">
                 <HoverButton onClick={handleJoinInitiative}>
                   <span className="uppercase">LEARN MORE ABOUT ONLYPROMPT</span>
                 </HoverButton>
@@ -321,34 +309,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 className="mt-10"
               >
-                <form className="flex flex-col items-center space-y-4">
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    className="w-full max-w-md rounded-none border border-white/20 bg-black/50 px-4 py-2 text-white placeholder-white/40 backdrop-blur-sm focus:border-white/40 focus:outline-none"
-                    disabled={isSubscribing || showSuccessCheck}
-                  />
-                  <HoverButton
-                    onClick={handleSubscribe}
-                    className="w-full max-w-md"
-                    disabled={isSubscribing || showSuccessCheck}
-                  >
-                    <div className="flex items-center justify-center">
-                      {isSubscribing ? (
-                        <Loader2 className="h-5 w-5 animate-spin" />
-                      ) : showSuccessCheck ? (
-                        <Check className="h-5 w-5 text-green-500" />
-                      ) : (
-                        <>
-                          <span className="font-medium font-manifold uppercase">
-                            Subscribe
-                          </span>
-                          <ArrowRight className="ml-2 h-4 w-4 inline-block transition-transform duration-300 group-hover:translate-x-1" />
-                        </>
-                      )}
-                    </div>
-                  </HoverButton>
-                </form>
+                <WaitlistForm />
                 <p className="mt-4 text-xs font-extralight text-white/40">
                   By subscribing, you consent to our data collection protocols.
                 </p>
