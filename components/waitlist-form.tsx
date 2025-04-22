@@ -70,7 +70,6 @@ export default function WaitlistForm() {
               />
               <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-muted-foreground/50 peer-disabled:opacity-50">
                 <span className="text-[10px] font-semibold tracking-widest">FIRST<br/>NAME</span>
-                <Separator orientation="vertical" className="h-10 ml-2" />
               </div>
             </div>
           </div>
@@ -88,7 +87,6 @@ export default function WaitlistForm() {
               />
               <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-muted-foreground/50 peer-disabled:opacity-50">
                 <span className="text-[10px] font-semibold tracking-widest">LAST<br/>NAME</span>
-                <Separator orientation="vertical" className="h-10 ml-2" />
               </div>
             </div>
           </div>

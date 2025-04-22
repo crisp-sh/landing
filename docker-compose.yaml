@@ -5,6 +5,11 @@ services:
     image: ghcr.io/crisp-sh/landing:latest
     networks:
       - proxy
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_SITE_URL=https://crisp.sh
+      - EMAILOCTOPUS_API_KEY=${EMAILOCTOPUS_API_KEY}
+      - LIST_ID=${LIST_ID}
     deploy:
       restart_policy:
         condition: any
