@@ -24,9 +24,9 @@ import SplitType from "split-type";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import WaitlistForm from "@/components/waitlist-form";
 import { RetroGrid } from "@/components/ui/retro-grid";
-import { PricingTable } from "@/components/blocks/pricing-table";
-import { features } from "@/lib/constants";
-import { plans } from "@/lib/constants";
+
+// Add import for the calculator component
+import Calculator from "@/components/blocks/calculator";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -217,18 +217,15 @@ export default function OnlyPromptPage() {
         </div>
       </section>
 
+      {/* Cost Calculator Section */}
       <section
         ref={uncannySectionRef}
-        className="relative h-screen border-white/10"
+        id="cost-calculator"
+        className="relative py-16 md:py-24 border-b border-white/10"
       >
-        <PricingTable 
-          features={features}
-          plans={plans}
-          defaultPlan="pro"
-          defaultInterval="monthly"
-          containerClassName="mx-auto"
-          buttonClassName="mx-auto"
-        />
+        <div className="container mx-auto px-4 md:px-6">
+          <Calculator />
+        </div>
       </section>
 
       <section

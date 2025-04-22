@@ -107,7 +107,7 @@ export default function WaitlistForm() {
               <div className="relative">
                 <Input
                   id="waitlist-first-name"
-                  className="peer ps-[4.5rem] h-10 sm:h-12 font-bold tracking-wide uppercase w-full"
+                  className="peer ps-[4.5rem] h-10 sm:h-12 font-bold bg-background tracking-wide uppercase w-full"
                   placeholder="HELENA"
                   type="text"
                   aria-label="First Name"
