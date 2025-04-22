@@ -12,6 +12,8 @@ const collegeLogos = [
   { src: "/college/gatech.svg", alt: "Georgia Tech Logo" },
   { src: "/college/usaf.svg", alt: "US Air Force Academy Logo" },
   { src: "/college/yale.svg", alt: "Yale University Logo" },
+  { src: "/college/fsi.png", alt: "Foreign Service Institute Logo" },
+  { src: "/college/dos.png", alt: "Department of State Logo" },
 ];
 
 interface CollegeLogoSliderProps {
