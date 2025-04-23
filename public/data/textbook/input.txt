@@ -1,0 +1,781 @@
+PROMPT: Summarize this chapter by subchapter, and come up with some practice problems for me to study for my upcoming test.
+
+---
+title: Organic Chemistry: A Tenth Edition (OpenStax)
+chapter: Chapter 5: Stereochemistry at Tetrahedral Centers
+---
+
+Chapter Contents
+5.1 Enantiomers and the Tetrahedral Carbon
+5.2 The Reason for Handedness in Molecules: Chirality
+5.3 Optical Activity
+5.4 Pasteur’s Discovery of Enantiomers
+5.5 Sequence Rules for Specifying Configuration
+5.6 Diastereomers
+5.7 Meso Compounds
+5.8 Racemic Mixtures and the Resolution of Enantiomers
+5.9 A Review of Isomerism
+5.10 Chirality at Nitrogen, Phosphorus, and Sulfur
+5.11 Prochirality
+5.12 Chirality in Nature and Chiral Environments
+Understanding the causes and consequences of molecular handedness is crucial to understanding organic and biological chemistry. The subject can be a bit complex at first, but the material covered in this chapter nevertheless forms the basis for much of the remainder of the book.
+
+Are you right-handed or left-handed? You may not spend much time thinking about it, but handedness plays a surprisingly large role in your daily activities. Many musical instruments, such as oboes and clarinets, have a handedness to them; the last available softball glove always fits the wrong hand. The reason for these difficulties is that our hands aren’t identical; rather, they’re mirror images. When you hold a left hand up to a mirror, the image you see looks like a right hand. Try it.
+
+The figure shows a left hand and its reflection in a mirror on the right side, displaying a right hand.
+Handedness is also important in organic and biological chemistry, where it arises primarily as a consequence of the tetrahedral stereochemistry of sp3-hybridized carbon atoms. Many drugs and almost all the molecules in our bodies—amino acids, carbohydrates, nucleic acids, and many more—have a handedness. Furthermore, molecular handedness enables the precise interactions between enzymes and their substrates that are involved in the hundreds of thousands of chemical reactions on which life is based.
+
+What causes molecular handedness? Look at generalized molecules of the type CH3X, CH2XY, and CHXYZ shown in Figure 5.2. On the left are three molecules, and on the right are their images reflected in a mirror. The CH3X and CH2XY molecules are identical to their mirror images and thus are not handed. If you make a molecular model of each molecule and its mirror image, you find that you can superimpose one on the other so that all atoms coincide. The CHXYZ molecule, by contrast, is not identical to its mirror image. You can’t superimpose a model of this molecule on a model of its mirror image for the same reason that you can’t superimpose a left hand on a right hand: they simply aren’t the same.
+
+The figure shows condensed formulas, structures, and ball-and-stick models of C H 3 X, C H 2 X Y, and C H X Y Z along with their mirror images.
+Figure 5.2 Tetrahedral carbon atoms and their mirror images. Molecules of the type CH3X and CH2XY are identical to their mirror images, but a molecule of the type CHXYZ is not. A CHXYZ molecule is related to its mirror image in the same way a right hand is related to a left hand.
+A molecule that is not identical to its mirror image is a kind of stereoisomer (Section 4.2) called an enantiomer (e-nan-tee-oh-mer, from the Greek enantio, meaning “opposite”). Enantiomers are related to each other as a right hand is related to a left hand and result whenever a tetrahedral carbon is bonded to four different substituents (one need not be H). For example, lactic acid (2-hydroxypropanoic acid) exists as a pair of enantiomers because there are four different groups (−H, −OH, −CH3, −CO2H) bonded to the central carbon atom. The enantiomers are called (+)-lactic acid and (−)-lactic acid. Both are found in sour milk, but only the (+) enantiomer occurs in muscle tissue.
+
+Structure of lactic acid with a molecule of the general formula C H X Y Z. Ball-and-stick model and structure of (plus)-lactic acid with its mirror image, displaying (minus)-lactic acid.
+No matter how hard you try, you can’t superimpose a molecule of (+)-lactic acid on a molecule of (−)-lactic acid. If any two groups match up, say −H and −CO2H, the remaining two groups don’t match (Figure 5.3).
+
+Two pairs of lactic acid molecules. Pair a shows the positions of substituents mismatching except hydrogen and hydroxyl groups. Pair b shows substituents mismatching except methyl and carboxylic acid groups.
+Figure 5.3 Attempts at superimposing the mirror-image forms of lactic acid. (a) When the −H and −OH substituents match up, the −CO2H and −CH3 substituents don’t; (b) when −CO2H and −CH3 match up, −H and −OH don’t. Regardless of how the molecules are oriented, they aren’t identical.
+
+A molecule that is not identical to its mirror image is said to be chiral (ky-ral, from the Greek cheir, meaning “hand”). You can’t take a chiral molecule and its enantiomer and place one on the other so that all atoms coincide.
+
+How can you predict whether a given molecule is or is not chiral? A molecule is not chiral if it has a plane of symmetry. A plane of symmetry is a plane that cuts through the middle of a molecule (or any object) in such a way that one half of the molecule or object is a mirror image of the other half. A coffee mug, for example, has a plane of symmetry. If you were to cut the coffee mug in half from top to bottom, one half would be a mirror image of the other half. A hand, however, does not have a plane of symmetry. One “half” of a hand is not a mirror image of the other half (Figure 5.4).
+
+Mirror shows a coffee mug with a symmetry line passing through the handle. To the right, mirror shows a hand with a symmetry line next to the middle finger.
+Figure 5.4 The meaning of symmetry plane. (a) An object like the coffee mug has a symmetry plane cutting through it so that right and left halves are mirror images. (b) An object like a hand has no symmetry plane; the right “half” of a hand is not a mirror image of the left half.
+A molecule that has a plane of symmetry in any conformation must be identical to its mirror image and must be nonchiral, or achiral. Thus, propanoic acid, CH3CH2CO2H, has a plane of symmetry when lined up as shown in Figure 5.5 and is achiral, while lactic acid, CH3CH(OH)CO2H, has no plane of symmetry in any conformation and is chiral.
+
+Condensed formulas and structures along with ball-and-stick models of propanoic acid (achiral) and lactic acid (chiral). Propanoic acid has a symmetry plane. Lactic acid does not have a symmetry plane.
+Figure 5.5 The achiral propanoic acid molecule versus the chiral lactic acid molecule. Propanoic acid has a plane of symmetry that makes one side of the molecule a mirror image of the other. Lactic acid has no such symmetry plane.
+The most common, although not the only, cause of chirality in organic molecules is the presence of a tetrahedral carbon atom bonded to four different groups—for example, the central carbon atom in lactic acid. Such carbons are referred to as chirality centers, although other terms such as stereocenter, asymmetric center, and stereogenic center have also been used. Note that chirality is a property of the entire molecule, whereas a chirality center is the cause of chirality.
+
+Detecting a chirality center in a complex molecule takes practice because it’s not always immediately apparent whether four different groups are bonded to a given carbon. The differences don’t necessarily appear right next to the chirality center. For example, 5-bromodecane is a chiral molecule because four different groups are bonded to C5, the chirality center (marked with an asterisk). A butyl substituent is similar to a pentyl substituent, but it isn’t identical. The difference isn’t apparent until looking four carbon atoms away from the chirality center, but there’s still a difference.
+
+The condensed structure of 5-bromodecane (chiral). Substitutes on carbon 5 are H, Br, butyl, and pentyl and the chiral carbon is marked by an asterisk.
+As other possible examples, look at methylcyclohexane and 2-methylcyclohexanone. Methylcyclohexane is achiral because no carbon atom in the molecule is bonded to four different groups. You can immediately eliminate all −CH2− carbons and the −CH3 carbon from consideration, but what about C1 on the ring? The C1 carbon atom is bonded to a −CH3 group, to an −H atom, and to C2 and C6 of the ring. Carbons 2 and 6 are equivalent, however, as are carbons 3 and 5. Thus, the C6–C5–C4 “substituent” is equivalent to the C2–C3–C4 substituent, and methylcyclohexane is achiral. Another way of reaching the same conclusion is to realize that methylcyclohexane has a symmetry plane, which passes through the methyl group and through C1 and C4 of the ring.
+
+The situation is different for 2-methylcyclohexanone. 2-Methylcyclohexanone has no symmetry plane and is chiral because its C2 is bonded to four different groups: a −CH3 group, an −H atom, a −COCH2− ring bond (C1), and a −CH2CH2− ring bond (C3).
+
+The ball-and-stick model and structures of methylcyclohexane (achiral) and 2-methylcyclohexanone (chiral). An asterisk denotes the chiral center and achiral molecule has a symmetry plane through C1, C4, and methyl carbon.
+Several more examples of chiral molecules are shown below. Check for yourself that the labeled carbons are chirality centers. You might note that carbons in −CH2−, −CH3,  C═O
+ ,  C═C
+ , and  C≡C
+  groups can’t be chirality centers. (Why not?)
+
+The bond-line structures of carvone (spearmint oil) and nootkatone (grapefruit oil) with one and three carbons labeled with asterisks, respectively.
+Worked Example 5.1
+Drawing the Three-Dimensional Structure of a Chiral Molecule
+Draw the structure of a chiral alcohol.
+
+Strategy
+An alcohol is a compound that contains the −OH functional group. To make an alcohol chiral, we need to have four different groups bonded to a single carbon atom, say −H, −OH, −CH3, and −CH2CH3.
+Solution
+The structure of 2-butanol (chiral). C2 is labeled with an asterisk.
+Problem
+5-1
+Which of the following objects are chiral?
+
+(a) Soda can (b) Screwdriver (c) Screw (d) Shoe
+
+Problem
+5-2
+Which of the following molecules are chiral? Identify the chirality center(s) in each.
+(a)		The structure of coniine (poison hemlock), in which N is in first position. C2 is bonded to a propyl group.
+(b)		The wedge-dash structure of menthol (flavoring agent).
+(c)		The wedge-dash structure of dextromethorphan (cough suppressant).
+Problem
+5-3
+Alanine, an amino acid found in proteins, is chiral. Draw the two enantiomers of alanine using the standard convention of solid, wedged, and dashed lines.
+
+Alanine has a 3-carbon chain. C1 is a carboxylic acid group. C2 is bonded to an amino group.
+Problem
+5-4
+Identify the chirality centers in the following molecules (gray = H, black = C, red = O, green = Cl, yellow-green = F):
+(a)		The ball-and-stick model of threose (a sugar) where gray, black, and red spheres represent hydrogen, carbon, and oxygen, respectively.
+(b)		The ball-and-stick model of enflurane (an anesthetic) where gray, black, green, yellow-green, and red spheres represent hydrogen, carbon, chlorine, fluorine, and oxygen, respectively.
+
+The study of chirality originated in the early 19th century during investigations by the French physicist Jean-Baptiste Biot into the nature of plane-polarized light. A beam of ordinary light consists of electromagnetic waves that oscillate in an infinite number of planes at right angles to its direction of travel. When a beam of ordinary light passes through a device called a polarizer, however, only the light waves oscillating in a single plane pass through and the light is said to be plane-polarized. Light waves in all other planes are blocked out.
+
+Biot made the remarkable observation that when a beam of plane-polarized light passes through a solution of certain organic molecules, such as sugar or camphor, the plane of polarization is rotated through an angle, α. Not all organic substances exhibit this property, but those that do are said to be optically active.
+
+The angle of rotation can be measured with an instrument called a polarimeter, represented in Figure 5.6. A solution of optically active organic molecules is placed in a sample tube, plane-polarized light is passed through the tube, and rotation of the polarization plane occurs. The light then goes through a second polarizer called the analyzer. By rotating the analyzer until the light passes through it, we can find the new plane of polarization and can tell to what extent rotation has occurred.
+
+Schematic representation of a polarimeter. Unpolarized light from light source passes through polarizer, followed by polarized light, sample tube containing organic molecules, analyzer, and observer.
+Figure 5.6 Schematic representation of a polarimeter. Plane-polarized light passes through a solution of optically active molecules, which rotate the plane of polarization.
+In addition to determining the extent of rotation, we can also find the direction. From the vantage point of the observer looking directly at the analyzer, some optically active molecules rotate polarized light to the left (counterclockwise) and are said to be levorotatory, whereas others rotate polarized light to the right (clockwise) and are said to be dextrorotatory. By convention, rotation to the left is given a minus sign (−) and rotation to the right is given a plus sign (+). (−)-Morphine, for example, is levorotatory, and (+)-sucrose is dextrorotatory.
+
+The extent of rotation observed in a polarimetry experiment depends on the number of optically active molecules encountered by the light beam. This number, in turn, depends on sample concentration and sample pathlength. If the concentration of the sample is doubled, the observed rotation doubles. If the concentration is kept constant but the length of the sample tube is doubled, the observed rotation doubles. It also happens that the angle of rotation depends on the wavelength of the light used.
+
+To express optical rotations in a meaningful way so that comparisons can be made, we have to choose standard conditions. The specific rotation, [α]D, of a compound is defined as the observed rotation when light of 589.6 nanometer (nm; 1 nm = 10−9 m) wavelength is used with a sample pathlength l of 1 decimeter (dm; 1 dm = 10 cm) and a sample concentration c of 1 g/cm3. (Light of 589.6 nm, the so-called sodium D line, is the yellow light emitted from common sodium street lamps.)
+
+[α]D=Observed rotation (degrees)Pathlength,l(dm)×Concentration,c(g/cm3)=αl×c
+ 
+When optical rotations are expressed in this standard way, the specific rotation, [α]D, is a physical constant characteristic of a given optically active compound. For example, (+)-lactic acid has [α]D = +3.82, and (−)-lactic acid has [α]D = −3.82. That is, the two enantiomers rotate plane-polarized light to exactly the same extent but in opposite directions. Note that the units of specific rotation are [(deg · cm2)/g] but the values are usually expressed without units. Some additional examples are listed in Table 5.1.
+
+Table 5.1 Specific Rotations of Some Organic Molecules
+Compound	[α]D	Compound	[α]D
+Penicillin V	+233	Cholesterol	 −31.5
+Sucrose	 +66.47	Morphine	−132
+Camphor	 +44.26	Cocaine	 −16
+Chloroform	   0	Acetic acid	   0
+Worked Example 5.2
+Calculating an Optical Rotation
+A 1.20 g sample of cocaine, [α]D = −16, was dissolved in 7.50 mL of chloroform and placed in a sample tube having a pathlength of 5.00 cm. What was the observed rotation?
+
+The structure of cocaine.
+Strategy
+Since  [α]D=αl×c
+ 
+Then  α=l×c×[α]D
+ 
+
+where [α]D = −16; l = 5.00 cm = 0.500 dm; c = 1.20 g/7.50 cm3 = 0.160 g/cm3
+
+Solution
+α = (−16) (0.500) (0.160) = −1.3°.
+Problem
+5-5
+Is cocaine (Worked Example 5.2) dextrorotatory or levorotatory?
+Problem
+5-6
+A 1.50 g sample of coniine, the toxic extract of poison hemlock, was dissolved in 10.0 mL of ethanol and placed in a sample cell with a 5.00 cm pathlength. The observed rotation at the sodium D line was +1.21°. Calculate [α]D for coniine.
+
+Little was done to build on Biot’s discovery of optical activity until 1848, when Louis Pasteur began work on a study of crystalline tartaric acid salts derived from wine. On crystallizing a concentrated solution of sodium ammonium tartrate below 28 °C, Pasteur made the surprising observation that two distinct kinds of crystals were obtained. Furthermore, the two kinds of crystals were nonsuperimposable mirror images and were related in the same way that a right hand is related to a left hand.
+
+Working carefully with tweezers, Pasteur was able to separate the crystals into two piles, one of “right-handed” crystals and one of “left-handed” crystals, like those shown in Figure 5.7. Although the original sample, a 50 : 50 mixture of right and left, was optically inactive, solutions of the crystals from each of the sorted piles were optically active and their specific rotations were equal in magnitude but opposite in sign.
+
+The figure shows the drawing of two sodium ammonium tartrate crystals (dextrorotatory and  levorotatory) and the structure of sodium ammonium tartrate.
+Figure 5.7 Drawings of sodium ammonium tartrate crystals taken from Pasteur’s original sketches. One of the crystals is dextrorotatory in solution, and the other is levorotatory.
+Pasteur was far ahead of his time. Although the structural theory of Kekulé had not yet been proposed, Pasteur explained his results by speaking of the molecules themselves, saying, “There is no doubt that [in the dextro tartaric acid] there exists an asymmetric arrangement having a nonsuperimposable image. It is no less certain that the atoms of the levo acid have precisely the inverse asymmetric arrangement.” Pasteur’s vision was extraordinary, for it was not until 25 years later that his ideas regarding asymmetric carbon atoms were confirmed.
+
+Today, we would describe Pasteur’s work by saying that he had discovered enantiomers. Enantiomers, also called optical isomers, have identical physical properties, such as melting point and boiling point, but differ in the direction in which their solutions rotate plane-polarized light.
+
+Structural drawings provide a visual representation of stereochemistry, but a written method for indicating the three-dimensional arrangement, or configuration, of substituents at a chirality center is also needed. The method used a set of sequence rules to rank the four groups attached to the chirality center and then looks at the handedness with which those groups are attached. Called the Cahn–Ingold–Prelog rules after the chemists who proposed them, the sequence rules are as follows:
+
+RULE 1
+Look at the four atoms directly attached to the chirality center, and rank them according to atomic number. The atom with the highest atomic number has the highest ranking (first), and the atom with the lowest atomic number (usually hydrogen) has the lowest ranking (fourth). When different isotopes of the same element are compared, such as deuterium (2H) and protium (1H), the heavier isotope ranks higher than the lighter isotope. Thus, atoms commonly found in organic compounds have the following order.
+
+The atoms are arranged in descending order of their ranking and atomic number as follows: B r, C l, S, P, O, N, C, 2 H, and 1 H.
+RULE 2
+If a decision can’t be reached by ranking the first atoms in the substituent, look at the second, third, or fourth atoms away from the chirality center until the first difference is found. A −CH2CH3 substituent and a −CH3 substituent are equivalent by rule 1 because both have carbon as the first atom. By rule 2, however, ethyl ranks higher than methyl because ethyl has a carbon as its highest second atom, while methyl has only hydrogen as its second atom. Look at the following pairs of examples to see how the rule works:
+
+Four pairs of structures are ranked. Within each pair, one structure is labeled as lower while the other as higher.
+RULE 3
+Multiple-bonded atoms are equivalent to the same number of single-bonded atoms. For example, an aldehyde substituent ( –CH═O
+ ), which has a carbon atom doubly bonded to one oxygen, is equivalent to a substituent having a carbon atom singly bonded to two oxygens:
+
+Two equivalent structures. The first structure has a carbonyl group. The second structure has a carbon bonded to hydrogen and two oxygens. One of the oxygens is bonded to carbon.
+As further examples, the following pairs are equivalent:
+
+Two pairs of equivalent structures. First pair shows alkene and a 4-carbon chain. Second pair shows alkyne and a 2-carbon chain, in which each carbon is bonded to two carbons
+Having ranked the four groups attached to a chiral carbon, we describe the stereochemical configuration around the carbon by orienting the molecule so that the group with the lowest ranking (4) points directly away from us. We then look at the three remaining substituents, which now appear to radiate toward us like the spokes on a steering wheel (Figure 5.8). If a curved arrow drawn from the highest to second-highest to third-highest ranked substituent (1 → 2 → 3) is clockwise, we say that the chirality center has the R configuration (Latin rectus, meaning “right”). If an arrow from 1 → 2 → 3 is counterclockwise, the chirality center has the S configuration (Latin sinister, meaning “left”). To remember these assignments, think of a car’s steering wheel when making a Right (clockwise) turn.
+
+Substituents in the compound form R configuration, depicted as a right turn of the steering wheel. Its mirror image forms S configuration, depicted as left turn of the steering wheel.
+Figure 5.8 Assigning R and S configurations to chirality centers. When the molecule is oriented so that the lowest-ranked group (4) is toward the rear, the remaining three groups radiate toward the viewer like the spokes of a steering wheel. If the direction of travel 1 → 2 → 3 is clockwise (right turn), the center has the R configuration. If the direction of travel 1 → 2 → 3 is counterclockwise (left turn), the center is S.
+Look at (−)-lactic acid in Figure 5.9 for an example of how to assign configuration. Sequence rule 1 says that −OH is ranked 1 and −H is ranked 4, but it doesn’t allow us to distinguish between −CH3 and −CO2H because both groups have carbon as their first atom. Sequence rule 2, however, says that −CO2H ranks higher than −CH3 because O (the highest second atom in −CO2H) outranks H (the highest second atom in −CH3). Now, turn the molecule so that the fourth-ranked group (−H) is oriented toward the rear, away from the observer. Since a curved arrow from 1 (−OH) to 2 (−CO2H) to 3 (−CH3) is clockwise (right turn of the steering wheel), (−)-lactic acid has the R configuration. Applying the same procedure to (+)-lactic acid leads to the opposite assignment.
+
+Structure and ball-and-stick model of (minus)-lactic acid with R configuration. Its mirror image shows ball-and-stick model of (plus)-lactic acid with S configuration. The figure also shows structure of (plus)-lactic acid.
+Figure 5.9 Assigning configuration to (a) (R)-(−)-lactic acid and (b) (S)-(+)-lactic acid.
+Further examples are provided by naturally occurring (−)-glyceraldehyde and (+)-alanine, which both have the S configuration as shown in Figure 5.10. Note that the sign of optical rotation, (+) or (−), is not related to the R,S designation. (S)-Glyceraldehyde happens to be levorotatory (−), and (S)-alanine happens to be dextrorotatory (+). There is no simple correlation between R,S configuration and direction or magnitude of optical rotation.
+
+The structures and ball-and-stick models of (S)-Glyceraldehyde [(S)-(minus)-2,3-dihydroxypropanal] and (S)-alanine [(S)-(plus)-2-aminopropanoic acid with their [alpha] D values equals minus 8.7 and plus 8.5, respectively.
+Figure 5.10 Assigning configuration to (a) (−)-glyceraldehyde. (b) (+)-alanine. Both happen to have the S configuration, although one is levorotatory and the other is dextrorotatory.
+One additional point needs to be mentioned—the matter of absolute configuration. How do we know that the assignments of R and S configuration are correct in an absolute sense, rather than a relative, sense? Since there is no correlation between the R,S configuration and the direction or magnitude of optical rotation, how do we know that the R configuration belongs to the levorotatory enantiomer of lactic acid? This difficult question was finally solved in 1951, when an X-ray diffraction method was found for determining the absolute spatial arrangement of atoms in a molecule. Based on those results, we can say with certainty that the R,S conventions are correct.
+
+Worked Example 5.3
+Assigning Configuration to Chirality Centers
+Orient each of the following drawings so that the lowest-ranked group is toward the rear, and then assign R or S configuration to each:
+
+A carbon single bonded to 2 and 3, wedge to 1, and dash to 4. Another carbon single bonded to 1 and 3, wedge to 4, and dash to 2.
+Strategy
+It takes practice to be able to visualize and orient a chirality center in three dimensions. You might start by indicating where the observer must be located—180° opposite the lowest-ranked group. Then imagine yourself in the position of the observer, and redraw what you would see.
+Solution
+In (a), you would be located in front of the page toward the top right of the molecule, and you would see group 2 to your left, group 3 to your right, and group 1 below you. This corresponds to an R configuration.
+A carbon is single bonded to substituents 2 and 3, wedge bonded to 1, and dash bonded to 4. To the right, the substituents are arranged in R configuration.
+In (b), you would be located behind the page toward the top left of the molecule from your point of view, and you would see group 3 to your left, group 1 to your right, and group 2 below you. This also corresponds to an R configuration.
+
+A carbon is single bonded to substituents 1 and 3, wedge bonded to 4, and dash bonded to 2. To the right, the substituents are arranged in R configuration.
+Worked Example 5.4
+Drawing the Three-Dimensional Structure of a Specific Enantiomer
+Draw a tetrahedral representation of (R)-2-chlorobutane.
+
+Strategy
+Begin by ranking the four substituents bonded to the chirality center: (1) −Cl, (2) −CH2CH3, (3) −CH3, (4) −H. To draw a tetrahedral representation of the molecule, orient the lowest-ranked group (−H) away from you and imagine that the other three groups are coming out of the page toward you. Then, place the remaining three substituents such that the direction of travel 1 → 2 → 3 is clockwise (right turn), and tilt the molecule toward you to bring the rear hydrogen into view. Using molecular models is a real help in working problems of this sort.
+Solution
+The structure of chlorobutane has a central carbon wedge bonded to chlorine (1), ethyl (2), and methyl (3) in clockwise manner. The structure is rotated to form (R)-2-chlorobutane.
+Problem
+5-7
+Which member in each of the following sets ranks higher?
+(a)		−H or −Br
+(b)		−Cl or −Br
+(c)		−CH3 or −CH2CH3
+(d)		−NH2 or −OH
+(e)		−CH2OH or −CH3
+(f)		−CH2OH or −CH =
+ O
+Problem
+5-8
+Rank each of the following sets of substituents:
+(a)		−H, −OH, −CH2CH3, −CH2CH2OH
+(b)		−CO2H, −CO2CH3, −CH2OH, −OH
+(c)		−CN, −CH2NH2, −CH2NHCH3, −NH2
+(d)		−SH, −CH2SCH3, −CH3, −SSCH3
+Problem
+5-9
+Orient each of the following drawings so that the lowest-ranked group is toward the rear, and then assign R or S configuration:
+(a)		A central carbon is single bonded to substituents 1 and 3, wedge bonded to 2, and dash bonded to 4 (clockwise).
+(b)		A central carbon is single bonded to substituents 3 and 4, wedge bonded to 1, and dash bonded to 2 (clockwise).
+(c)		A central carbon is single bonded to substituents 4 and 2, wedge bonded to 3, and dash bonded to 1 (clockwise).
+Problem
+5-10
+Assign R or S configuration to the chirality center in each of the following molecules:
+(a)		A central carbon is single bonded to a methyl and a carboxylic acid group, wedge bonded to a thiol group, and dash bonded to a hydrogen atom (clockwise).
+(b)		A central carbon is single bonded to a methyl and a hydroxyl group, dash bonded to a carboxylic acid group, and wedge bonded to a hydrogen atom (clockwise).
+(c)		A central carbon is wedge bonded to hydrogen, dash bonded to an aldehyde group, wedge bonded to a hydroxyl group, and dash bonded to a hydroxymethyl group (clockwise).
+Problem
+5-11
+Draw a tetrahedral representation of (S)-2-pentanol (2-hydroxypentane).
+Problem
+5-12
+Assign R or S configuration to the chirality center in the following molecular model of the amino acid methionine (blue = N, yellow = S):
+
+Molecules like lactic acid, alanine, and glyceraldehyde are relatively simple because each has only one chirality center and thus only two stereoisomers. The situation becomes more complex, however, with molecules that have more than one chirality center. As a general rule, a molecule with n chirality centers can have up to 2n stereoisomers (although it may have fewer, as we’ll see below). Take the amino acid threonine (2-amino-3-hydroxybutanoic acid), for example. Since threonine has two chirality centers (C2 and C3), there are four possible stereoisomers, as shown in Figure 5.11. Check for yourself that the R,S configurations of all stereoisomers are correct.
+
+The figure shows the wedge-dash structures and ball-and-stick models of enantiomer pairs of 2-amino-3-hydroxybutanoic acid. 2R, 3R mirror image is 2S, 3S. 2R, 3S mirror image is 2S, 3R.
+Figure 5.11 The four stereoisomers of 2-amino-3-hydroxybutanoic acid.
+The four stereoisomers of 2-amino-3-hydroxybutanoic acid can be grouped into two pairs of enantiomers. The 2R,3R stereoisomer is the mirror image of 2S,3S, and the 2R,3S stereoisomer is the mirror image of 2S,3R. But what is the relationship between any two molecules that are not mirror images? What, for instance, is the relationship between the 2R,3R isomer and the 2R,3S isomer? They are stereoisomers, yet they aren’t enantiomers. To describe such a relationship, we need a new term—diastereomer.
+
+Diastereomers (dia-stair-e-oh-mers) are stereoisomers that are not mirror images. Since we used the right-hand/left-hand analogy to describe the relationship between two enantiomers, we might extend the analogy by saying that the relationship between diastereomers is like that of hands from different people. Your hand and your friend’s hand look similar, but they aren’t identical and they aren’t mirror images. The same is true of diastereomers: they’re similar, but they aren’t identical and they aren’t mirror images.
+
+Note carefully the difference between enantiomers and diastereomers: enantiomers have opposite configurations at all chirality centers, whereas diastereomers have opposite configurations at some (one or more) chirality centers but the same configuration at others. A full description of the four stereoisomers of threonine is given in Table 5.2. Of the four, only the 2S,3R isomer, [α]D = −28.3, occurs naturally in plants and animals and is an essential nutrient for humans. This result is typical: most biological molecules are chiral, and usually only one stereoisomer is found in nature.
+
+Table 5.2 Relationships among the Four Stereoisomers of Threonine
+Stereoisomer	Enantiomer	Diastereomer
+2R,3R	2S,3S	2R,3S and 2S,3R
+2S,3S	2R,3R	2R,3S and 2S,3R
+2R,3S	2S,3R	2R,3R and 2S,3S
+2S,3R	2R,3S	2R,3R and 2S,3S
+In the special case where two diastereomers differ at only one chirality center but are the same at all others, we say that the compounds are epimers. Cholestanol and coprostanol, for instance, are both found in human feces, and both have nine chirality centers. Eight of the nine are identical, but the one at C5 is different. Thus, cholestanol and coprostanol are epimeric at C5.
+
+The wedge-dash structures of cholestanol and coprostanol are labeled epimers. C5 of cholestanol and coprostanol are labeled S and R, respectively.
+Problem
+5-13
+One of the following molecules (a)–(d) is D-erythrose 4-phosphate, an intermediate in the Calvin photosynthetic cycle by which plants incorporate CO2 into carbohydrates. If D-erythrose 4-phosphate has R stereochemistry at both chirality centers, which of the structures is it? Which of the remaining three structures is the enantiomer of D-erythrose 4-phosphate, and which are diastereomers?
+
+(a)Vertically, aldehyde dashed bond carbon bond carbon dashed bond C H 2 phosphate. C 2 and C 3 both have hydrogen (wedge, left) and hydroxyl (wedge, right).  (b)Vertically, aldehyde dashed bond carbon bond carbon dashed bond C H 2 phosphate. C 2 has hydroxyl (left), H on wedges, C 3 has hydrogen (left), hydroxyl on wedges.  (c)Vertically, aldehyde dashed bond carbon bond carbon dashed bond C H 2 phosphate. C 2 has hydrogen (left), hydroxyl on wedges, C 3 has hydroxyl (left), hydrogen on wedges.  (d)Vertically, aldehyde dashed bond carbon bond carbon dashed bond C H 2 phosphate. C 2 and C 3 both have hydroxyl (wedge, left) and hydrogen (wedge, right).
+
+Problem
+5-14
+How many chirality centers does morphine have? How many stereoisomers of morphine are possible in principle?
+
+The structure of morphine.
+Problem
+5-15
+Assign R or S configuration to each chirality center in the following molecular model of the amino acid isoleucine (blue = N):
+
+Let’s look at another example (Section 5.4) of a compound with more than one chirality center: the tartaric acid used by Pasteur. The four stereoisomers can be drawn as follows:
+
+The mirror image of 2 R, 3 R tartaric acid is 2 S, 3 S and mirror image of 2 R, 3 S tartaric acid is 2 S, 3 R.
+The 2R,3R and 2S,3S structures are nonsuperimposable mirror images and therefore represent a pair of enantiomers. A close look at the 2R,3S and 2S,3R structures, however, shows that they are superimposable, and thus identical, as can be seen by rotating one structure 180°.
+
+2 R, 3 S tartaric acid is rotated at 180 degrees to form 2 S, 3 R tartaric acid. Both structures are identical.
+The 2R,3S and 2S,3R structures are identical because the molecule has a plane of symmetry and is therefore achiral. The symmetry plane cuts through the C2–C3 bond, making one half of the molecule a mirror image of the other half (Figure 5.12). Because of the plane of symmetry, the molecule is achiral, despite the fact that it has two chirality centers. Such compounds, which are achiral, yet contain chirality centers, are called meso compounds (me-zo). Thus, tartaric acid exists in three stereoisomeric forms: two enantiomers and one meso form.
+
+The wedge-dash structure and ball-and-stick model of tartaric acid. C2 and C3 have a horizontal symmetry plane.
+Figure 5.12 A symmetry plane through the C2–C3 bond of meso-tartaric acid makes the molecule achiral.
+Some physical properties of the three stereoisomers are listed in Table 5.3. The (+)- and (−)-tartaric acids have identical melting points, solubilities, and densities, but they differ in the sign of their rotation of plane-polarized light. The meso isomer, by contrast, is diastereomeric with the (+) and (−) forms. It has no mirror-image relationship to (+)- and (−)-tartaric acids, is a different compound altogether, and thus has different physical properties.
+
+Table 5.3 Some Properties of the Stereoisomers of Tartaric Acid Some Properties of the Stereoisomers of Tartaric Acid
+Stereoisomer	Melting point (°C)	[α]D	Density (g/cm3)	Solubility at 20 °C
+(g/100 mL H2O)
+(+)	168–170	+12	1.7598	139.0
+(−)	168–170	−12	1.7598	139.0
+Meso	146–148	  0	1.6660	125.0
+Worked Example 5.5
+Distinguishing Chiral Compounds from Meso Compounds
+Does cis-1,2-dimethylcyclobutane have any chirality centers? Is it chiral?
+
+Strategy
+To see whether a chirality center is present, look for a carbon atom bonded to four different groups. To see whether the molecule is chiral, look for the presence or absence of a symmetry plane. Not all molecules with chirality centers are chiral overall—meso compounds are an exception.
+Solution
+A look at the structure of cis-1,2-dimethylcyclobutane shows that both methyl-bearing ring carbons (C1 and C2) are chirality centers. Overall, though, the compound is achiral because there is a symmetry plane bisecting the ring between C1 and C2. Thus, the molecule is a meso compound.
+The structure of cis-1,2-dimethylcyclobutane. The bond between C1 and C2 has a vertical symmetry plane.
+Problem
+5-16
+Which of the following structures represent meso compounds?
+
+(a)In a cyclopentane ring, C1 and C2 are each wedge bonded to a hydroxyl group and dash bonded to a hydrogen atom. (b)In a cyclopentane ring, C1 is dash bonded to hydrogen and wedge bonded to the hydroxyl group. C2 is dash bonded to the hydroxyl group and wedge bonded to hydrogen. (c)The wedge-dash structure shows cyclopentane ring fusion. C2 of the right cyclopentane is wedge bonded to a methyl group and dash bonded to a hydrogen atom. (d)In a 2-carbon chain, C1 is wedge bonded to the bromine atom and methyl group. C2 is dash bonded to bromine, wedge bonded to a methyl group, and hydrogen atom.
+
+Problem
+5-17
+Which of the following have a meso form? (Recall that the -ol suffix refers to an alcohol, ROH.)
+
+(a) 2,3-Butanediol (b) 2,3-Pentanediol (c) 2,4-Pentanediol
+
+Problem
+5-18
+Does the following structure represent a meso compound? If so, indicate the symmetry plane.
+
+The ball-and-stick model of a compound comprising a cyclopentane ring. Gray, black, and red spheres represent hydrogen, carbon, and oxygen, respectively.
+
+To end this discussion of stereoisomerism, let’s return for a last look at Pasteur’s pioneering work, described in Section 5.4. Pasteur took an optically inactive tartaric acid salt and found that he could crystallize from it two optically active forms having what we would now call 2R,3R and 2S,3S configurations. But what was the optically inactive form he started with? It couldn’t have been meso-tartaric acid, because meso-tartaric acid is a different chemical compound and can’t interconvert with the two chiral enantiomers without breaking and re-forming chemical bonds.
+
+The answer is that Pasteur started with a 50 : 50 mixture of the two chiral tartaric acid enantiomers. Such a mixture is called a racemate (rass-uh-mate), or racemic mixture, and is denoted by either the symbol (±) or the prefix d,l to indicate an equal mixture of dextrorotatory and levorotatory forms. Racemates show no optical rotation because the (+) rotation from one enantiomer exactly cancels the (−) rotation from the other. Through good luck, Pasteur was able to separate, or resolve, racemic tartaric acid into its (+) and (−) enantiomers. Unfortunately, the fractional crystallization technique he used doesn’t work for most racemates, so other methods are needed.
+
+The most common method for resolving the racemate of a chiral carboxylic acid (RCO2H) is to carry out an acid-base reaction between the acid and an amine base (RNH2) to yield an ammonium salt:
+
+The figure shows a reaction in which carboxylic acid reacts with an amine base to form ammonium salt.
+To understand how this method of resolution works, let’s see what happens when a racemic mixture of chiral acids, such as (+)- and (−)-lactic acids, reacts with an achiral amine base, such as methylamine, CH3NH2. The situation is analogous to what happens when left and right hands (chiral) pick up a ball (achiral). Both left and right hands pick up the ball equally well, and the products—ball in right hand versus ball in left hand—are mirror images. In the same way, both (+)- and (−)-lactic acid react with methylamine equally well, and the product is a racemic mixture of the two enantiomers methylammonium (+)-lactate and methylammonium (−)-lactate (Figure 5.13).
+
+Racemic lactic acid (50 percent R, 50 percent S) reacts with methylamine to form R salt. Its mirror image shows S salt. Both R and S salts are labeled enantiomers.
+Figure 5.13 Reaction of racemic lactic acid with achiral methylamine gives a racemic mixture of ammonium salts.
+Now let’s see what happens when the racemic mixture of (+)- and (−)-lactic acids reacts with a single enantiomer of a chiral amine base, such as (R)-1-phenylethylamine. The situation is analogous to what happens when left and right hands (chiral) put on a right-handed glove (also chiral). Left and right hands don’t put on the right-handed glove in the same way, so the products—right hand in right glove versus left hand in right glove—are not mirror images; they’re similar but different.
+
+In the same way, (+)- and (−)-lactic acids react with (R)-1-phenylethylamine to give two different products (Figure 5.14). (R)-Lactic acid reacts with (R)-1-phenylethylamine to give the R,R salt, and (S)-lactic acid reacts with the R amine to give the S,R salt. The two salts are diastereomers, not enantiomers. They have different chemical and physical properties, and it may therefore be possible to separate them by crystallization or some other means. Once separated, acidification of the two diastereomeric salts with a strong acid makes it possible to isolate the two pure enantiomers of lactic acid and to recover the chiral amine for reuse.
+
+Racemic lactic acid reacts with R-1-phenylethylamine to form an R, R salt and an S, R salt. Both salts are labeled diastereomers.
+Figure 5.14 Reaction of racemic lactic acid with (R)-1-phenylethylamine yields a mixture of diastereomeric ammonium salts, which have different properties and can be separated.
+Worked Example 5.6
+Predicting the Chirality of a Reaction Product
+We’ll see in Section 21.3 that carboxylic acids (RCO2H) react with alcohols (R′OH) to form esters (RCO2R′). Suppose that (±)-lactic acid reacts with CH3OH to form the ester, methyl lactate. What stereochemistry would you expect the product(s) to have? What is the relationship of the products?
+
+In a reaction, lactic acid reacts with methanol in the presence of acid catalyst to form methyl lactate and water.
+Solution
+Reaction of a racemic acid with an achiral alcohol such as methanol yields a racemic mixture of mirror-image (enantiomeric) products.
+(S)-lactic acid reacts with (R)-lactic acid in the presence of methanol, acid catalyst to form methyl (S)-lactate and methyl (R)-lactate.
+Problem
+5-19
+Suppose that acetic acid (CH3CO2H) reacts with (S)-2-butanol to form an ester (see Worked Example 5.6). What stereochemistry would you expect the product(s) to have? What is the relationship of the products?
+
+In a reaction, acetic acid reacts with 2-butanol in the presence of acid catalyst to form secondary-butyl acetate and water.
+Problem
+5-20
+What stereoisomers would result from reaction of (±)-lactic acid with (S)-1-phenylethylamine, and what is the relationship between them?
+
+As noted on several previous occasions, isomers are compounds with the same chemical formula but different structures. We’ve seen several kinds of isomers in the past few chapters, and it’s a good idea at this point to see how they relate to one another (Figure 5.15).
+
+The flowchart of classification of isomers. Two types of isomers are constitutional and stereoisomers. Stereoisomers are further classified into enantiomers and diastereomers. The diastereomers are categorized as configurational and cis-trans.
+Figure 5.15 A summary of the different kinds of isomers.
+There are two fundamental types of isomers, both of which we’ve now encountered: constitutional isomers and stereoisomers.
+
+Constitutional isomers (Section 3.2) are compounds whose atoms are connected differently. Among the kinds of constitutional isomers we’ve seen are skeletal, functional, and positional isomers.
+
+2-methylpropane and butane have different carbon skeletons. Ethyl alcohol and dimethyl ether have different functional groups. Isopropylamine and propylamine have different position of functional groups.
+Stereoisomers (Section 4.2) are compounds whose atoms are connected in the same order but with a different spatial arrangement. Among the kinds of stereoisomers we’ve seen are enantiomers, diastereomers, and cis–trans isomers of cycloalkanes. Actually, cis–trans isomers are just a subclass of diastereomers because they are non–mirror-image stereoisomers:
+
+(R)-lactic acid and (S)-lactic acid are enantiomers. (2 R, 3 R)-2-amino-3-hydroxybutanoic acid and (2 R, 3 S)-2-amino-3-hydroxybutanoic acid are configurational diastereomers. Trans and cis-1,3-dimethylcyclopentane are cis-trans diastereomers.
+Problem
+5-21
+What kinds of isomers are the following pairs?
+(a)		(S)-5-Chloro-2-hexene and chlorocyclohexane
+(b)		(2R,3R)-Dibromopentane and (2S,3R)-dibromopentane
+
+As noted previously, the most common cause of chirality in a molecule is the presence of four different substituents bonded to a tetrahedral atom. Although that atom is usually carbon, it doesn’t necessarily have to be. Nitrogen, phosphorus, and sulfur atoms are all commonly encountered in organic molecules, and can all be chirality centers. We know, for instance, that trivalent nitrogen is tetrahedral, with its lone pair of electrons acting as the fourth “substituent” (Section 1.10). Is trivalent nitrogen chiral? Does a compound such as ethylmethylamine exist as a pair of enantiomers?
+
+The answer is both yes and no. Yes in principle, but no in practice. It turns out that most trivalent nitrogen compounds undergo a rapid umbrella-like inversion that interconverts enantiomers, so we can’t isolate individual enantiomers except in special cases.
+
+The figure shows ethylmethylamine with its mirror image. The mirror shows reversible arrows labeled rapid.
+A similar situation occurs in trivalent phosphorus compounds, called phosphines, but the inversion at phosphorus is substantially slower than inversion at nitrogen, so stable chiral phosphines can be isolated. (R)- and (S)-methylpropylphenylphosphine, for instance, are configurationally stable for several hours at 100 °C. We’ll see the importance of phosphine chirality in Section 26.7 in connection with the synthesis of chiral amino acids.
+
+The structure of (R)-methylpropylphenylphosphine (configurationally stable). The lobe above P containing a lone pair of electrons is labeled lowest ranked.
+Divalent sulfur compounds are achiral, but trivalent sulfur compounds called sulfonium salts (R3S+) can be chiral. Like phosphines, sulfonium salts undergo relatively slow inversion, so chiral sulfonium salts are configurationally stable and can be isolated. Perhaps the best known example is the coenzyme S-adenosylmethionine, the so-called biological methyl donor, which is involved in many metabolic pathways as a source of CH3 groups. (The “S” in the name S-adenosylmethionine stands for sulfur and means that the adenosyl group is attached to the sulfur atom of the amino acid methionine.) The molecule has S stereochemistry at sulfur and is configurationally stable for several days at room temperature. Its R enantiomer is also known but is not biologically active.
+
+The structure of (S)-S-adenosylmethionine. The S atom in methionine group is labeled S. The ribose and adenine rings are collectively labeled adenosine.
+
+Closely related to the concept of chirality, and particularly important in biological chemistry, is the notion of prochirality. A molecule is said to be prochiral if it can be converted from achiral to chiral in a single chemical step. For instance, an unsymmetrical ketone like 2-butanone is prochiral because it can be converted to the chiral alcohol 2-butanol by the addition of hydrogen, as we’ll see in Section 17.4.
+
+The figure shows a reaction in which 2-butanone (prochiral) forms 2-butanol (chiral). C2 in both structures is highlighted.
+Which enantiomer of 2-butanol is produced depends on which face of the planar carbonyl group undergoes reaction. To distinguish between the possibilities, we use the stereochemical descriptors Re and Si. Rank the three groups attached to the trigonal, sp2-hybridized carbon, and imagine curved arrows from the highest to second-highest to third-highest ranked substituents. The face on which the arrows curve clockwise is designated the Re face (similar to R), and the face on which the arrows curve counterclockwise is designated the Si face (similar to S). In this example, addition of hydrogen from the Re face gives (S)-2-butane, and addition from the Si face gives (R)-2-butane.
+
+2-Butanone is labeled Si face (counterclockwise) at the bottom and Re face (clockwise) at the top. To the right, the structures of (S)-2-butanol and (R)-2-butanol are drawn.
+In addition to compounds with planar, sp2-hybridized atoms, compounds with tetrahedral, sp3-hybridized atoms can also be prochiral. An sp3-hybridized atom is said to be a prochirality center if, by changing one of its attached groups, it becomes a chirality center. The −CH2OH carbon atom of ethanol, for instance, is a prochirality center because changing one of its attached −H atoms converts it into a chirality center.
+
+The structure of ethanol with prochiral C2  labeled. Forms another compound, in which the C2  is bonded to X instead of hydrogen and labeled chirality center.
+To distinguish between the two identical atoms (or groups of atoms) on a prochirality center, we imagine a change that will raise the ranking of one atom over the other without affecting its rank with respect to other attached groups. On the −CH2OH carbon of ethanol, for instance, we might imagine replacing one of the 1H atoms (protium) by 2H (deuterium). The newly introduced 2H atom ranks higher than the remaining 1H atom, but it remains lower than other groups attached to the carbon. Of the two identical atoms in the original compound, the atom whose replacement leads to an R chirality center is said to be pro-R and the atom whose replacement leads to an S chirality center is pro-S.
+
+The structure of ethanol with prochiral C2  labeled  leads to the formation of two chiral compounds, one with C2  labeled R and other with C2  labeled S.
+A large number of biological reactions involve prochiral compounds. One of the steps in the citric acid cycle by which food is metabolized, for instance, is the addition of H2O to fumarate to give malate. Addition of −OH occurs on the Si face of a fumarate carbon and gives (S)-malate as product.
+
+The figure shows a reaction where fumarate converts to (S)-malate. In fumarate, the central carbon is labeled Re at the top and Si at the bottom.
+As another example, studies with deuterium-labeled substrates have shown that the reaction of ethanol with the coenzyme nicotinamide adenine dinucleotide (NAD+), catalyzed by yeast alcohol dehydrogenase, occurs with exclusive removal of the pro-R hydrogen from ethanol and with addition only to the Re face of NAD+.
+
+The figure shows a reversible reaction where ethanol reacts with N A D superscript plus to form acetaldehyde and N A D H.
+Determining the stereochemistry of reactions at prochirality centers is a powerful method for studying detailed mechanisms in biochemical reactions. As just one example, the conversion of citrate to cis-aconitate in the citric acid cycle has been shown to occur with loss of a pro-R hydrogen, implying that the OH and H groups leave from opposite sides of the molecule.
+
+The figure shows a reaction where citrate on the elimination of water molecules by the loss of the pro-R-hydrogen forms cis-aconitate.
+Problem
+5-22
+Identify the indicated hydrogens in the following molecules as pro-R or pro-S:
+(a)		The wedge-dash structure of (S)-glyceraldehyde. Two arrows point toward the hydrogen atoms bonded at C3.
+(b)		The wedge-dash structure of phenylalanine. Two arrows point toward the hydrogen atoms bonded at C3.
+Problem
+5-23
+Identify the indicated faces of carbon atoms in the following molecules as Re or Si:
+(a)		The structure of hydroxyacetone. Two arrows, one from the top and other from the bottom, point toward the central carbon.
+(b)		The structure of crotyl alcohol. Two arrows, one from the top and other from the bottom, point toward the central carbon.
+Problem
+5-24
+The lactic acid that builds up in tired muscles is formed from pyruvate. If the reaction occurs with addition of hydrogen to the Re face of pyruvate, what is the stereochemistry of the product?
+
+The figure shows a reaction where pyruvate converts to lactate.
+Problem
+5-25
+The aconitase-catalyzed addition of water to cis-aconitate in the citric acid cycle occurs with the following stereochemistry. Does the addition of the OH group occur on the Re or Si face of the substrate? What about the addition of the H? Do the H and OH groups add from the same side of the double bond or from opposite sides?
+
+Although the different enantiomers of a chiral molecule have the same physical properties, they usually have different biological properties. For example, a change in chirality can affect the biological properties of many drugs, such as fluoxetine, a heavily prescribed medication sold under the trade name Prozac. Racemic fluoxetine is an effective antidepressant but has no activity against migraine. The pure S enantiomer, however, works remarkably well in preventing migraine. Other examples of how chirality affects biological properties are given in the Chapter 5 Chemistry Matters at the end of this chapter.
+
+The wedge-dash structure and ball-and-stick model of (S)-fluoxetine. Gray, black, green, blue, and red spheres represent hydrogen, carbon, fluorine, nitrogen, and oxygen, respectively. (S)-fluoxetine prevents migraine.
+Why do different enantiomers have different biological properties? To have a biological effect, a substance typically must fit into an appropriate receptor that has a complementary shape. But because biological receptors are chiral, only one enantiomer of a chiral substrate can fit, just as only a right hand can fit into a right-handed glove. The mirror-image enantiomer will be a misfit, like a left hand in a right-handed glove. A representation of the interaction between a chiral molecule and a chiral biological receptor is shown in Figure 5.16: one enantiomer fits the receptor perfectly, but the other does not.
+
+A hand on left holds chiral molecule with a cube above the palm. Hand on right shows enantiomer with the cube on palm, labeled mismatch.
+Figure 5.16 Interaction of a chiral object with a chiral receptor. A left hand interacts with a chiral object, much as a biological receptor interacts with a chiral molecule. (a) One enantiomer fits into the hand perfectly: green thumb, red palm, and gray pinkie finger, with the blue substituent exposed. (b) The other enantiomer, however, can’t fit into the hand. When the green thumb and gray pinkie finger interact appropriately, the palm holds a blue substituent rather than a red one, with the red substituent exposed.
+The hand-in-glove fit of a chiral substrate into a chiral receptor is relatively straightforward, but it’s less obvious how a prochiral substrate can undergo a selective reaction. Take the reaction of ethanol with NAD+ catalyzed by yeast alcohol dehydrogenase. As we saw at the end of Section 5.11, this reaction occurs with exclusive removal of the pro-R hydrogen from ethanol and with addition only to the Re face of the NAD+ carbon.
+
+We can understand this result by imagining that the chiral enzyme receptor again has three binding sites, as in Figure 5.16. When green and gray substituents of a prochiral substrate are held appropriately, however, only one of the two red substituents—say, the pro-S one—is also held while the other, pro-R, substituent is exposed for reaction.
+
+We describe the situation by saying that the receptor provides a chiral environment for the substrate. In the absence of a chiral environment, the two red substituents are chemically identical, but in the presence of a chiral environment, they are chemically distinctive (Figure 5.17a). The situation is similar to what happens when you pick up a coffee mug. By itself, the mug has a plane of symmetry and is achiral. When you pick up the mug, however, your hand provides a chiral environment so that one side becomes much more accessible and easier to drink from than the other (Figure 5.17b).
+
+Left hand holding molecule; red spheres pointing upward (pro-R) and toward wrist (pro-S), green toward thumb, white toward pinkie. Separately, a right hand holding a coffee mug by the handle.
+Figure 5.17 (a) When a prochiral molecule is held in a chiral environment, the two seemingly identical substituents are distinguishable. (b) Similarly, when an achiral coffee mug is held in the chiral environment of your hand, it’s much easier to drink from one side than the other because the two sides of the mug are now distinguishable.
+
+The many hundreds of different pharmaceutical agents approved for use by the U.S. Food and Drug Administration come from many sources. Many drugs are isolated directly from plants or bacteria, and others are made by chemical modification of naturally occurring compounds. An estimated 33%, however, are made entirely in the laboratory and have no relatives in nature.
+
+A photo shows an injured runner being carried off the track on a stretcher.
+Figure 5.18 The S enantiomer of ibuprofen soothes the aches and pains of athletic injuries much more effectively than the R enantiomer. (credit: “World Athletic Championships 2007 in Osaka” by Eckhard Pecher/Wikimedia Commons, CC BY 2.5)
+Those drugs that come from natural sources, either directly or after laboratory modification, are usually chiral and are generally found only as a single enantiomer rather than as a racemate. Penicillin V, for example, an antibiotic isolated from the Penicillium mold, has the 2S,5R,6R configuration. Its enantiomer, which does not occur naturally but can be made in the laboratory, has no antibiotic activity.
+
+The wedge-dash structure of penicillin V (2 S, 5 R, 6 R configuration). C6, C5, and C2 have configuration 6R, 5R, and 2S, respectively.
+In contrast to drugs from natural sources, drugs that are made entirely in the laboratory are either achiral or, if chiral, are often produced and sold as racemates. Ibuprofen, for example, has one chirality center and is sold commercially under such trade names as Advil, Nuprin, and Motrin as a 50 : 50 mixture of R and S. It turns out, however, that only the S enantiomer is active as an analgesic and anti-inflammatory agent. The R enantiomer of ibuprofen is inactive, although it is slowly converted in the body to the active S form.
+
+The structure and ball-and-stick model of (S)-Ibuprofen (an active analgesic agent). Gray, black, and red spheres represent hydrogen, carbon, and oxygen, respectively.
+Not only is it chemically wasteful to synthesize and administer an enantiomer that does not serve the intended purpose, many instances are now known where the presence of the “wrong” enantiomer in a racemic mixture either affects the body’s ability to utilize the “right” enantiomer or has unintended pharmacological effects of its own. The presence of (R)-ibuprofen in the racemic mixture, for instance, slows the rate at which the S enantiomer takes effect in the body, from 12 minutes to 38 minutes.
+
+To get around this problem, pharmaceutical companies attempt to devise methods of enantioselective synthesis, which allow them to prepare only a single enantiomer rather than a racemic mixture. Viable methods have been developed for the preparation of (S)-ibuprofen, which is marketed in Europe. We’ll look further into enantioselective synthesis in the Chapter 19 Chemistry Matters.
+
+absolute configuration
+achiral
+Cahn–Ingold–Prelog rules
+chiral
+chiral environment
+chirality center
+configuration
+dextrorotatory
+diastereomer
+enantiomer
+epimer
+levorotatory
+meso compound
+optically active
+prochiral
+prochirality center
+pro-R configuration
+pro-S configuration
+R configuration
+racemate
+Re face
+resolution
+S configuration
+Si face
+specific rotation, [α]D
+
+In this chapter, we’ve looked at some of the causes and consequences of molecular handedness—a topic of particular importance in understanding biological chemistry. The subject can be a bit complex but is so important that it’s worthwhile spending time to become familiar with it.
+
+An object or molecule that is not superimposable on its mirror image is said to be chiral, meaning “handed.” A chiral molecule is one that does not have a plane of symmetry cutting through it so that one half is a mirror image of the other half. The most common cause of chirality in organic molecules is the presence of a tetrahedral, sp3-hybridized carbon atom bonded to four different groups—a so-called chirality center. Chiral compounds can exist as a pair of nonsuperimposable mirror-image stereoisomers called enantiomers. Enantiomers are identical in all physical properties except for the direction in which they rotate plane-polarized light.
+
+The stereochemical configuration of a chirality center can be specified as either R (rectus) or S (sinister) by using the Cahn–Ingold–Prelog rules. First rank the four substituents on the chiral carbon atom, and then orient the molecule so that the lowest-ranked group points directly back. If a curved arrow drawn in the direction of decreasing rank (1 → 2 → 3) for the remaining three groups is clockwise, the chirality center has the R configuration. If the direction is counterclockwise, the chirality center has the S configuration.
+
+Some molecules have more than one chirality center. Enantiomers have opposite configuration at all chirality centers, whereas diastereomers have the same configuration in at least one center but opposite configurations at the others. Epimers are diastereomers that differ in configuration at only one chirality center. A compound with n chirality centers can have a maximum of 2n stereoisomers.
+
+A meso compound contains a chirality center but is achiral overall because it has a plane of symmetry. Racemic mixtures, or racemates, are 50 : 50 mixtures of (+) and (−) enantiomers. Racemates and individual diastereomers differ in their physical properties, such as solubility, melting point, and boiling point.
+
+A molecule is prochiral if it can be converted from achiral to chiral in a single chemical step. A prochiral sp2-hybridized atom has two faces, described as either Re or Si. An sp3-hybridized atom is a prochirality center if, by changing one of its attached atoms, a chirality center results. The atom whose replacement leads to an R chirality center is pro-R, and the atom whose replacement leads to an S chirality center is pro-S.
+
+Visualizing Chemistry
+
+Problem
+5-26
+Which of the following structures are identical? (Green = Cl.)
+
+(a)The ball-and-stick model shows a 3-carbon chain. C1 is a carboxylic acid group on the right. A chlorine atom is bonded to C2  above and a methyl group below C2. (b)The ball-and-stick model shows a 3-carbon  chain. C1 is a carboxylic acid group  on the left. C2 is bonded to a chlorine atom at the top behind the C2 hydrogen. (c)The ball-and-stick model shows a 3-carbon  chain. C1 is a carboxylic acid group on the left. C2 is bonded to a chlorine atom on the right the methyl group above.
+(d)The ball-and-stick model shows a 3-carbon  chain. C1 is a carboxylic acid group on the left. C2 is bonded to a chlorine atom in front of the C2 hydrogen
+
+Problem
+5-27
+Assign R or S configurations to the chirality centers in the following molecules (blue = N):
+(a)		The ball-and-stick model of serine. Gray, black, blue, and red spheres represent hydrogen, carbon, nitrogen, and oxygen, respectively.
+(b)		The ball-and-stick model of adrenaline. Gray, black, blue, and red spheres represent hydrogen, carbon, nitrogen, and oxygen, respectively.
+Problem
+5-28
+Which, if any, of the following structures represent meso compounds? (Blue = N, green = Cl.)
+(a)		The ball-and-stick model has a cyclopentane ring. C1 and C3 are each bonded to cis hydroxyl groups where red spheres represent oxygen atoms.
+(b)		The ball-and-stick model has a 5-carbon chain. C2 and C4 are each bonded to an amino group where blue spheres represent nitrogen atoms.
+(c)		The ball-and-stick model has a 4-carbon chain. C2 and C3 are each bonded to a chlorine atom where green spheres represent chlorine atoms.
+Problem
+5-29
+Assign R or S configuration to each chirality center in pseudoephedrine, an over-the-counter decongestant found in cold remedies (blue = N).
+
+The ball-and-stick model of pseudoephedrine. Gray, black, blue, and red spheres represent hydrogen, carbon, nitrogen, and oxygen, respectively.
+Problem
+5-30
+Orient each of the following drawings so that the lowest-ranked group is toward the rear, and then assign R or S configuration:
+(a)		A carbon is single-bonded to substituents 1 (top) and 3(right), wedge bonded to 2 (front), and dash bonded to 4 (left).
+(b)		A carbon is single-bonded to substituents 3 (top) and 4 (right), wedge bonded to 1 (front), and dash bonded to 2 (left).
+(c)		A carbon is single-bonded to substituents 4 (top) and 2 (right), wedge bonded to 3 (front), and dash bonded to 1 (left).
+Chirality and Optical Activity
+
+Problem
+5-31
+Which of the following objects are chiral?
+
+(a) A basketball (b) A fork (c) A wine glass (d) A golf club (e) A spiral staircase 
+(f) A snowflake
+
+Problem
+5-32
+Which of the following compounds are chiral? Draw them, and label the chirality centers.
+(a)		2,4-Dimethylheptane
+(b)		5-Ethyl-3,3-dimethylheptane
+(c)		cis-1,4-Dichlorocyclohexane
+Problem
+5-33
+Draw chiral molecules that meet the following descriptions:
+(a)		A chloroalkane, C5H11Cl
+(b)		An alcohol, C6H14O
+(c)		An alkene, C6H12
+(d)		An alkane, C8H18
+Problem
+5-34
+Eight alcohols have the formula C5H12O. Draw them. Which are chiral?
+Problem
+5-35
+Draw compounds that fit the following descriptions:
+(a)		A chiral alcohol with four carbons
+(b)		A chiral carboxylic acid with the formula C5H10O2
+(c)		A compound with two chirality centers
+(d)		A chiral aldehyde with the formula C3H5BrO
+Problem
+5-36
+Erythronolide B is the biological precursor of erythromycin, a broad-spectrum antibiotic. How many chirality centers does erythronolide B have? Identify them.
+
+The wedge-dash structure of erythronolide B.
+Assigning Configuration to Chirality Centers
+
+Problem
+5-37
+Which of the following pairs of structures represent the same enantiomer, and which represent different enantiomers?
+(a)		A carbon is single-bonded to bromine (top), cyano (right), wedge bonded to hydrogen (front), and dash bonded to methyl (left). The second structure, the positions of substituents are different.
+(b)		A carbon is single-bonded to carboxylic acid (top), bromo (right), wedge bonded to cyano (front), and dash bonded to hydrogen (left). The second structure, the positions of substituents are different.
+(c)		A carbon is single-bonded to methyl (top),hydroxyl (right), wedge bonded to ethyl (front), and dash bonded to hydrogen (left). The second structure, the positions of substituents are different.
+(d)		A carbon is single-bonded to methyl (top), carboxylic acid (right), wedge bonded to amine (front), and dash bonded to hydrogen (left). The second structure, the positions of substituents are different.
+Problem
+5-38
+What is the relationship between the specific rotations of (2R,3R)-dichloropentane and (2S,3S)-dichloropentane? Between (2R,3S)-dichloropentane and (2R,3R)-dichloropentane?
+Problem
+5-39
+What is the stereochemical configuration of the enantiomer of (2S,4R)-2,4-octanediol?
+Problem
+5-40
+What are the stereochemical configurations of the two diastereomers of (2S,4R)-2,4-octanediol? (A diol is a compound with two – OH groups.)
+Problem
+5-41
+Orient each of the following drawings so that the lowest-ranked group is toward the rear, and then assign R or S configuration:
+(a)		A carbon is single-bonded to substituents 4 (top) and 3 (right), wedge bonded to 2 (front), and dash bonded to 1 (left).
+(b)		A carbon is single-bonded to substituents 3 (top) and 1 (right), wedge bonded to 2 (front), and dash bonded to 4 (left).
+(c)		A carbon is single-bonded to substituents 4 (top) and 2 (right), wedge bonded to 1 (front), and dash bonded to 2 (left).
+Problem
+5-42
+Assign Cahn–Ingold–Prelog rankings to the following sets of substituents:
+(a)		C H double bonded to C H 2, C H (C H 3) 2, C (C H 3) 3, and C H 2 C H 3 with open single bonds.
+(b)		C triple bonded to C H, C H double bonded to C H 2, C (C H 3) 3, and benzene each with an open single bond.
+(c)		C O 2 C H 3, C O C H 3, C H 2 O C H 3, and C H 2 C H 3, with open single bonds.
+(d)		Four substituents are C triple bonded to N, C H 2 Br, C H 2 C H 2 Br, and Br each with an open single bond.
+Problem
+5-43
+Assign R or S configurations to each chirality center in the following molecules:
+(a)		A carbon is single-bonded to wedge hydrogen (front),  dash bonded to hydroxyl (behind ), ethyl (right), and methyl (left).
+(b)		A carbon is single-bonded to wedge chlorine atom (front),  dash bonded to hydrogen atom (behind ), methyl (right), and phenyl (left).
+(c)		A carbon is single-bonded to wedge hyrdrogen atom (front),  dash bonded to methoxy group (behind ), carboxylic acid  (right), and hydroxymethyl group (left).
+Problem
+5-44
+Assign R or S configuration to each chirality center in the following molecules:
+(a)		In a cyclohexane ring, C1 is dash bonded to the hydroxyl group and wedge bonded to hydrogen. C2 is wedge bonded to chlorine and dash bonded to hydrogen.
+(b)		In a cyclohexane ring, C1 is wedge bonded to hydrogen and dash bonded to the ethyl group. C2 is dash bonded to hydrogen and wedge bonded to methyl group.
+(c)		In a cyclopentane ring, C1 and C3 are each wedge bonded to a hydroxyl group and dash bonded to a methyl group.
+Problem
+5-45
+Assign R or S configuration to each chirality center in the following biological molecules:
+(a)		The wedge-dash structure of biotin.
+(b)		The wedge-dash structure of prostaglandin E 1.
+Problem
+5-46
+Draw tetrahedral representations of the following molecules:
+(a)		(S)-2-Chlorobutane
+(b)		(R)-3-Chloro-1-pentene [H2C =
+ CHCH(Cl)CH2CH3]
+Problem
+5-47
+Assign R or S configuration to each chirality center in the following molecules:
+(a)		In a 4-carbon chain, C2 and C3 are each wedge bonded to a bromine atom and dash bonded to a hydrogen atom.
+(b)		A 4-carbon chain at C1 is a carboxylic acid group (right). C2 is wedge bonded to amino. C3 is wedge bonded to hydroxyl and C4 is bonded to benzene.
+Problem
+5-48
+Assign R or S configurations to the chirality centers in ascorbic acid (vitamin C).
+
+The wedge-dash structure of ascorbic acid.
+Problem
+5-49
+Assign R or S stereochemistry to the chirality centers in the following Newman projections:
+(a)		Newman projection of a 4-carbon chain with front carbon chlorine, hydrogen, and methyl substituents (clockwise). The back carbon has hydrogen, methyl, and hydrogen substituents (clockwise).
+(b)		Newman projection of a 4-carbon chain with front carbon hydrogen, methyl, and methyl substituents (clockwise). The back carbon has hydroxyl, hydrogen, and methyl  substituents (clockwise).
+Problem
+5-50
+Xylose is a common sugar found in many types of wood, including maple and cherry. Because it is much less prone to cause tooth decay than sucrose, xylose has been used in candy and chewing gum. Assign R or S configurations to the chirality centers in xylose.
+
+Acyclic wedge-dash structure of (plus)-xylose.
+Meso Compounds
+
+Problem
+5-51
+Draw examples of the following:
+(a)		A meso compound with the formula C8H18
+(b)		A meso compound with the formula C9H20
+(c)		A compound with two chirality centers, one R and the other S
+Problem
+5-52
+Draw the meso form of each of the following molecules, and indicate the plane of symmetry in each:
+(a)		In a 6-carbon chain, C2 and C5 are each bonded to hydroxyl groups.
+(b)		In a cyclohexane ring, C1 and C3 are each bonded to methyl groups.
+(c)		In a cyclohexane ring, C1 and C3 are each bonded to methyl groups.
+Problem
+5-53
+Draw the structure of a meso compound that has five carbons and three chirality centers.
+Problem
+5-54
+Ribose, an essential part of ribonucleic acid (RNA), has the following structure:
+
+Acyclic wedge-dash structure of ribose.
+(a)		How many chirality centers does ribose have? Identify them.
+(b)		How many stereoisomers of ribose are there?
+(c)		Draw the structure of the enantiomer of ribose.
+(d)		Draw the structure of a diastereomer of ribose.
+Problem
+5-55
+On reaction with hydrogen gas in the presence of a platinum catalyst, ribose (Problem 5-54) is converted into ribitol. Is ribitol optically active or inactive? Explain.
+
+Acyclic wedge-dash structure of ribitol.
+Prochirality
+
+Problem
+5-56
+Identify the indicated hydrogens in the following molecules as pro-R or pro-S:
+(a)		Wedge-dash structure of malic acid. Two arrows point toward the pro-S  and pro-R hydrogen atoms bonded at C3.
+(b)		Wedge-dash structure of methionine zwitterion. Arrows point toward the pro-S  and pro-R hydrogen atoms bonded at C3 and C4.
+(c)		Wedge-dash structure of cysteine zwitterion. Arrows point toward the pro-S and pro-R hydrogen atoms bonded at C3.
+Problem
+5-57
+Identify the indicated faces in the following molecules as Re or Si:
+(a)		The structure of pyruvate. Two arrows, one from the top and the other from bottom, point toward the central carbon.
+(b)		The structure of crotonate. Two arrows, one from the top and the other from bottom, point toward C3.
+Problem
+5-58
+One of the steps in fat metabolism is the hydration of crotonate to yield 3-hydroxybutyrate. The reaction occurs by addition of  – OH to the Si face at C3, followed by protonation at C2, also from the Si face. Draw the product of the reaction, showing the stereochemistry of each step.
+
+The figure shows a reaction where crotonate converts to 3-hydroxybutyrate. In crotonate, the double bond is between C2 and C3.
+Problem
+5-59
+The dehydration of citrate to yield cis-aconitate, a step in the citric acid cycle, involves the pro-R “arm” of citrate rather than the pro-S arm. Which of the following two products is formed?
+
+The figure shows a reaction where citrate converts to two forms of cis-aconitate structures.
+Problem
+5-60
+The first step in the metabolism of glycerol, formed by digestion of fats, is phosphorylation of the pro-R – CH2OH group by reaction with adenosine triphosphate (ATP) to give the corresponding glycerol phosphate plus adenosine diphosphate (ADP). Show the stereochemistry of the product.
+
+The figure shows a reaction where glycerol on the conversion of A T P to A D P forms glycerol phosphate.
+Problem
+5-61
+One of the steps in fatty-acid biosynthesis is the dehydration of (R)-3-hydroxybutyryl ACP to give trans-crotonyl ACP. Does the reaction remove the pro-R or the pro-S hydrogen from C2?
+
+The dehydration of (R)-3-hydroxybutyryl A C P to form trans-crotonyl A C P.
+General Problems
+
+Problem
+5-62
+Draw all possible stereoisomers of 1,2-cyclobutanedicarboxylic acid, and indicate the interrelationships. Which, if any, are optically active? Do the same for 1,3-cyclobutanedicarboxylic acid.
+Problem
+5-63
+Draw tetrahedral representations of the two enantiomers of the amino acid cysteine, HSCH2CH(NH2)CO2H, and identify each as R or S.
+Problem
+5-64
+The naturally occurring form of the amino acid cysteine (Problem 5-63) has the R configuration at its chirality center. On treatment with a mild oxidizing agent, two cysteines join to give cystine, a disulfide. Assuming that the chirality center is not affected by the reaction, is cystine optically active? Explain.
+
+The figure shows a reaction where two molecules of cysteine convert to cystine.
+Problem
+5-65
+Draw tetrahedral representations of the following molecules:
+(a)		The 2S,3R enantiomer of 2,3-dibromopentane
+(b)		The meso form of 3,5-heptanediol
+Problem
+5-66
+Assign R or S configurations to the chiral centers in cephalexin, trade-named Keflex, the most widely prescribed antibiotic in the United States.
+
+The wedge-dash structure of cephalexin.
+Problem
+5-67
+Chloramphenicol, a powerful antibiotic isolated in 1947 from the Streptomyces venezuelae bacterium, is active against a broad spectrum of bacterial infections and is particularly valuable against typhoid fever. Assign R or S configurations to the chirality centers in chloramphenicol.
+
+The wedge-dash structure of chloramphenicol.
+Problem
+5-68
+Allenes are compounds with adjacent carbon–carbon double bonds. Many allenes are chiral, even though they don’t contain chirality centers. Mycomycin, for example, a naturally occurring antibiotic isolated from the bacterium Nocardia acidophilus, is chiral and has [α]D = −130. Explain why mycomycin is chiral.
+
+The condensed structural formula of mycomycin.
+Problem
+5-69
+Long before chiral allenes were known (Problem 5-68), the resolution of 4-methylcyclohexylideneacetic acid into two enantiomers had been carried out. Why is it chiral? What geometric similarity does it have to allenes?
+
+The wedge-dash structure of 4-methylcyclohexylideneacetic acid.
+Problem
+5-70
+(S)-1-Chloro-2-methylbutane undergoes light-induced reaction with Cl2 to yield a mixture of products, among which are 1,4-dichloro-2-methylbutane and 1,2-dichloro-2-methylbutane.
+(a)		Write the reaction, showing the correct stereochemistry of the reactant.
+(b)		One of the two products is optically active, but the other is optically inactive. Which is which?
+Problem
+5-71
+How many stereoisomers of 2,4-dibromo-3-chloropentane are there? Draw them, and indicate which are optically active.
+Problem
+5-72
+Draw both cis- and trans-1,4-dimethylcyclohexane in their more stable chair conformations.
+(a)		How many stereoisomers are there of cis-1,4-dimethylcyclohexane, and how many of trans-1,4-dimethylcyclohexane?
+(b)		Are any of the structures chiral?
+(c)		What are the stereochemical relationships among the various stereoisomers of 1,4-dimethylcyclohexane?
+Problem
+5-73
+Draw both cis- and trans-1,3-dimethylcyclohexane in their more stable chair conformations.
+(a)		How many stereoisomers are there of cis-1,3-dimethylcyclohexane, and how many of trans-1,3-dimethylcyclohexane?
+(b)		Are any of the structures chiral?
+(c)		What are the stereochemical relationships among the various stereoisomers of 1,3-dimethylcyclohexane?
+Problem
+5-74
+cis-1,2-Dimethylcyclohexane is optically inactive even though it has two chirality centers. Explain.
+Problem
+5-75
+We’ll see in Chapter 11 that alkyl halides react with hydrosulfide ion (HS−) to give a product whose stereochemistry is inverted from that of the reactant.
+
+Draw the reaction of (S)-2-bromobutane with HS− ion to yield 2-butanethiol, CH3CH2CH(SH)CH3. Is the stereochemistry of the product R or S?
+
+The figure shows a reaction where an alkyl bromide reacts with H S anion  to form a thiol compound and a bromide ion.
+Problem
+5-76
+Ketones react with sodium acetylide (the sodium salt of acetylene, Na+– : C ≡
+ CH) to give alcohols. For example, the reaction of sodium acetylide with 2-butanone yields 3-methyl-1-pentyn-3-ol:
+
+In a reaction, 2-butanone reacts with Na superscript plus C superscript minus triple bonded to C H in first step and hydronium ion in the second step to form 3-methyl-1-pentyn-3-ol.
+(a)		Is the product chiral?
+(b)		Assuming that the reaction takes place with equal likelihood from both Re and Si faces of the carbonyl group, is the product optically active? Explain.
+Problem
+5-77
+Imagine that a reaction similar to that in Problem 5-76 is carried out between sodium acetylide and (R)-2-phenylpropanal to yield 4-phenyl-1-pentyn-3-ol:
+
+In a reaction, (R)-2-phenylpropanal reacts with Na superscript plus C superscript minus triple bonded to C H in first step and hydronium ion in the second step to form 4-phenyl-1-pentyn-3-ol.
+(a)		Is the product chiral?
+(b)		Draw both major and minor reaction products, assuming that the reaction takes place preferentially from the Re face of the carbonyl group. Is the product mixture optically active? Explain.
