@@ -13,6 +13,10 @@ services:
     deploy:
       restart_policy:
         condition: any
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: start-first
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.next-app.rule=Host(`crisp.sh`)"
