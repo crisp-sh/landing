@@ -46,32 +46,6 @@ const ALLOWED_PROVIDERS = [
   // "o3-mini", // Need to confirm provider and add to ALLOWED_PROVIDERS if required
 ];
 
-// // Define specific model IDs to include
-// const ALLOWED_MODELS = [
-//   "claude-3.5-haiku",
-//   "claude-3.5-haiku:beta",
-//   "claude-3.7-sonnet",
-//   "claude-3.7-sonnet:beta",
-//   "claude-3.7-sonnet:thinking",
-//   "deepseek-chat-v3-0324",
-//   "deepseek-r1",
-//   "deepseek-r1-zero",
-//   "deepseek-r1:free",
-//   "gemini-1.5-flash-latest",
-//   "gemini-2.0-flash-001",
-//   "gemini-2.0-flash-thinking-exp",
-//   "gemini-2.5-pro-exp",
-//   "gemma-3-27b-it", // Assuming provider 'google' or 'gemma' is in ALLOWED_PROVIDERS
-//   "gpt-4.1",
-//   "gpt-4.1-mini",
-//   "gpt-4.1-nano",
-//   "gpt-4o",
-//   "gpt-4o-mini",
-//   "llama-3-8b-instruct:free", // Assuming provider 'meta' is in ALLOWED_PROVIDERS
-//   "mistral-7b-instruct:free",
-//   // "o3-mini", // Need to confirm provider and add to ALLOWED_PROVIDERS if required
-// ];
-
 // Helper to get logo URL based on provider AND model ID
 const getLogoUrl = (provider: string | null | undefined, modelId: string): string => {
   const lowerProvider = provider?.toLowerCase();
@@ -300,7 +274,7 @@ export default function CostCalculator() {
 
       {/* Input tokens */}
       <div className="space-y-1.5">
-        <label htmlFor="input-tokens" className="block text-sm font-medium text-blue-500">
+        <label htmlFor="input-tokens" className="block text-sm font-medium text-muted-foreground">
           Input Tokens
         </label>
         <Input
@@ -320,7 +294,7 @@ export default function CostCalculator() {
 
       {/* Output tokens */}
       <div className="space-y-1.5">
-        <label htmlFor="output-tokens" className="block text-sm font-medium text-red-400">
+        <label htmlFor="output-tokens" className="block text-sm font-medium text-muted-foreground">
           Output Tokens
         </label>
         <Input
@@ -338,7 +312,7 @@ export default function CostCalculator() {
         </label>
       </div>
 
-      {/* Cached reads */}
+      {/* Cached reads
       <div className="space-y-1.5">
         <label htmlFor="cached-reads" className="block text-sm font-medium text-orange-300">
           Cached Read Tokens
@@ -356,7 +330,7 @@ export default function CostCalculator() {
             <AlertCircle className="w-4 h-4 inline-block mr-1" /> Cached responses require a minimum of 1024 tokens.
           </span>
         </label>
-      </div>
+      </div> */}
 
       {/* Results panel - Enhanced styling */}
       <div className="md:col-span-3 bg-muted/40 p-4 rounded-lg border border-border/70 mt-4">
