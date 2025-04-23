@@ -277,9 +277,9 @@ export default function CostCalculator() {
   };
 
   return (
-    <div className="grid gap-6 md:grid-cols-2 max-w-5xl mx-auto">
+    <div className="grid gap-6 md:grid-cols-3 max-w-5xl mx-auto">
       {/* Model selector - Replace Select with ModelCombobox */}
-      <div className="space-y-1.5 md:col-span-2"> {/* Span across two columns for better width */}
+      <div className="space-y-1.5 md:col-span-3"> {/* Span across two columns for better width */}
         <label htmlFor="model-select" className="block text-sm font-medium text-muted-foreground">
           Select AI Model
         </label>
@@ -300,7 +300,7 @@ export default function CostCalculator() {
 
       {/* Input tokens */}
       <div className="space-y-1.5">
-        <label htmlFor="input-tokens" className="block text-sm font-medium text-muted-foreground">
+        <label htmlFor="input-tokens" className="block text-sm font-medium text-blue-500">
           Input Tokens
         </label>
         <Input
@@ -309,18 +309,18 @@ export default function CostCalculator() {
           min={1}
           value={inTokens}
           onChange={(e) => setInTokens(Number(e.target.value) || 0)}
-          className="h-9" 
+          className="h-9 border-blue-500" 
         />
-        <label htmlFor="input-tokens" className="block text-sm font-medium text-muted-foreground">
+        <label htmlFor="input-tokens" className="block text-sm font-medium text-blue-500">
           <span className="text-xs text-neutral-500">
-            <AlertCircle className="w-4 h-4 inline-block mr-1" /> The transcript of the US Declaration of Independence contains ~1,695 tokens.
+            <AlertCircle className="w-4 h-4 inline-block mr-1" /> The US Declaration of Independence contains ~1,695 tokens.
           </span>
         </label>
       </div>
 
       {/* Output tokens */}
       <div className="space-y-1.5">
-        <label htmlFor="output-tokens" className="block text-sm font-medium text-muted-foreground">
+        <label htmlFor="output-tokens" className="block text-sm font-medium text-red-400">
           Output Tokens
         </label>
         <Input
@@ -329,7 +329,7 @@ export default function CostCalculator() {
           min={1}
           value={outTokens}
           onChange={(e) => setOutTokens(Number(e.target.value) || 0)}
-          className="h-9" 
+          className="h-9 border-red-400" 
         />
         <label htmlFor="input-tokens" className="block text-sm font-medium text-muted-foreground">
           <span className="text-xs text-neutral-500">
@@ -340,7 +340,7 @@ export default function CostCalculator() {
 
       {/* Cached reads */}
       <div className="space-y-1.5">
-        <label htmlFor="cached-reads" className="block text-sm font-medium text-muted-foreground">
+        <label htmlFor="cached-reads" className="block text-sm font-medium text-orange-300">
           Cached Read Tokens
         </label>
         <Input
@@ -349,7 +349,7 @@ export default function CostCalculator() {
           min={0}
           value={cacheTokens}
           onChange={(e) => setCacheTokens(Number(e.target.value) || 0)}
-          className="h-9" 
+          className="h-9 border-orange-300" 
         />
         <label htmlFor="input-tokens" className="block text-sm font-medium text-muted-foreground">
           <span className="text-xs text-neutral-500">
@@ -359,20 +359,20 @@ export default function CostCalculator() {
       </div>
 
       {/* Results panel - Enhanced styling */}
-      <div className="md:col-span-2 bg-muted/40 p-4 rounded-lg border border-border/70 mt-4">
+      <div className="md:col-span-3 bg-muted/40 p-4 rounded-lg border border-border/70 mt-4">
         <h3 className="text-base font-semibold mb-3 text-foreground">Cost Breakdown</h3>
         <div className="space-y-2 text-sm">
           <div className="flex justify-between items-center">
-            <span className="text-muted-foreground">Input Cost:</span>
-            <span className="font-mono text-foreground">{formatCurrency(costIn)}</span>
+            <span className="text-blue-500">Input Cost:</span>
+            <span className="text-blue-500">{formatCurrency(costIn)}</span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-muted-foreground">Output Cost:</span>
-            <span className="font-mono text-foreground">{formatCurrency(costOut)}</span>
+            <span className="text-red-400">Output Cost:</span>
+            <span className="text-red-400">{formatCurrency(costOut)}</span>
           </div>
           <div className="flex justify-between items-center pb-3">
-            <span className="text-muted-foreground">Cache Read Cost:</span>
-            <span className="font-mono text-foreground">{formatCurrency(costCache)}</span>
+            <span className="text-orange-300">Cache Read Cost:</span>
+            <span className="text-orange-300">{formatCurrency(costCache)}</span>
           </div>
           <Separator className="my-2 bg-muted" decorative={true} />
           <div className="flex justify-between items-center font-bold pt-2 text-xl">

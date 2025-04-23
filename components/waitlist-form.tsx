@@ -9,7 +9,7 @@ import { Separator } from "./ui/separator";
 import { balloons } from "balloons-js";
 import { Spinner } from "./ui/spinner";
 
-export default function WaitlistForm() {
+export default function WaitlistForm({ flexDirection }: { flexDirection: string }) {
   const [email, setEmail] = useState<string>("");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
@@ -98,11 +98,11 @@ export default function WaitlistForm() {
           method="POST"
         >
           <div className="space-y-6 mb-6 text-center">
-            <h2 className="text-3xl sm:text-2xl font-normal text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400">
+            <h2 className="uppercase text-2xl xs:text-2xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl font-normal text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400">
               Join the waitlist
             </h2>
           </div>
-          <div className="flex flex-row sm:flex-row gap-2">
+          <div className={`flex flex-${flexDirection} sm:flex-row gap-2`}>
             <div className="space-y-1 flex-1">
               <div className="relative">
                 <Input

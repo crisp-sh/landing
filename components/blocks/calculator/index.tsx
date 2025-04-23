@@ -19,12 +19,12 @@ export default function Calculator() {
   return (
     <>
       <h3 className="mb-10 sm:mb-12 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400 uppercase">
-        Cost Calculator
+        how much does it <span className="bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-green-400">cost</span>?
       </h3>
       <div className="flex justify-center my-6">
-        <Button variant="outline" size="sm" onClick={() => setShowTable(prev => !prev)} className="shadow-sm hover:shadow-md transition-shadow bg-background/80">
+        <Button variant="link" size="lg" onClick={() => setShowTable(prev => !prev)} className="shadow-sm hover:shadow-md transition-shadow bg-background/80">
           <ArrowLeftRight className="mr-2 h-4 w-4" />
-          {showTable ? "Show Calculator View" : "Show Full Pricing Table"}
+          {showTable ? "Switch to calculator" : "Switch to pricing table"}
         </Button>
       </div>
       <div className="bg-background/70 rounded-md p-6 min-h-[300px] overflow-hidden">
