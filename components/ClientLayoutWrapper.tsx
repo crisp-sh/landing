@@ -16,7 +16,7 @@ export function ClientLayoutWrapper({ children }: { children: React.ReactNode })
         description="This website is satire! We do not condone the actions of the faux corporation portrayed on this website. Privacy is a human right."
         className="font-bold"
       />
-      <ReactLenis root options={{ lerp: 0.1, smoothWheel: true }}>
+      <ReactLenis root options={{ lerp: 0.1, smoothWheel: false }}>
         <ViewTransitions>{children}</ViewTransitions>
       </ReactLenis>
       <Toaster richColors position="bottom-right" />

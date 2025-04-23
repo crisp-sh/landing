@@ -182,7 +182,7 @@ export default function OnlyPromptPage() {
               </div>
             </div>
             <div className="w-full max-w-[18rem] sm:max-w-xs md:max-w-sm mx-auto px-4 space-y-5 sm:space-y-6 flex flex-col items-center py-10">
-              <WaitlistForm />
+              <WaitlistForm flexDirection="row" />
               <RetroGrid />
 
               <div className="flex flex-col items-center gap-2">
@@ -295,7 +295,7 @@ export default function OnlyPromptPage() {
         className="min-h-screen h-screen border-b border-white/10 flex items-center"
       >
         <div className="w-full max-w-[18rem] sm:max-w-xs md:max-w-sm mx-auto px-4 space-y-5 sm:space-y-6 flex flex-col items-center">
-          <WaitlistForm />
+          <WaitlistForm flexDirection="col" />
         </div>
       </section>
     </div>
