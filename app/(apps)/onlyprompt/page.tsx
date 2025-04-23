@@ -1,13 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Lock, Bot, Brain, Cog, DollarSign } from "lucide-react";
+import { Lock, Bot, Brain, Cog, DollarSign, Sparkles } from "lucide-react";
 import GridItem from "@/components/ui/grid-item";
 import Image from "next/image";
 import { CollegeLogoSlider } from "@/components/college-logo-slider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Spotlight } from "@/components/ui/spotlight-new";
+import SecondaryNavbar from "@/components/secondary-navbar";
 
 // GSAP Imports
 import React, { useRef } from "react";
@@ -140,34 +141,47 @@ export default function OnlyPromptPage() {
 
   return (
     <div className="flex-1 font-manifold bg-inherit">
-      <section className="min-h-screen border-b border-white/10 flex items-center">
+      <SecondaryNavbar />
+
+      <section className="min-h-screen border-b border-white/10 flex items-center pt-16 md:pt-0">
         <div className="bg-black relative overflow-hidden w-full">
+          <Spotlight />
           <div className="flex flex-col min-h-screen items-center justify-center gap-y-6 sm:gap-y-8 py-12 sm:py-16 md:py-20">
             <div className="flex flex-col items-center gap-4 md:gap-5">
               <div className="text-sm sm:text-base md:text-lg font-medium text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400 pointer-events-none">
+                <span className="uppercase font-extralight text-2xl xs:text-2xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl text-center bg-clip-text text-transparent bg-gradient-to-b from-purple-200 to-purple-800 pointer-events-none">
+                  introducing
+                </span>
                 <br />
-                <div className="flex flex-row items-center justify-center gap-2 sm:gap-3 mt-6 sm:mt-8">
+                <div className="flex flex-row items-center justify-center gap-2 sm:gap-3 my-6 sm:my-8">
                   <Image
                     src="/onlyprompt-logo-colored-dark.svg"
                     alt="OnlyPrompt Logo"
-                    width={60}
-                    height={60}
-                    className="w-10 sm:w-14 md:w-16"
+                    width={80}
+                    height={80}
+                    className="text-5xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl"
                   />
                   <Separator
                     orientation="vertical"
                     className="h-10 sm:h-14 md:h-16 mx-2 sm:mx-3 md:mx-4 bg-transparent"
                   />
-                  <div className="relative pointer-events-none">
-                    <Spotlight />
-                  </div>
-                  <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight sm:tracking-tighter text-center bg-clip-text text-transparent bg-gradient-to-b from-orange-200 to-gray-400 pointer-events-none">
+                  <h1 className="text-5xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-extrabold tracking-tight sm:tracking-tighter text-center bg-clip-text text-transparent bg-gradient-to-b from-orange-200 to-gray-400 pointer-events-none">
                     ONLYPROMPT
                   </h1>
                 </div>
+                {/* <span className="uppercase font-extralight text-2xl xs:text-2xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl text-center bg-clip-text text-transparent bg-gradient-to-b from-purple-200 to-purple-800 pointer-events-none">
+                  the {" "} 
+                  <span className="bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-green-400">
+                    ai assistant
+                  </span>{" "}
+                  built{" "}
+                  <span className="bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-green-400">
+                    for you
+                  </span>
+                </span> */}
               </div>
             </div>
-            <div className="w-full max-w-[18rem] sm:max-w-xs md:max-w-sm mx-auto px-4 space-y-5 sm:space-y-6 flex flex-col items-center">
+            <div className="w-full max-w-[18rem] sm:max-w-xs md:max-w-sm mx-auto px-4 space-y-5 sm:space-y-6 flex flex-col items-center py-10">
               <WaitlistForm />
               <RetroGrid />
 
@@ -196,12 +210,12 @@ export default function OnlyPromptPage() {
                 </div>
               </div>
             </div>
-            <div className="w-full max-w-xs sm:max-w-md md:max-w-xl lg:max-w-3xl px-4 text-center mt-6 sm:mt-10">
+            {/* <div className="w-full max-w-xs sm:max-w-md md:max-w-xl lg:max-w-3xl px-4 text-center mt-6 sm:mt-10">
               <h3 className="mb-3 sm:mb-4 text-xs sm:text-sm md:text-base font-normal text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400 uppercase">
                 Trusted By Students and Professionals at Leading Institutions:
               </h3>
               <CollegeLogoSlider />
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
