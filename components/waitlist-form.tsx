@@ -8,8 +8,13 @@ import { HoverButton } from "./hover-button";
 import { Separator } from "./ui/separator";
 import { balloons } from "balloons-js";
 import { Spinner } from "./ui/spinner";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
-export default function WaitlistForm({ flexDirection }: { flexDirection: string }) {
+export default function WaitlistForm({
+  flexDirection,
+}: {
+  flexDirection: string;
+}) {
   const [email, setEmail] = useState<string>("");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
@@ -158,7 +163,7 @@ export default function WaitlistForm({ flexDirection }: { flexDirection: string 
                 onChange={handleEmailChange}
                 required
               />
-                <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-muted-foreground/50 peer-disabled:opacity-50">
+              <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-muted-foreground/50 peer-disabled:opacity-50">
                 <span className="text-[10px] font-semibold tracking-widest">
                   EMAIL
                   <br />
@@ -176,6 +181,29 @@ export default function WaitlistForm({ flexDirection }: { flexDirection: string 
           </HoverButton>
         </form>
       )}
+      <div className="w-full max-w-[18rem] sm:max-w-xs md:max-w-sm mx-auto px-4 space-y-5 sm:space-y-6 flex flex-col items-center py-10">
+        <div className="flex flex-col items-center gap-2">
+          <div className="flex items-center gap-4">
+            <div className="flex -space-x-3">
+              <Avatar className="border-2 border-black w-8 h-8 sm:w-12 sm:h-12">
+                <AvatarImage src="/avatars/two.png" alt="User 1 Avatar" />
+                <AvatarFallback>U1</AvatarFallback>
+              </Avatar>
+              <Avatar className="border-2 border-black w-8 h-8 sm:w-12 sm:h-12">
+                <AvatarImage src="/avatars/three.png" alt="User 2 Avatar" />
+                <AvatarFallback>U2</AvatarFallback>
+              </Avatar>
+              <Avatar className="border-2 border-black w-8 h-8 sm:w-12 sm:h-12">
+                <AvatarImage src="/avatars/one.png" alt="User 3 Avatar" />
+                <AvatarFallback>U3</AvatarFallback>
+              </Avatar>
+            </div>
+            <span className="font-semibold text-xs sm:text-sm text-gray-400">
+              200+ people already on the waitlist
+            </span>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

@@ -41,6 +41,7 @@
     "@radix-ui/react-toggle": "1.1.1",
     "@radix-ui/react-toggle-group": "1.1.1",
     "@radix-ui/react-tooltip": "1.1.6",
+    "@splinetool/react-spline": "^4.0.0",
     "@studio-freight/react-lenis": "^0.0.47",
     "@tanstack/react-table": "^8.21.3",
     "autoprefixer": "^10.4.20",

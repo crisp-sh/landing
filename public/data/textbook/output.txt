@@ -1,0 +1,136 @@
+The user is asking for a summary of Chapter 5 on stereochemistry, broken down by subchapter (like 5.1 for Enantiomers and 5.2 for Chirality), and some practice problems to help them study for their test. I'll summarize each subchapter in a concise 1-2 sentence paragraph, then come up with a few practice problems for each one—probably about 1-3 problems per subchapter, totaling around 10 problems. It’s a practical request, so it should be straightforward!
+
+The user has requested a structured, concise chapter summary using markdown. Each subchapter, such as "5.1 Enantiomers and the Tetrahedral Carbon," will have a brief summary followed by one practice problem. The practice questions will focus on key concepts. Since the user is preparing for a test, we should aim for clarity and conciseness, using well-defined headings, with potentially no more than 12 questions—one per subchapter—based on their preference.
+
+I’ll work on keeping it breezy yet structured!
+
+Done
+Here’s a section-by-section recap plus one targeted problem per topic to test your grasp before the exam.
+
+5.1 Enantiomers and the Tetrahedral Carbon
+Summary:
+
+When an sp³ carbon is bonded to four different groups, its two mirror images cannot be superimposed.
+
+Such non-superimposable mirror images are called enantiomers.
+
+Practice Problem:
+Draw the Lewis structures of lactic acid’s two enantiomers (– and +). Show why they can’t be superimposed.
+
+5.2 The Reason for Handedness in Molecules: Chirality
+Summary:
+
+A molecule is chiral if it has no plane of symmetry and is not identical to its mirror image.
+
+Achiral molecules either lack tetrahedral stereocenters or possess an internal mirror plane.
+
+Practice Problem:
+Decide whether methylcyclohexane and 2-methylcyclohexanone are chiral or achiral. Explain based on symmetry or substituent differences.
+
+5.3 Optical Activity
+Summary:
+
+Chiral molecules rotate plane-polarized light; dextrorotatory (+) to the right, levorotatory (–) to the left.
+
+The observed rotation scales with concentration and pathlength; the specific rotation [α]ᴰ normalizes these variables.
+
+Practice Problem:
+A sample of sucrose ( [α]ᴰ = +66.47 ) at 0.50 g/mL in a 2.0 dm cell gives what observed rotation?
+
+5.4 Pasteur’s Discovery of Enantiomers
+Summary:
+
+Pasteur separated “right-handed” and “left-handed” tartrate crystals by hand, showing mirror-image forms with opposite optical rotations.
+
+This was the first resolution of a racemic mixture into pure enantiomers.
+
+Practice Problem:
+Explain why a 1:1 mixture of (+)- and (–)-tartaric acid shows no net rotation, yet the separated crystals do.
+
+5.5 Sequence Rules for Specifying Configuration
+Summary:
+
+The Cahn–Ingold–Prelog rules rank substituents by atomic number, isotopic mass, and then by successive atoms.
+
+With the lowest-priority group pointed away, the 1→2→3 path is clockwise → R, counterclockwise → S.
+
+Practice Problem:
+Assign R or S to both enantiomers of 2-chlorobutane.
+
+5.6 Diastereomers
+Summary:
+
+Diastereomers are stereoisomers that are not mirror images (they differ at one or more but not all stereocenters).
+
+Unlike enantiomers, diastereomers have different physical properties.
+
+Practice Problem:
+List the stereochemical relationship between (2R,3R)- and (2R,3S)-2-amino-3-hydroxybutanoic acid.
+
+5.7 Meso Compounds
+Summary:
+
+Meso compounds have stereocenters but are overall achiral due to an internal plane of symmetry.
+
+They do not exhibit optical activity despite having chirality centers.
+
+Practice Problem:
+Show why meso-tartaric acid is superimposable on its mirror image, whereas 2R,3R- and 2S,3S-tartaric acids are not.
+
+5.8 Racemic Mixtures and the Resolution of Enantiomers
+Summary:
+
+A racemate is a 1:1 mix of enantiomers (optically inactive).
+
+Resolution often uses chiral reagents (e.g., chiral amine salts) to form separable diastereomeric salts.
+
+Practice Problem:
+Outline how (R)-1-phenylethylamine resolves racemic lactic acid into separable salts.
+
+5.9 A Review of Isomerism
+Summary:
+
+Constitutional isomers differ in connectivity; stereoisomers share connectivity but differ in spatial arrangement.
+
+Stereoisomers include enantiomers, diastereomers, cis-trans isomers, epimers, etc.
+
+Practice Problem:
+Classify each pair as constitutional isomers, enantiomers, or diastereomers:
+
+Butane vs. isobutane
+
+(S)-lactic acid vs. (R)-lactic acid
+
+cis-1,3-dimethylcyclopentane vs. trans-1,3-dimethylcyclopentane
+
+5.10 Chirality at Nitrogen, Phosphorus, and Sulfur
+Summary:
+
+Trivalent N inverts too fast to isolate enantiomers, but phosphines and sulfonium salts can be configurationally stable.
+
+Coenzyme S-adenosylmethionine is a natural, chiral sulfonium salt.
+
+Practice Problem:
+Explain why ethylmethylamine is not isolable as enantiomers, but (R)-methylpropylphenylphosphine can be.
+
+5.11 Prochirality
+Summary:
+
+An sp² center is prochiral if attack on one face (Re or Si) yields different enantiomers.
+
+An sp³ center is prochiral if replacing one of two identical groups creates a stereocenter (pro-R vs. pro-S).
+
+Practice Problem:
+Identify the Re and Si faces of 2-butanone and predict which face attack gives (R)-2-butanol.
+
+5.12 Chirality in Nature and Chiral Environments
+Summary:
+
+Biological receptors are chiral, so only one enantiomer of a drug typically fits.
+
+Even achiral substrates become “distinguished” in a chiral environment (enzyme active site).
+
+Practice Problem:
+R-ibuprofen is inactive analgesically but slowly converts to S inside the body. Propose how a chiral environment (enzyme) might favor that conversion.
+
+Keep these summaries handy, work through each practice question, and you’ll be ready for any stereochemistry challenge on test day. Good luck!

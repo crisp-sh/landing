@@ -1,13 +1,24 @@
 "use client";
 
-import React, { useState } from "react";
-// Adjust import path if necessary - assuming public is served statically
-import rawModelsJson from "../../../public/data/litellm_models.json"; 
+import type React from "react"; // Use type import
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Input } from "@/components/ui/input";
-import Image from 'next/image'; // Import Image for optimized logos
+import Image from 'next/image';
 import { ModelCombobox } from "./model-combobox";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Eye, Info, Loader2 } from "lucide-react"; // Add Eye, Info, Loader2
 import { Separator } from "@/components/ui/separator";
+import type { Scenario } from "@/components/ui/scenario-combobox"; // Use type import
+import { ScenarioCombobox } from "@/components/ui/scenario-combobox";
+import { ScenarioModal } from "@/components/ui/scenario-modal";
+import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"; // Import Tooltip
+import { motion, AnimatePresence } from "framer-motion"; // Import motion and AnimatePresence
+import type { ModelInfo as ParentModelInfo } from "."; // Use aliased import
 
 // Define raw model spec type from JSON
 type RawModelSpec = {
@@ -25,7 +36,7 @@ type RawModelSpec = {
 export interface ModelInfo { // Export interface for PricingTable
   id: string;
   name: string;
-  provider: string; // Add provider field
+  provider: string;
   logoUrl: string;
   inputCost: number;
   outputCost: number;
@@ -45,32 +56,6 @@ const ALLOWED_PROVIDERS = [
   // Add providers for the specific models below if needed
   // "o3-mini", // Need to confirm provider and add to ALLOWED_PROVIDERS if required
 ];
-
-// // Define specific model IDs to include
-// const ALLOWED_MODELS = [
-//   "claude-3.5-haiku",
-//   "claude-3.5-haiku:beta",
-//   "claude-3.7-sonnet",
-//   "claude-3.7-sonnet:beta",
-//   "claude-3.7-sonnet:thinking",
-//   "deepseek-chat-v3-0324",
-//   "deepseek-r1",
-//   "deepseek-r1-zero",
-//   "deepseek-r1:free",
-//   "gemini-1.5-flash-latest",
-//   "gemini-2.0-flash-001",
-//   "gemini-2.0-flash-thinking-exp",
-//   "gemini-2.5-pro-exp",
-//   "gemma-3-27b-it", // Assuming provider 'google' or 'gemma' is in ALLOWED_PROVIDERS
-//   "gpt-4.1",
-//   "gpt-4.1-mini",
-//   "gpt-4.1-nano",
-//   "gpt-4o",
-//   "gpt-4o-mini",
-//   "llama-3-8b-instruct:free", // Assuming provider 'meta' is in ALLOWED_PROVIDERS
-//   "mistral-7b-instruct:free",
-//   // "o3-mini", // Need to confirm provider and add to ALLOWED_PROVIDERS if required
-// ];
 
 // Helper to get logo URL based on provider AND model ID
 const getLogoUrl = (provider: string | null | undefined, modelId: string): string => {
@@ -166,221 +151,336 @@ const formatModelName = (id: string, provider: string | null | undefined): strin
     return `${providerName}: ${modelName}`;
 }
 
-// Raw JSON data assertion
-const rawModelsData = rawModelsJson as Record<string, RawModelSpec>;
+// --- SCENARIOS Constant with pre-calculated tokens ---
+const SCENARIOS: Scenario[] = [
+  { label: 'US Constitution', value: 'constitution', input_tokens: 9022, output_tokens: 527 },
+  { label: 'College Essay', value: 'essay', input_tokens: 843, output_tokens: 580 },
+  { label: 'Every Emoji', value: 'emoji', input_tokens: 11451, output_tokens: 4217 },
+  { label: 'Organic Chemistry, Chapter 5', value: 'textbook', input_tokens: 20196, output_tokens: 1392 },
+];
 
-// Transform raw JSON to UI models array, filtering and mapping
-export const MODELS: ModelInfo[] = Object.entries(rawModelsData)
-  .map(([id, rawSpec]): (Omit<ModelInfo, 'name'> & { provider: string | null | undefined }) | null => {
-    // --- Start Filtering (Order matters slightly) ---
-    // 1. Filter by allowed model ID first
-    // if (!ALLOWED_MODELS.includes(id)) {
-    //   return null;
-    // }
-
-    // Get provider early for logo determination and provider filtering
-    const provider = rawSpec.litellm_provider;
-
-    // 5. Filter by allowed provider (check *after* getting provider)
-    if (!provider || !ALLOWED_PROVIDERS.includes(provider.toLowerCase())) {
-        // console.log(`Filtering out ${id} due to provider: ${provider}`); // Debugging line
-        return null;
-    }
-
-    // 2. Filter by mode (only chat models)
-    if (rawSpec.mode !== "chat") {
-      return null;
-    }
-
-    // 3. Filter by defined costs
-    if (rawSpec.input_cost_per_token == null || rawSpec.output_cost_per_token == null) {
-      return null;
-    }
-
-    // 4. Filter out models with zero essential costs
-    const inputCost = rawSpec.input_cost_per_token || 0;
-    const outputCost = rawSpec.output_cost_per_token || 0;
-    const cacheCost = rawSpec.cache_read_input_token_cost ?? rawSpec.output_cost_per_reasoning_token ?? 0;
-    if (inputCost === 0 && outputCost === 0 && cacheCost === 0) {
-        return null;
-    }
-    // --- End Filtering ---
-
-    // Map to intermediate object - pass id to getLogoUrl
-    return {
-      id,
-      provider,
-      logoUrl: getLogoUrl(provider, id), // Pass id here
-      inputCost: inputCost,
-      outputCost: outputCost,
-      cacheCost: cacheCost,
-    };
-  })
-  .filter((model): model is (Omit<ModelInfo, 'name'> & { provider: string }) => model !== null) // Filter out nulls
-  .map(model => ({ // Add the formatted name
-      ...model,
-      name: formatModelName(model.id, model.provider),
-  }));
-
-// Ensure MODELS is not empty after filtering
-if (MODELS.length === 0) {
-    // Handle case where no valid models are found
-    // You could return a message or a default state
-    console.error("No valid models found after filtering.");
-    // Potentially throw an error or provide a fallback UI
+// --- Define Props for CostCalculator, importing ModelInfo from index ---
+interface CostCalculatorProps {
+  models: ParentModelInfo[];
 }
 
+export default function CostCalculator({ models: MODELS }: CostCalculatorProps) {
 
-export default function CostCalculator() {
-  // Find the default model (GPT 4.1)
-  const defaultModel = MODELS.find(m => m.id === 'gpt-4.1');
-  
-  // Initialize state with the default model if found, otherwise the first model, or null
-  const [model, setModel] = useState<ModelInfo | null>(defaultModel || (MODELS.length > 0 ? MODELS[0] : null));
+  // --- Hooks MUST be called at the top level ---
+
+  // --- Existing State ---
+  const [model, setModel] = useState<ParentModelInfo | null>(null);
   const [inTokens, setInTokens] = useState<number>(1695);
   const [outTokens, setOutTokens] = useState<number>(2048);
-  const [cacheTokens, setCacheTokens] = useState<number>(0);
 
-  // Simplified initial state handling
-  if (MODELS.length === 0) {
-    // If MODELS is empty after filtering
-    return <div className="p-4 text-center text-muted-foreground">No allowed models found.</div>;
-  }
+  // --- New State for Scenarios ---
+  const [selectedScenario, setSelectedScenario] = useState<Scenario | null>(SCENARIOS[0]);
+  const [inputTokensManuallyEdited, setInputTokensManuallyEdited] = useState(false);
+  const [outputTokensManuallyEdited, setOutputTokensManuallyEdited] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalInputText, setModalInputText] = useState<string | null>(null);
+  const [modalOutputText, setModalOutputText] = useState<string | null>(null);
+  const [isModalLoading, setIsModalLoading] = useState(false);
+  const [scenarioFetchError, setScenarioFetchError] = useState<string | null>(null);
 
-  if (!model) {
-     // Initialize model if MODELS exist but model state is somehow null
-     // This might happen briefly on first render or if state logic changes
-     if (MODELS.length > 0) {
-         setModel(defaultModel || MODELS[0]); // Use default or first
-     }
-     // Return null or a loading indicator while state updates
-     return <div className="p-4 text-center text-muted-foreground">Loading model...</div>; // Or return null
-  }
+  // --- Effect to set initial model once MODELS prop is available ---
+  useEffect(() => {
+    if (MODELS.length > 0 && !model) { // Check passed MODELS prop
+        const defaultModel = MODELS.find(m => m.id === 'gpt-4.1') || MODELS[0];
+        setModel(defaultModel);
+    }
+    // Don't reset model if MODELS prop changes after initial set, 
+    // unless specific behavior is desired (e.g., parent filtering changes MODELS)
+  }, [MODELS, model]); // Depend on MODELS prop and internal model state
 
-  // Cost calculations (ensure model exists)
-  const costIn = inTokens * model.inputCost;
-  const costOut = outTokens * model.outputCost;
-  const costCache = cacheTokens * model.cacheCost;
-  const subtotal = costIn + costOut + costCache;
+  // --- Effect to update tokens based on selected scenario ---
+  useEffect(() => {
+    // If no scenario is selected, do nothing (keep manual/previous values)
+    if (!selectedScenario) return;
 
-  // Helper to format currency with more precision
-  const formatCurrency = (value: number) => {
-    // Show more decimals for small values, standard 2 for larger sums
-    if (value === 0) return "$0.00";
-    if (Math.abs(value) < 0.01) return `$${value.toPrecision(2)}`; // e.g., $0.000030
-    return `$${value.toFixed(2)}`; // e.g., $12.34
-  };
+    // Use pre-calculated tokens from the scenario object
+    const inputTokens = selectedScenario.input_tokens ?? 0; // Fallback to 0 if undefined
+    const outputTokens = selectedScenario.output_tokens ?? 0;
 
-  const handleModelChange = (selectedModelId: string) => {
+    // Update state only if not manually edited
+    if (!inputTokensManuallyEdited) {
+      setInTokens(inputTokens);
+    }
+    if (!outputTokensManuallyEdited) {
+      setOutTokens(outputTokens);
+    }
+
+    // Reset manual edit flags when a scenario is selected
+    // This ensures subsequent scenario selections correctly update the fields
+    setInputTokensManuallyEdited(false);
+    setOutputTokensManuallyEdited(false);
+    setScenarioFetchError(null); // Clear any previous fetch errors (though we aren't fetching tokens here anymore)
+
+  }, [selectedScenario, inputTokensManuallyEdited, outputTokensManuallyEdited]); // Dependencies remain the same
+
+  // --- Event Handlers --- 
+  // Make sure handlers use the MODELS prop where needed
+  const handleModelChange = useCallback((selectedModelId: string) => {
     const newSelectedModel = MODELS.find(m => m.id === selectedModelId) || null;
     setModel(newSelectedModel);
+  }, [MODELS]); // Depend on MODELS prop
+
+  const handleTokenInputChange = useCallback((
+    e: React.ChangeEvent<HTMLInputElement>,
+    setter: React.Dispatch<React.SetStateAction<number>>,
+    setManualEditFlag: React.Dispatch<React.SetStateAction<boolean>>
+  ) => {
+    const value = e.target.value;
+    const numValue = value === '' ? 0 : Number.parseInt(value.replace(/,/g, ''), 10);
+    if (!Number.isNaN(numValue)) {
+      setter(numValue);
+      setManualEditFlag(true);
+    } else if (value === '') {
+      setter(0);
+      setManualEditFlag(true);
+    }
+  }, []); // No dependencies needed here usually
+
+  const handleSelectScenario = useCallback((scenario: Scenario | null) => {
+    setSelectedScenario(scenario);
+  }, []); // No dependencies needed
+
+  const handleViewExample = useCallback(async () => {
+    if (!selectedScenario) return;
+    setIsModalLoading(true);
+    setModalInputText(null);
+    setModalOutputText(null);
+    setIsModalOpen(true);
+    try {
+      const [inputRes, outputRes] = await Promise.all([
+        fetch(`/data/${selectedScenario.value}/input.txt`),
+        fetch(`/data/${selectedScenario.value}/output.txt`)
+      ]);
+      if (!inputRes.ok || !outputRes.ok) {
+        throw new Error(`Failed to fetch scenario files for ${selectedScenario.label}`);
+      }
+      const inputText = await inputRes.text();
+      const outputText = await outputRes.text();
+      setModalInputText(inputText);
+      setModalOutputText(outputText);
+    } catch (error) {
+      console.error("Error fetching scenario for modal:", error);
+      setModalInputText("Error loading input text.");
+      setModalOutputText("Error loading output text.");
+    } finally {
+      setIsModalLoading(false);
+    }
+  }, [selectedScenario]);
+
+  // --- Initial Model Loading Check ---
+  if (!model) {
+     return <div className="p-4 text-center text-muted-foreground"><Loader2 className="h-5 w-5 animate-spin inline mr-2"/>Initializing calculator...</div>;
+  }
+
+  // --- Cost Calculations (Model is guaranteed non-null here) ---
+  const costIn = inTokens * (model?.inputCost ?? 0);
+  const costOut = outTokens * (model?.outputCost ?? 0);
+  const subtotal = costIn + costOut;
+
+  // --- Helper Functions (Formatters - can stay or be moved) ---
+  const formatCurrency = (value: number): string => {
+    if (value === 0) return "$0.00";
+    // Show up to 6 decimals for values less than 0.01
+    if (Math.abs(value) < 0.01) return `$${value.toFixed(6)}`; 
+    // Otherwise, show standard 2 decimals
+    return `$${value.toFixed(2)}`;
   };
 
+  // New formatter for cost per token (avoids scientific notation)
+  const formatCostPerToken = (value: number): string => {
+    if (value === 0) return "$0.00";
+    // Show significant decimals, e.g., up to 8, remove trailing zeros after decimal point if any
+    return `$${value.toFixed(8).replace(/\.?0+$/, "")}`;
+  };
+
+  const formatNumber = (value: number): string => {
+    return value.toLocaleString(); // Displays integer without .00
+  };
+
+  // --- Animation Variants ---
+  const fieldVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
+    exit: { opacity: 0, y: -10, transition: { duration: 0.2, ease: "easeIn" } }
+  };
+
+  // --- Render Logic ---
   return (
-    <div className="grid gap-6 md:grid-cols-3 max-w-5xl mx-auto">
-      {/* Model selector - Replace Select with ModelCombobox */}
-      <div className="space-y-1.5 md:col-span-3"> {/* Span across two columns for better width */}
-        <label htmlFor="model-select" className="block text-sm font-medium text-muted-foreground">
-          Select AI Model
-        </label>
-        <ModelCombobox 
-          models={MODELS}
-          value={model?.id || null} // Pass current model ID
-          onValueChange={handleModelChange} // Pass handler function
-          placeholder="Select or search for a model..."
-          searchPlaceholder="Search models..."
-          notFoundText="No matching models found."
-          // className="w-full md:w-[400px]" // Example of controlling width
-        />
-        {/* <Select ... > // Old Select component removed */}
-      </div>
-
-      {/* Spacer div removed as Combobox now spans 2 columns */}
-      {/* <div className="hidden md:block" /> */}
-
-      {/* Input tokens */}
-      <div className="space-y-1.5">
-        <label htmlFor="input-tokens" className="block text-sm font-medium text-blue-500">
-          Input Tokens
-        </label>
-        <Input
-          id="input-tokens"
-          type="number"
-          min={1}
-          value={inTokens}
-          onChange={(e) => setInTokens(Number(e.target.value) || 0)}
-          className="h-9 border-blue-500" 
-        />
-        <label htmlFor="input-tokens" className="block text-sm font-medium text-blue-500">
-          <span className="text-xs text-neutral-500">
-            <AlertCircle className="w-4 h-4 inline-block mr-1" /> The US Declaration of Independence contains ~1,695 tokens.
-          </span>
-        </label>
-      </div>
-
-      {/* Output tokens */}
-      <div className="space-y-1.5">
-        <label htmlFor="output-tokens" className="block text-sm font-medium text-red-400">
-          Output Tokens
-        </label>
-        <Input
-          id="output-tokens"
-          type="number"
-          min={1}
-          value={outTokens}
-          onChange={(e) => setOutTokens(Number(e.target.value) || 0)}
-          className="h-9 border-red-400" 
-        />
-        <label htmlFor="input-tokens" className="block text-sm font-medium text-muted-foreground">
-          <span className="text-xs text-neutral-500">
-            <AlertCircle className="w-4 h-4 inline-block mr-1" /> 1,500 words ≈ 2048 tokens
-          </span>
-        </label>
-      </div>
-
-      {/* Cached reads */}
-      <div className="space-y-1.5">
-        <label htmlFor="cached-reads" className="block text-sm font-medium text-orange-300">
-          Cached Read Tokens
-        </label>
-        <Input
-          id="cached-reads"
-          type="number"
-          min={0}
-          value={cacheTokens}
-          onChange={(e) => setCacheTokens(Number(e.target.value) || 0)}
-          className="h-9 border-orange-300" 
-        />
-        <label htmlFor="input-tokens" className="block text-sm font-medium text-muted-foreground">
-          <span className="text-xs text-neutral-500">
-            <AlertCircle className="w-4 h-4 inline-block mr-1" /> Cached responses require a minimum of 1024 tokens.
-          </span>
-        </label>
-      </div>
-
-      {/* Results panel - Enhanced styling */}
-      <div className="md:col-span-3 bg-muted/40 p-4 rounded-lg border border-border/70 mt-4">
-        <h3 className="text-base font-semibold mb-3 text-foreground">Cost Breakdown</h3>
-        <div className="space-y-2 text-sm">
-          <div className="flex justify-between items-center">
-            <span className="text-blue-500">Input Cost:</span>
-            <span className="text-blue-500">{formatCurrency(costIn)}</span>
+    <TooltipProvider delayDuration={200}>
+      <div className="flex flex-col md:flex-row gap-8">
+        {/* Left Side: Inputs & Scenario */}
+        <div className="w-full md:w-1/3 space-y-6">
+          {/* Model Selector - uses MODELS prop */}
+          <div>
+            {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
+            <label className="block text-lg font-medium mb-4 text-foreground">
+              Select Model
+            </label>
+            <ModelCombobox
+              models={MODELS} // Pass MODELS prop
+              value={model?.id || null}
+              onValueChange={handleModelChange}
+            />
           </div>
-          <div className="flex justify-between items-center">
-            <span className="text-red-400">Output Cost:</span>
-            <span className="text-red-400">{formatCurrency(costOut)}</span>
+
+          {/* Scenario Selector */}
+          <div>
+            {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
+            <label className="block text-sm font-medium text-muted-foreground mb-2">
+              Try with a real prompt/response example:
+            </label>
+            <div className="flex items-center gap-2">
+              <ScenarioCombobox
+                scenarios={SCENARIOS}
+                selectedScenario={selectedScenario}
+                onSelectScenario={handleSelectScenario}
+                className="flex-grow"
+              />
+              <Tooltip>
+                <TooltipTrigger asChild>
+                   <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={handleViewExample}
+                      disabled={!selectedScenario}
+                      aria-label="View Example Text"
+                    >
+                      <Eye className="h-4 w-4" />
+                   </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>View example prompt & output</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+             {scenarioFetchError && (
+                <p className="text-xs text-red-500 mt-1.5">{scenarioFetchError}</p>
+             )}
           </div>
-          <div className="flex justify-between items-center pb-3">
-            <span className="text-orange-300">Cache Read Cost:</span>
-            <span className="text-orange-300">{formatCurrency(costCache)}</span>
+
+          {/* Token Inputs */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selectedScenario?.value ?? 'manual'} // Animate when scenario changes or goes to manual
+              variants={fieldVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="space-y-4"
+            >
+              <div>
+                <label htmlFor="inTokens" className="block text-sm font-medium text-muted-foreground mb-2">
+                  Input Tokens
+                </label>
+                <Input
+                  id="inTokens"
+                  disabled
+                  type="text"
+                  value={formatNumber(inTokens)}
+                  onChange={(e) => handleTokenInputChange(e, setInTokens, setInputTokensManuallyEdited)}
+                  className="tabular-nums"
+                  autoComplete="off"
+                />
+              </div>
+              <div>
+                <label htmlFor="outTokens" className="block text-sm font-medium text-muted-foreground mb-2">
+                  Output Tokens
+                </label>
+                <Input
+                  id="outTokens"
+                  disabled
+                  type="text"
+                  value={formatNumber(outTokens)}
+                   onChange={(e) => handleTokenInputChange(e, setOutTokens, setOutputTokensManuallyEdited)}
+                  className="tabular-nums"
+                  autoComplete="off"
+                />
+              </div>
+              {/* Subcaption */}
+               <div className="flex items-center text-xs text-muted-foreground mt-2">
+                 {selectedScenario ? (
+                   <span>Token count estimated from example files. Adjust if needed.</span>
+                 ) : (
+                   <span>Enter token counts manually.</span>
+                 )}
+                 <Tooltip>
+                    <TooltipTrigger asChild>
+                        <Info className="h-3 w-3 ml-1.5 cursor-help opacity-70"/>
+                    </TooltipTrigger>
+                    <TooltipContent side="top" className="max-w-xs text-center">
+                        <p>Token estimates based on GPT tokenizer. Counts may differ slightly for other models.</p>
+                    </TooltipContent>
+                 </Tooltip>
+               </div>
+            </motion.div>
+           </AnimatePresence>
+
+        </div>
+
+        {/* Right Side: Cost Breakdown */}
+        <div className="w-full md:w-2/3 md:pl-8">
+           <h3 className="text-lg font-medium mb-4 text-foreground">Cost Breakdown</h3>
+          <div className="space-y-3 text-sm bg-muted/30 p-4 rounded-md border border-border/50">
+             {/* Model Info */}
+             <div className="flex items-center justify-between pb-3 border-b border-border/30">
+                 <div className="flex items-center gap-3">
+                    <Image src={model.logoUrl ?? "/logos/default.svg"} alt={`${model.provider ?? 'Unknown'} logo`} width={24} height={24} className="rounded-sm"/>
+                    <span className="font-medium text-foreground">{model.name ?? 'Unknown Model'}</span>
+                 </div>
+                 <div className="text-right text-muted-foreground">
+                    <div>Input: {formatCostPerToken(model.inputCost * 1000000)} / 1M tokens</div>
+                    <div>Output: {formatCostPerToken(model.outputCost * 1000000)} / 1M tokens</div>
+                 </div>
+             </div>
+
+             {/* Cost Items */}
+             <div className="flex justify-between">
+                 <span className="text-muted-foreground">Input Cost ({formatNumber(inTokens)} tokens)</span>
+                 <span className="font-medium tabular-nums text-foreground">{formatCurrency(costIn)}</span>
+             </div>
+             <div className="flex justify-between">
+                 <span className="text-muted-foreground">Output Cost ({formatNumber(outTokens)} tokens)</span>
+                 <span className="font-medium tabular-nums text-foreground">{formatCurrency(costOut)}</span>
+             </div>
+
+             <Separator className="my-3 bg-border/40" />
+
+             {/* Total Cost */}
+             <div className="flex justify-between items-center pt-1">
+                 <span className="text-base font-semibold text-foreground">Estimated Total Cost</span>
+                 <span className="text-lg font-bold tabular-nums text-foreground">{formatCurrency(subtotal)}</span>
+             </div>
+
+             {/* OnlyPrompt Fee (Example) */}
+             {/* You can add your platform fee calculation here */}
+             {/* <Separator className="my-3 bg-border/40" />
+             <div className="flex justify-between items-center pt-1">
+                 <span className="text-base font-semibold text-foreground">Total (incl. OnlyPrompt Fee)</span>
+                 <span className="text-lg font-bold tabular-nums text-primary">{formatCurrency(subtotal * 1.XX)}</span>
+             </div> */}
           </div>
-          <Separator className="my-2 bg-muted" decorative={true} />
-          <div className="flex justify-between items-center font-bold pt-2 text-xl">
-            <span className="text-green-500">Total Estimated Cost:</span>
-            <span className="font-mono text-green-500">{formatCurrency(subtotal)}</span>
-          </div>
+
+          {/* Disclaimer */}
+           <p className="text-xs text-muted-foreground mt-4 italic">
+             * All costs are estimates based on publicly available pricing data and may not reflect real-time promotional offers or specific regional pricing. Token counts are illustrative.
+           </p>
         </div>
       </div>
-    </div>
+
+      {/* Scenario Modal */}
+      <ScenarioModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        scenarioLabel={selectedScenario?.label ?? "Example"}
+        inputText={modalInputText}
+        outputText={modalOutputText}
+        isLoading={isModalLoading}
+      />
+    </TooltipProvider>
   );
 }

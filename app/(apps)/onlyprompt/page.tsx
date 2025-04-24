@@ -4,13 +4,11 @@ import { motion } from "framer-motion";
 import { Lock, Bot, Brain, Cog, DollarSign, Sparkles } from "lucide-react";
 import GridItem from "@/components/ui/grid-item";
 import Image from "next/image";
-import { CollegeLogoSlider } from "@/components/college-logo-slider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Spotlight } from "@/components/ui/spotlight-new";
 import SecondaryNavbar from "@/components/secondary-navbar";
 
-// GSAP Imports
 import React, { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -18,11 +16,15 @@ import SplitType from "split-type";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import WaitlistForm from "@/components/waitlist-form";
 import { RetroGrid } from "@/components/ui/retro-grid";
+import { useIsMobile } from "@/hooks/use-mobile";
 
-// Add import for the calculator component
 import Calculator from "@/components/blocks/calculator";
+import WhyOnlyPromptBlock from "@/components/blocks/why-onlyprompt-block";
 import { BackgroundPaths } from "@/components/blocks/background-paths";
 import { TestimonialsSectionDemo } from "@/components/blocks/testimonials-with-marquee-demo";
+import FairPricingBlock from "@/components/blocks/fair-pricing-block";
+import RealCostBlock from "@/components/blocks/real-cost-block";
+import { TextEffect } from "@/components/ui/text-effect";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -75,7 +77,7 @@ export default function OnlyPromptPage() {
 
   const capabilitiesSectionRef = useRef<HTMLDivElement>(null);
   const capabilitiesH2Ref = useRef<HTMLHeadingElement>(null);
-
+  
   const whySectionRef = useRef<HTMLDivElement>(null);
   const whyH2Ref = useRef<HTMLHeadingElement>(null);
   const whyP1Ref = useRef<HTMLParagraphElement>(null);
@@ -86,6 +88,9 @@ export default function OnlyPromptPage() {
   const endorsementsH2Ref = useRef<HTMLHeadingElement>(null);
   const endorsementRefs = useRef<(HTMLParagraphElement | null)[]>([]);
   const endorsementContainerRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Check if mobile
+  const isMobile = useIsMobile();
 
   // Apply animations using hooks scoped to sections
   useGSAP(() => applyLineReveal([uncannyH2Ref.current, uncannyPRef.current]), {
@@ -143,31 +148,21 @@ export default function OnlyPromptPage() {
     <div className="flex-1 font-manifold bg-inherit">
       <SecondaryNavbar />
 
-      <section className="min-h-screen border-b border-white/10 flex items-center pt-16 md:pt-0">
+      <section className="min-h-screen border-b border-white/10 flex items-center md:items-start pt-16 md:pt-0">
         <div className="bg-black relative overflow-hidden w-full">
+          <RetroGrid />
           <Spotlight />
           <div className="flex flex-col min-h-screen items-center justify-center gap-y-6 sm:gap-y-8 py-12 sm:py-16 md:py-20">
             <div className="flex flex-col items-center gap-4 md:gap-5">
               <div className="text-sm sm:text-base md:text-lg font-medium text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400 pointer-events-none">
                 <span className="uppercase font-extralight text-2xl xs:text-2xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl text-center bg-clip-text text-transparent bg-gradient-to-b from-purple-200 to-purple-800 pointer-events-none">
-                  introducing
+                    introducing
                 </span>
                 <br />
                 <div className="flex flex-row items-center justify-center gap-2 sm:gap-3 my-6 sm:my-8">
-                  <Image
-                    src="/onlyprompt-logo-colored-dark.svg"
-                    alt="OnlyPrompt Logo"
-                    width={80}
-                    height={80}
-                    className="text-5xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl"
-                  />
-                  <Separator
-                    orientation="vertical"
-                    className="h-10 sm:h-14 md:h-16 mx-2 sm:mx-3 md:mx-4 bg-transparent"
-                  />
-                  <h1 className="text-5xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-extrabold tracking-tight sm:tracking-tighter text-center bg-clip-text text-transparent bg-gradient-to-b from-orange-200 to-gray-400 pointer-events-none">
+                  <h3 className="text-5xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-extrabold tracking-tight sm:tracking-tighter text-center bg-clip-text text-transparent bg-gradient-to-b from-orange-200 to-gray-400 pointer-events-none">
                     ONLYPROMPT
-                  </h1>
+                  </h3>
                 </div>
                 {/* <span className="uppercase font-extralight text-2xl xs:text-2xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl text-center bg-clip-text text-transparent bg-gradient-to-b from-purple-200 to-purple-800 pointer-events-none">
                   the {" "} 
@@ -181,35 +176,6 @@ export default function OnlyPromptPage() {
                 </span> */}
               </div>
             </div>
-            <div className="w-full max-w-[18rem] sm:max-w-xs md:max-w-sm mx-auto px-4 space-y-5 sm:space-y-6 flex flex-col items-center py-10">
-              <WaitlistForm flexDirection="row" />
-              <RetroGrid />
-
-              <div className="flex flex-col items-center gap-2">
-                <div className="flex items-center gap-4">
-                  <div className="flex -space-x-3">
-                    <Avatar className="border-2 border-black w-8 h-8 sm:w-12 sm:h-12">
-                      <AvatarImage src="/avatars/two.png" alt="User 1 Avatar" />
-                      <AvatarFallback>U1</AvatarFallback>
-                    </Avatar>
-                    <Avatar className="border-2 border-black w-8 h-8 sm:w-12 sm:h-12">
-                      <AvatarImage
-                        src="/avatars/three.png"
-                        alt="User 2 Avatar"
-                      />
-                      <AvatarFallback>U2</AvatarFallback>
-                    </Avatar>
-                    <Avatar className="border-2 border-black w-8 h-8 sm:w-12 sm:h-12">
-                      <AvatarImage src="/avatars/one.png" alt="User 3 Avatar" />
-                      <AvatarFallback>U3</AvatarFallback>
-                    </Avatar>
-                  </div>
-                  <span className="font-semibold text-xs sm:text-sm text-gray-400">
-                    200+ people already on the waitlist
-                  </span>
-                </div>
-              </div>
-            </div>
             {/* <div className="w-full max-w-xs sm:max-w-md md:max-w-xl lg:max-w-3xl px-4 text-center mt-6 sm:mt-10">
               <h3 className="mb-3 sm:mb-4 text-xs sm:text-sm md:text-base font-normal text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400 uppercase">
                 Trusted By Students and Professionals at Leading Institutions:
@@ -217,6 +183,13 @@ export default function OnlyPromptPage() {
               <CollegeLogoSlider />
             </div> */}
           </div>
+        </div>
+      </section>
+      <section>
+        <div className="container mx-auto px-4 md:px-6">
+          <WhyOnlyPromptBlock />
+          <FairPricingBlock />
+          <RealCostBlock />
         </div>
       </section>
 

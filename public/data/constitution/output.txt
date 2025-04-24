@@ -1,0 +1,35 @@
+The U.S. Constitution establishes a system of **checks and balances** between the **legislative** (Congress) and **executive** (President) branches to prevent any one branch from becoming too powerful. Here's how the system works, with three historical examples:
+
+---
+
+### 🔁 **Checks and Balances in the Constitution**
+
+1. **Legislative on Executive**  
+   - **Lawmaking:** Congress writes and passes laws (Article I, Section 7), but the President can **veto** them.  
+   - **Override Power:** Congress can **override a veto** with a two-thirds vote in both the House and Senate.  
+   - **Appointments and Treaties:** The Senate must approve the President’s **treaty agreements** and **appointments** (Article II, Section 2).  
+   - **Impeachment:** The House can **impeach** the President, and the Senate can **try and remove** him (Article I, Sections 2–3).
+
+2. **Executive on Legislative**  
+   - **Veto Power:** The President can **reject bills** passed by Congress (Article I, Section 7).  
+   - **Calling Special Sessions:** The President can **convene or adjourn** Congress in certain cases (Article II, Section 3).  
+   - **State of the Union:** The President can recommend legislation through the **State of the Union** address (Article II, Section 3).
+
+---
+
+### 📜 **Historical Examples**
+
+#### 1. **Andrew Johnson’s Impeachment (1868)**
+Congress clashed with President Johnson over Reconstruction policies. The House impeached him for violating the **Tenure of Office Act**, and though the Senate narrowly acquitted him, the case showed Congress checking presidential power.
+
+#### 2. **Nixon’s Veto of the War Powers Resolution (1973)**
+President Nixon vetoed a law limiting his power to send U.S. forces abroad without congressional approval. Congress **overrode** the veto, asserting its role in foreign military action.
+
+#### 3. **Senate Rejection of the Treaty of Versailles (1919)**
+Although President Wilson negotiated the treaty to end World War I, the Senate **refused to ratify** it, demonstrating its constitutional check on foreign agreements.
+
+---
+
+### 🧠 Summary
+
+The Constitution's checks and balances ensure that while the President leads the executive branch, Congress holds significant power over legislation, spending, appointments, and even removal from office. These mechanisms maintain a balance crucial to the U.S. system of government.
