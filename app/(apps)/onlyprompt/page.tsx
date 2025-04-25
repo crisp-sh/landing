@@ -1,7 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Lock, Bot, Brain, Cog, DollarSign, Sparkles } from "lucide-react";
+import {
+  Lock,
+  Bot,
+  Brain,
+  Cog,
+  DollarSign,
+  Sparkles,
+  FileText,
+} from "lucide-react";
 import GridItem from "@/components/ui/grid-item";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -25,7 +33,9 @@ import { TestimonialsSectionDemo } from "@/components/blocks/testimonials-with-m
 import FairPricingBlock from "@/components/blocks/fair-pricing-block";
 import RealCostBlock from "@/components/blocks/real-cost-block";
 import { TextEffect } from "@/components/ui/text-effect";
-import { Flex, FlexCol, FlexGroup } from "@/components/ui/flex";
+import { Flex, FlexCol, FlexGroup, FlexRow } from "@/components/ui/flex";
+import { ScrollIndicator } from "@/components/ui/scroll-indicator";
+import FutureOfAI from "@/components/blocks/future-of-ai";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -78,7 +88,7 @@ export default function OnlyPromptPage() {
 
   const capabilitiesSectionRef = useRef<HTMLDivElement>(null);
   const capabilitiesH2Ref = useRef<HTMLHeadingElement>(null);
-  
+
   const whySectionRef = useRef<HTMLDivElement>(null);
   const whyH2Ref = useRef<HTMLHeadingElement>(null);
   const whyP1Ref = useRef<HTMLParagraphElement>(null);
@@ -148,6 +158,7 @@ export default function OnlyPromptPage() {
   return (
     <div className="font-manifold bg-inherit">
       <SecondaryNavbar />
+      <ScrollIndicator />
 
       <section className="min-h-screen border-b border-white/10 flex items-center md:items-start">
         <div className="bg-black relative overflow-hidden w-full">
@@ -157,7 +168,7 @@ export default function OnlyPromptPage() {
             <div className="flex flex-col items-center">
               <div className="text-sm sm:text-base md:text-lg font-medium text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400 pointer-events-none">
                 <span className="uppercase font-extralight text-2xl xs:text-2xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl text-center bg-clip-text text-transparent bg-gradient-to-b from-purple-200 to-purple-800 pointer-events-none">
-                    introducing
+                  introducing
                 </span>
                 <br />
                 <div className="flex flex-row gap-2 sm:gap-3 my-6 sm:my-8">
@@ -170,30 +181,29 @@ export default function OnlyPromptPage() {
           </div>
         </div>
       </section>
-      
-      <Flex>
-        <FlexGroup 
-          vertical={true} 
-          reverse={true} 
-          wrap={true} 
-          gap="4"
-          gapX="2"
-          gapY="6"
-          justify="center" 
-          align="center"
-        >
-          <FlexCol 
-            gap="8"
-            justify="between" 
+      <section id="mission" className="bg-black text-white py-16 sm:py-20 md:py-24 border-b border-white/10">
+        <FutureOfAI />
+      </section>
+      {/* <section>
+        <Flex>
+          <FlexGroup
+            vertical={true}
+            reverse={true}
+            wrap={true}
+            gap="4"
+            gapX="2"
+            gapY="6"
+            justify="center"
             align="center"
           >
-            <WhyOnlyPromptBlock />
-            <FairPricingBlock />
-            <RealCostBlock />
-          </FlexCol>
-        </FlexGroup>
-      </Flex>
-
+            <FlexCol gap="8" justify="between" align="center">
+              <WhyOnlyPromptBlock />
+              <FairPricingBlock />
+              <RealCostBlock />
+            </FlexCol>
+          </FlexGroup>
+        </Flex>
+      </section> */}
       <section
         ref={capabilitiesSectionRef}
         id="features"

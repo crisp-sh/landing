@@ -263,7 +263,7 @@ export function PromptingIsAllYouNeed({ remainingBlocksToEnd = 5 }: PromptingIsA
     setGameState('playing')
 
     pixelsRef.current = []
-    const words = ["PROMPTING", "IS ALL YOU NEED", "-  ONLYPROMPT"]
+    const words = ["ONLYPROMPT", "IS ALL YOU NEED"]
 
     const calculateWordWidth = (word: string, pixelSize: number) => {
       // Add safety check for undefined word
