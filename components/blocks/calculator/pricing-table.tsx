@@ -6,6 +6,7 @@ import type {
   ColumnFiltersState,
   SortingState,
   VisibilityState,
+  TableMeta, // Import TableMeta if needed later in columns
 } from "@tanstack/react-table";
 // Import runtime functions
 import {
@@ -18,13 +19,16 @@ import {
 } from "@tanstack/react-table";
 
 // Import shared data and types from cost-calculator
-import { MODELS } from "./cost-calculator";
+// import { MODELS } from "./cost-calculator"; // REMOVED THIS LINE
 import type { ModelInfo } from "./cost-calculator";
-import { pricingColumns } from "./columns";
+// Import the function to get columns
+import { getPricingColumns } from "./columns";
 
 // Import shadcn UI components
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox"; // Import Checkbox
+import { Label } from "@/components/ui/label"; // Import Label
 import {
   Table,
   TableBody,
@@ -38,21 +42,42 @@ import {
   DataTableViewOptions,
 } from "@/components/ui/data-table-utils"; // Import utils
 
+// Define Props for PricingTable
+interface PricingTableProps {
+  data: ModelInfo[]; // Accept data as a prop
+}
+
+// Define custom meta type (No longer needed for this approach)
+// interface PricingTableMeta {
+//   showPerMillionTokens: boolean;
+// }
+
 // Main PricingTable component using TanStack Table
-export default function PricingTable() {
+export default function PricingTable({ data }: PricingTableProps) { // Destructure data from props
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
+  const [showPerMillionTokens, setShowPerMillionTokens] = React.useState<boolean>(false); // State for checkbox
+
+  // Generate columns based on the current state
+  const columns = React.useMemo(
+    () => getPricingColumns(showPerMillionTokens),
+    [showPerMillionTokens] // Re-generate columns when the state changes
+  );
 
   const table = useReactTable<ModelInfo>({
-    data: MODELS, // Use the imported and processed MODELS array
-    columns: pricingColumns, // Use the defined columns
+    data, // Use the data prop
+    columns, // Use the generated columns
     state: {
       sorting,
       columnFilters,
       columnVisibility,
     },
+    // Meta is no longer needed here for passing the flag
+    // meta: {
+    //   showPerMillionTokens,
+    // } as PricingTableMeta, 
     // Handlers for state changes
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -72,8 +97,8 @@ export default function PricingTable() {
 
   return (
     <div className="w-full space-y-4">
-      {/* Filter and View Options - Add spacing */}
-      <div className="flex items-center justify-between py-4">
+      {/* Filter and View Options - Add Checkbox */}
+      <div className="flex items-center justify-between py-4 gap-4"> {/* Add gap */}
         <Input
           placeholder="Filter models by name..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -82,7 +107,20 @@ export default function PricingTable() {
           }
           className="max-w-xs h-8" // Slightly smaller max width
         />
-        <DataTableViewOptions table={table} />
+        {/* Group Checkbox and View Options */}
+        <div className="flex items-center gap-3"> {/* Smaller gap */}
+           <div className="flex items-center space-x-2">
+             <Checkbox
+               id="showPerMillion"
+               checked={showPerMillionTokens}
+               onCheckedChange={(checked) => setShowPerMillionTokens(Boolean(checked))}
+             />
+             <Label htmlFor="showPerMillion" className="text-xs font-normal whitespace-nowrap">
+               Show $/1M tokens
+             </Label>
+           </div>
+          <DataTableViewOptions table={table} />
+        </div>
       </div>
 
       {/* Table - Use fainter border */}
@@ -108,7 +146,7 @@ export default function PricingTable() {
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {table.getRowModel()?.rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 // Apply faint border to body rows
                 <TableRow

@@ -67,8 +67,9 @@ export function EerieNav({ logo }: EerieNavProps) {
   return (
     <header className="fixed left-0 right-0 top-[var(--banner-height,0px)] z-[1000] w-full border-b border-white/10 bg-black/80 backdrop-blur-sm transition-all duration-300">
       <div className="container relative flex h-16 items-center justify-between">
-        {/* Logo and company name */}
-        <div className="flex flex-row items-center gap-2">
+        {/* Logo Group (Main + Secondary) */}
+        <div className="flex flex-row items-center gap-2 flex-shrink-0">
+          {/* Main Logo */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -106,7 +107,6 @@ export function EerieNav({ logo }: EerieNavProps) {
           {secondaryLogo && (
             <>
               <span className="select-none text-2xl font-light text-white/50 mx-1 leading-none flex items-center">
-                {/* <X className="w-4 h-4 rotate-45" /> */}
                 <Separator orientation="vertical" className="h-6 w-px mx-1" />
               </span>
               {/* Secondary logo */}
@@ -137,7 +137,7 @@ export function EerieNav({ logo }: EerieNavProps) {
                       alt={secondaryLogoAlt || "Secondary Logo"}
                       width={40}
                       height={40}
-                      className="h-1/2 w-auto opacity-75"
+                      className="h-full w-full opacity-75"
                     />
                   </a>
                 </motion.div>

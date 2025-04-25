@@ -198,7 +198,7 @@ export default function Calculator() {
             exit="exit"
           >
             <PricingTable 
-              models={MODELS} 
+              data={MODELS}
             />
           </motion.div>
         ) : (

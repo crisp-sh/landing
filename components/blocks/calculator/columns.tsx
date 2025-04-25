@@ -18,22 +18,37 @@ import Image from "next/image"
 // Import the provider formatter from cost-calculator
 import { formatProviderName } from "./cost-calculator" 
 
-// Helper to format currency (similar to the one in the old pricing table)
-const formatTableCurrency = (value: number | null | undefined): string => {
-  if (value == null || value === 0) return "-"; // Display dash for zero or undefined costs
-  
-  const absValue = Math.abs(value);
-  
-  // Use more decimal places for very small numbers instead of scientific notation
-  if (absValue > 0 && absValue < 0.000001) { 
-    return `$${value.toFixed(8)}`; // Show up to 8 decimal places
+// Define the meta type (can be removed later if not needed)
+interface PricingTableMeta {
+  showPerMillionTokens?: boolean; 
+}
+
+// Helper to format currency, considering per-million scale
+const formatTableCurrency = (value: number | null | undefined, perMillion = false): string => {
+  if (value == null) return "-"; 
+  // Handle zero explicitly, regardless of scale
+  if (value === 0) return "$0.00"; 
+
+  const displayValue = perMillion ? value * 1000000 : value;
+  const absDisplayValue = Math.abs(displayValue);
+
+  // Use more precision for very small per-token costs
+  if (!perMillion && absDisplayValue > 0 && absDisplayValue < 0.000001) { 
+    return `$${displayValue.toFixed(8)}`; 
   }
   
-  // For other numbers, stick to 6 decimal places
-  return `$${value.toFixed(6)}`; 
+  // For per-million or larger per-token costs, use 2 decimal places
+  // Adjusted threshold for switching to 2 decimals if needed
+  if (perMillion || absDisplayValue >= 0.01) {
+      return `$${displayValue.toFixed(2)}`;
+  }
+
+  // Default for smaller per-token costs (e.g., 0.000015)
+  return `$${displayValue.toFixed(6)}`; 
 };
 
-export const pricingColumns: ColumnDef<ModelInfo>[] = [
+// Function to generate columns, accepting the state
+export const getPricingColumns = (showPerMillion: boolean): ColumnDef<ModelInfo>[] => [
   {
     accessorKey: "provider",
     header: ({ column }) => (
@@ -68,53 +83,62 @@ export const pricingColumns: ColumnDef<ModelInfo>[] = [
   },
   {
     accessorKey: "inputCost",
-    header: ({ column }) => (
-        <Button 
-            variant="ghost" 
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className="px-0 hover:bg-transparent w-full justify-end uppercase"
-        > 
-            <div className="text-right">Input $/token</div>
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-    ),
+    header: ({ column }) => {
+        const headerText = showPerMillion ? "Input $/1M tokens" : "Input $/token";
+        return (
+            <Button 
+                variant="ghost" 
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                className="px-0 hover:bg-transparent w-full justify-end uppercase"
+            > 
+                <div className="text-right whitespace-nowrap">{headerText}</div>
+                <ArrowUpDown className="ml-2 h-4 w-4 flex-shrink-0" />
+            </Button>
+        );
+    },
     cell: ({ row }) => {
-      const val = row.getValue("inputCost") as number
-      return <div className="text-right font-mono">{formatTableCurrency(val)}</div>
+      const val = row.getValue("inputCost") as number;
+      return <div className="text-right font-mono">{formatTableCurrency(val, showPerMillion)}</div>;
     },
   },
   {
     accessorKey: "outputCost",
-    header: ({ column }) => (
-        <Button 
-            variant="ghost" 
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className="px-0 hover:bg-transparent w-full justify-end uppercase"
-        >
-            <div className="text-right">Output $/token</div>
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-    ),
+    header: ({ column }) => {
+        const headerText = showPerMillion ? "Output $/1M tokens" : "Output $/token";
+        return (
+            <Button 
+                variant="ghost" 
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                className="px-0 hover:bg-transparent w-full justify-end uppercase"
+            >
+                <div className="text-right whitespace-nowrap">{headerText}</div>
+                <ArrowUpDown className="ml-2 h-4 w-4 flex-shrink-0" />
+            </Button>
+        );
+    },
     cell: ({ row }) => {
-      const val = row.getValue("outputCost") as number
-      return <div className="text-right font-mono">{formatTableCurrency(val)}</div>
+      const val = row.getValue("outputCost") as number;
+      return <div className="text-right font-mono">{formatTableCurrency(val, showPerMillion)}</div>;
     },
   },
   {
     accessorKey: "cacheCost",
-    header: ({ column }) => (
-        <Button 
-            variant="ghost" 
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className="px-0 hover:bg-transparent w-full justify-end uppercase"
-        >
-            <div className="text-right">Cache read $/token</div>
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-    ),
+    header: ({ column }) => {
+        const headerText = showPerMillion ? "Cache $/1M tokens" : "Cache $/token";
+        return (
+            <Button 
+                variant="ghost" 
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                className="px-0 hover:bg-transparent w-full justify-end uppercase"
+            >
+                <div className="text-right whitespace-nowrap">{headerText}</div>
+                <ArrowUpDown className="ml-2 h-4 w-4 flex-shrink-0" />
+            </Button>
+        );
+    },
     cell: ({ row }) => {
-      const val = row.getValue("cacheCost") as number
-      return <div className="text-right font-mono">{formatTableCurrency(val)}</div>
+      const val = row.getValue("cacheCost") as number;
+      return <div className="text-right font-mono">{formatTableCurrency(val, showPerMillion)}</div>;
     },
   },
   {
