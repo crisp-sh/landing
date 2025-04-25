@@ -79,34 +79,57 @@ export const formatProviderName = (provider: string | null | undefined): string 
 // Helper function to format model ID (Lifted from cost-calculator)
 const formatModelId = (id: string): string => {
   let formatted = id;
-  // ... formatting logic ...
+  const hasSlash = id.includes('/'); // Check if it's a path-like ID
+
+  // --- Prefix replacements (Keep these) ---
   formatted = formatted.replace(/^gpt-?/, "GPT ");
   formatted = formatted.replace(/^claude-?/, "Claude ");
   formatted = formatted.replace(/^gemini-?/, "Gemini ");
   formatted = formatted.replace(/^command-?/, "Command ");
-  formatted = formatted.replace(/^mistral-?/, "Mistral ");
+  formatted = formatted.replace(/^mistral-?/, "Mistral "); // Keep for consistency if needed, e.g., mistral-7b
   formatted = formatted.replace(/^llama-?/, "LLaMA ");
-  formatted = formatted.replace(/-(?![0-9])/g, " ");
+  // --- End Prefix replacements ---
+  
+  // Replace hyphens with spaces, unless between numbers or within path
+  if (!hasSlash) {
+    formatted = formatted.replace(/-(?![0-9])/g, " ");
+  }
+  
+  // Extract and format date (Keep this)
   const dateMatch = formatted.match(/\s(\d{4}-\d{2}-\d{2})$/);
   let dateSuffix = "";
   if (dateMatch) {
     formatted = formatted.substring(0, dateMatch.index).trim();
     dateSuffix = ` (${dateMatch[1]})`;
   }
-  formatted = formatted.split(' ').map(word => {
-      if (["GPT", "AI", "LLaMA"].includes(word.toUpperCase())) return word.toUpperCase();
-      if (/^[0-9.]+$/.test(word)) return word;
-      return word.charAt(0).toUpperCase() + word.slice(1);
-  }).join(' ');
-  return formatted + dateSuffix;
+
+  // --- Conditional Capitalization ---
+  // Only capitalize words if it's NOT a path-like ID
+  if (!hasSlash) {
+    formatted = formatted.split(' ').map(word => {
+        // Keep specific capitalizations like GPT, AI
+        if (["GPT", "AI", "LLaMA"].includes(word.toUpperCase())) return word.toUpperCase();
+        // Keep version numbers or potential path parts if somehow split
+        if (/^[0-9.]+$/.test(word) || word.includes('/')) return word; 
+        // Capitalize first letter for other words
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    }).join(' ');
+  }
+  // --- End Conditional Capitalization ---
+
+  // --- Lowercase 'O' prefix ---
+  // Check if formatted string starts with O followed by a letter/number
+  if (/^O[a-zA-Z0-9]/.test(formatted)) {
+      formatted = `o${formatted.slice(1)}`;
+  }
+  // --- End Lowercase 'O' prefix ---
+  
+  // Use template literal for final string
+  return `${formatted}${dateSuffix}`; 
 };
 
-// Format model name (Lifted from cost-calculator)
-const formatModelName = (id: string, provider: string | null | undefined): string => {
-    const providerName = formatProviderName(provider);
-    const modelName = formatModelId(id);
-    return `${providerName}: ${modelName}`;
-}
+// Format model name function is no longer needed as logic moved to useMemo
+// const formatModelName = (id: string, provider: string | null | undefined): string => { ... }
 
 export default function Calculator() {
   const [showTable, setShowTable] = useState(false);
@@ -122,7 +145,7 @@ export default function Calculator() {
       setModelsLoading(true); // Ensure loading state is set
       setModelsError(null);
       try {
-        const response = await fetch('/data/litellm_models.json');
+        const response = await fetch('https://raw.githubusercontent.com/BerriAI/litellm/refs/heads/main/model_prices_and_context_window.json');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -138,12 +161,11 @@ export default function Calculator() {
     fetchModels();
   }, []); // Empty dependency array ensures this runs only once on mount
 
-  // --- Process models using useMemo (Lifted from cost-calculator) ---
+  // --- Process models using useMemo ---
   const MODELS: ModelInfo[] = useMemo(() => {
     if (!rawModelsData) return [];
     return Object.entries(rawModelsData)
       .map(([id, rawSpec]): (Omit<ModelInfo, 'name'> & { provider: string | null | undefined }) | null => {
-        // ... Filtering logic ...
           const provider = rawSpec.litellm_provider;
           if (!provider || !ALLOWED_PROVIDERS.includes(provider.toLowerCase())) return null;
           if (rawSpec.mode !== "chat") return null;
@@ -152,6 +174,7 @@ export default function Calculator() {
           const outputCost = rawSpec.output_cost_per_token || 0;
           const cacheCost = rawSpec.cache_read_input_token_cost ?? rawSpec.output_cost_per_reasoning_token ?? 0;
           if (inputCost === 0 && outputCost === 0 && cacheCost === 0) return null;
+          
           return {
             id,
             provider,
@@ -162,11 +185,24 @@ export default function Calculator() {
           };
       })
       .filter((model): model is (Omit<ModelInfo, 'name'> & { provider: string }) => model !== null)
-      .map(model => ({
-          ...model,
-          name: formatModelName(model.id, model.provider),
-      }));
-  }, [rawModelsData]);
+      .map(model => {
+          // Determine the display name based on provider
+          let displayName: string;
+          if (model.provider.toLowerCase() === 'openrouter') {
+              displayName = model.id; // Use raw ID for OpenRouter
+          } else {
+              // Use the updated formatModelId for others
+              displayName = formatModelId(model.id); 
+          }
+          
+          // Return the complete ModelInfo object
+          const finalModel: ModelInfo = {
+              ...model,
+              name: displayName, 
+          };
+          return finalModel;
+      }); // End of .map()
+  }, [rawModelsData]); // End of useMemo dependencies
 
   const variants = {
     hidden: { opacity: 0, y: 15, transition: { duration: 0.3 } },

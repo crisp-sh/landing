@@ -2,16 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import type { FC } from 'react';
-import { ChevronLeft, ChevronRight, Menu, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AnimatedNavigationTabs } from '@/components/ui/animated-navigation-tabs';
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 interface NavLink {
   href: string;
@@ -22,6 +16,7 @@ type TabItem = { id: number; tile: string; href: string; };
 
 const navLinksData: NavLink[] = [
   { href: '#', label: 'INTRO' },
+  { href: '#mission', label: 'MISSION' },
   { href: '#features', label: 'FEATURES' },
   { href: '#cost-calculator', label: 'PRICING' },
   { href: '#testimonials', label: 'FEEDBACK' },
@@ -37,40 +32,6 @@ const tabItems: TabItem[] = navLinksData.map((link, index) => ({
 const SecondaryNavbar: FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<TabItem>(tabItems[0]);
-
-  useEffect(() => {
-    // Kill previous triggers if any exist (safer for hot-reloading)
-    // Use for...of here too
-    for (const t of ScrollTrigger.getAll()) {
-      t.kill();
-    }
-
-    const triggers: ScrollTrigger[] = [];
-    const navHeightOffset = 80;
-
-    for (let i = 1; i < tabItems.length; i++) {
-      const item = tabItems[i];
-      const previousItem = tabItems[i - 1];
-      const targetElement = document.getElementById(item.href.substring(1));
-
-      if (targetElement) {
-        const trigger = ScrollTrigger.create({
-          trigger: targetElement,
-          start: `top ${navHeightOffset}px`,
-          end: `bottom ${navHeightOffset}px`,
-          onEnter: () => setActiveTab(item),
-          onLeaveBack: () => setActiveTab(previousItem),
-        });
-        triggers.push(trigger);
-      }
-    }
-
-    return () => {
-      for (const trigger of triggers) {
-        trigger.kill();
-      }
-    };
-  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -161,4 +122,4 @@ const SecondaryNavbar: FC = () => {
   );
 };
 
-export default SecondaryNavbar; 
+export default SecondaryNavbar;
