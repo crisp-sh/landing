@@ -25,6 +25,7 @@ import { TestimonialsSectionDemo } from "@/components/blocks/testimonials-with-m
 import FairPricingBlock from "@/components/blocks/fair-pricing-block";
 import RealCostBlock from "@/components/blocks/real-cost-block";
 import { TextEffect } from "@/components/ui/text-effect";
+import { Flex, FlexCol, FlexGroup } from "@/components/ui/flex";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -145,53 +146,53 @@ export default function OnlyPromptPage() {
   });
 
   return (
-    <div className="flex-1 font-manifold bg-inherit">
+    <div className="font-manifold bg-inherit">
       <SecondaryNavbar />
 
-      <section className="min-h-screen border-b border-white/10 flex items-center md:items-start pt-16 md:pt-0">
+      <section className="min-h-screen border-b border-white/10 flex items-center md:items-start">
         <div className="bg-black relative overflow-hidden w-full">
           <RetroGrid />
           <Spotlight />
-          <div className="flex flex-col min-h-screen items-center justify-center gap-y-6 sm:gap-y-8 py-12 sm:py-16 md:py-20">
-            <div className="flex flex-col items-center gap-4 md:gap-5">
+          <div className="flex flex-col h-screen items-center justify-center">
+            <div className="flex flex-col items-center">
               <div className="text-sm sm:text-base md:text-lg font-medium text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400 pointer-events-none">
                 <span className="uppercase font-extralight text-2xl xs:text-2xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl text-center bg-clip-text text-transparent bg-gradient-to-b from-purple-200 to-purple-800 pointer-events-none">
                     introducing
                 </span>
                 <br />
-                <div className="flex flex-row items-center justify-center gap-2 sm:gap-3 my-6 sm:my-8">
+                <div className="flex flex-row gap-2 sm:gap-3 my-6 sm:my-8">
                   <h3 className="text-5xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-extrabold tracking-tight sm:tracking-tighter text-center bg-clip-text text-transparent bg-gradient-to-b from-orange-200 to-gray-400 pointer-events-none">
                     ONLYPROMPT
                   </h3>
                 </div>
-                {/* <span className="uppercase font-extralight text-2xl xs:text-2xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl text-center bg-clip-text text-transparent bg-gradient-to-b from-purple-200 to-purple-800 pointer-events-none">
-                  the {" "} 
-                  <span className="bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-green-400">
-                    ai assistant
-                  </span>{" "}
-                  built{" "}
-                  <span className="bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-green-400">
-                    for you
-                  </span>
-                </span> */}
               </div>
             </div>
-            {/* <div className="w-full max-w-xs sm:max-w-md md:max-w-xl lg:max-w-3xl px-4 text-center mt-6 sm:mt-10">
-              <h3 className="mb-3 sm:mb-4 text-xs sm:text-sm md:text-base font-normal text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400 uppercase">
-                Trusted By Students and Professionals at Leading Institutions:
-              </h3>
-              <CollegeLogoSlider />
-            </div> */}
           </div>
         </div>
       </section>
-      <section>
-        <div className="container mx-auto px-4 md:px-6">
-          <WhyOnlyPromptBlock />
-          <FairPricingBlock />
-          <RealCostBlock />
-        </div>
-      </section>
+      
+      <Flex>
+        <FlexGroup 
+          vertical={true} 
+          reverse={true} 
+          wrap={true} 
+          gap="4"
+          gapX="2"
+          gapY="6"
+          justify="center" 
+          align="center"
+        >
+          <FlexCol 
+            gap="8"
+            justify="between" 
+            align="center"
+          >
+            <WhyOnlyPromptBlock />
+            <FairPricingBlock />
+            <RealCostBlock />
+          </FlexCol>
+        </FlexGroup>
+      </Flex>
 
       <section
         ref={capabilitiesSectionRef}
