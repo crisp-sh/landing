@@ -116,7 +116,7 @@ const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
 
 
     return (
-      <div className="bg-gray-900/80 backdrop-blur-sm text-white p-3 border border-gray-700 shadow-lg min-w-[150px]">
+      <div className="text-white p-3 shadow-lg min-w-[150px]">
         <p className="font-semibold text-base mb-1">{`${data.service}`}</p>
         <p className="text-sm text-gray-300">{`Tier: ${tierDisplay}`}</p>
         <p className="text-lg font-medium mt-1">{`Cost: ${priceDisplay}`}</p>
@@ -143,7 +143,7 @@ const legendPayload: LegendItem[] = [
 
 export default function PricingEstimateGraph() {
   return (
-    <div className="w-full bg-gray-950 p-6 border border-white/10 text-white font-sans">
+    <div className="w-full p-6 text-white font-sans">
        <h3 className="text-lg font-semibold mb-1 text-gray-300">Estimated Monthly AI Costs</h3>
        <p className="text-sm text-gray-500 mb-6">Comparison of typical subscription tiers.</p>
       <div style={{ width: '100%', height: 250 }}> {/* Adjust height as needed */}
@@ -170,8 +170,8 @@ export default function PricingEstimateGraph() {
               axisLine={false}
               tickLine={false}
               tick={{ fill: "#a0a0a0", fontSize: 10 }}
-              ticks={[20, 100, 200, 300]} // Keep specified ticks (user removed 0)
-              domain={[0, 300]}
+              ticks={[20, 100, 200]} // Updated ticks
+              domain={[0, 200]} // Updated domain
               tickFormatter={(value) => `$${value}`}
               orientation="top"
               interval={0}
