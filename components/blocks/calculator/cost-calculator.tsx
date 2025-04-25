@@ -453,7 +453,7 @@ export default function CostCalculator({ models: MODELS }: CostCalculatorProps) 
              {/* Total Cost */}
              <div className="flex justify-between items-center pt-1">
                  <span className="text-base font-semibold text-foreground">Estimated Total Cost</span>
-                 <span className="text-lg font-bold tabular-nums text-foreground">{formatCurrency(subtotal)}</span>
+                 <span className="text-lg font-bold tabular-nums text-foreground">{formatCurrency(subtotal)}<span className="text-muted-foreground">*</span></span>
              </div>
 
              {/* OnlyPrompt Fee (Example) */}
@@ -467,7 +467,7 @@ export default function CostCalculator({ models: MODELS }: CostCalculatorProps) 
 
           {/* Disclaimer */}
            <p className="text-xs text-muted-foreground mt-4 italic">
-             * All costs are estimates based on publicly available pricing data and may not reflect real-time promotional offers or specific regional pricing. Token counts are illustrative.
+             * All costs are estimates based on publicly available pricing data. Token counts may vary based on model, message frequency, and other factors.
            </p>
         </div>
       </div>
