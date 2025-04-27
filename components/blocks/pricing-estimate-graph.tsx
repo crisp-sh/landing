@@ -65,7 +65,7 @@ const chartData: PricingChartData[] = rawData.map((item) => ({
 }));
 
 // Colors for Tiers (Updated)
-const TIER1_COLOR = "#f87171"; // Mild Red (red-400)
+const TIER1_COLOR = "#facc15"; // Changed to Yellow (yellow-400)
 const TIER2_COLOR = "#dc2626"; // Darker Red (red-600)
 const ONLYPROMPT_COLOR = "#22c55e"; // Green (green-500)
 

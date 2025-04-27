@@ -543,7 +543,7 @@ export default function CostCalculator({
           <h3 className="text-lg font-medium mb-4 text-foreground">
             Cost Breakdown
           </h3>
-          <div className="space-y-3 text-sm bg-muted/30 p-4 rounded-md border border-border/50">
+          <div className="space-y-3 text-sm bg-muted/30 p-4 border border-border/50">
             {/* Model Info */}
             <div className="flex items-center justify-between pb-3 border-b border-border/30">
               <div className="flex items-center gap-3">

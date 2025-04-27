@@ -1,5 +1,6 @@
 "use client";
 
+import type React from "react";
 import { Flex, FlexCol, FlexGroup, FlexRow } from "@/components/ui/flex";
 import { DollarSign, Lock, FileText, Sparkles } from "lucide-react";
 import {
@@ -19,6 +20,7 @@ import type {
   Payload,
 } from "recharts/types/component/DefaultTooltipContent";
 import PricingEstimateGraph from "./pricing-estimate-graph";
+import { HoverButton } from "../hover-button";
 
 // Define chart data structure for stacking
 interface StackedChartData {
@@ -137,7 +139,13 @@ const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
   return null;
 };
 
-export default function FutureOfAI() {
+// Props for the component, including target refs
+interface FutureOfAIProps {
+  waitlistTargetRef: React.RefObject<HTMLElement>;
+  pricingTargetRef: React.RefObject<HTMLElement>;
+}
+
+export default function FutureOfAI({ waitlistTargetRef, pricingTargetRef }: FutureOfAIProps) {
   return (
     <div className="container mx-auto px-4 md:px-6 text-center">
       <Flex>
@@ -245,23 +253,31 @@ export default function FutureOfAI() {
       </p>
 
       {/* Mini CTA */}
-      <div className="bg-gradient-to-r from-purple-600/20 via-black to-orange-600/20 p-6 rounded-lg inline-block">
+      <div className="py-6 px-12 w-1/2 mx-auto bg-muted/30 border border-border/50 inline-block">
         <h4 className="text-xl font-semibold mb-4">
           Ready for chat that's smart, secure, and sensibly priced?
         </h4>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a
-            href="#waitlist-2"
-            className="px-6 py-2 bg-orange-500 hover:bg-orange-600 rounded-md text-white font-semibold transition-colors uppercase inline-block text-center"
+          <HoverButton
+            className="px-6 py-2 bg-green-400 hover:bg-green-500 rounded-md text-black font-semibold transition-colors uppercase inline-block text-center"
+            onClick={() => {
+              if (waitlistTargetRef?.current) {
+                waitlistTargetRef.current.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
           >
             Join the waitlist
-          </a>
-          <a
-            href="#cost-calculator"
+          </HoverButton>
+          <HoverButton
             className="px-6 py-2 bg-gray-700 hover:bg-gray-600 rounded-md text-white font-semibold transition-colors uppercase inline-block text-center"
+            onClick={() => {
+              if (pricingTargetRef?.current) {
+                pricingTargetRef.current.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
           >
             Explore pricing
-          </a>
+          </HoverButton>
         </div>
       </div>
     </div>
