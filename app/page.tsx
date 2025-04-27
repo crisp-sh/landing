@@ -14,6 +14,7 @@ import { ReactingEyeball } from "@/components/ui/reacting-eyeball";
 // import { AnimatedLogo } from "@/components/ui/animated-logo";
 import { GradientTracing } from "@/components/ui/gradient-tracing";
 import { LOGO_SVG_PATHS } from "@/lib/constants";
+import AIToolsComparison from "@/components/blocks/ai-tools-comparison";
 
 // Transition Imports
 import { useTransitionRouter } from "next-view-transitions";
@@ -294,19 +295,12 @@ export default function Home() {
           </div>      
         </section>
 
+        <AIToolsComparison />
+
         <section className="relative pb-16">
           <div className="absolute inset-0 z-0 bg-gradient-to-b from-black via-gray-900/20 to-black" />
           <div className="container relative z-10">
             <div className="mx-auto max-w-3xl text-center">
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 1 }}
-                viewport={{ once: true }}
-              >
-                
-              </motion.div>
-
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -314,7 +308,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 className="mt-10"
               >
-                <WaitlistForm />
+                <WaitlistForm flexDirection={""} />
                 <p className="mt-4 text-xs font-extralight text-white/40">
                   By subscribing, you consent to our data collection protocols.
                 </p>

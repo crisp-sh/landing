@@ -1,20 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  Lock,
-  Bot,
-  Brain,
-  Cog,
-  DollarSign,
-  Sparkles,
-  FileText,
-} from "lucide-react";
+import { Lock, Bot, Brain, Cog, DollarSign } from "lucide-react";
 import GridItem from "@/components/ui/grid-item";
-import Image from "next/image";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
-import { Spotlight } from "@/components/ui/spotlight-new";
+// import Image from "next/image";
+// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+// import { Separator } from "@/components/ui/separator";
+// import { Spotlight } from "@/components/ui/spotlight-new";
 import SecondaryNavbar from "@/components/secondary-navbar";
 
 import React, { useRef } from "react";
@@ -30,12 +22,14 @@ import Calculator from "@/components/blocks/calculator";
 import WhyOnlyPromptBlock from "@/components/blocks/why-onlyprompt-block";
 import { BackgroundPaths } from "@/components/blocks/background-paths";
 import { TestimonialsSectionDemo } from "@/components/blocks/testimonials-with-marquee-demo";
-import FairPricingBlock from "@/components/blocks/fair-pricing-block";
-import RealCostBlock from "@/components/blocks/real-cost-block";
-import { TextEffect } from "@/components/ui/text-effect";
+// import FairPricingBlock from "@/components/blocks/fair-pricing-block";
+// import RealCostBlock from "@/components/blocks/real-cost-block";
+// import { TextEffect } from "@/components/ui/text-effect";
 import { Flex, FlexCol, FlexGroup, FlexRow } from "@/components/ui/flex";
 import { ScrollIndicator } from "@/components/ui/scroll-indicator";
-import FutureOfAI from "@/components/blocks/future-of-ai";
+// import FutureOfAI from "@/components/blocks/future-of-ai";
+import AIToolsComparison from "@/components/blocks/ai-tools-comparison";
+import { MainHero } from "@/components/blocks/main-hero";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -159,51 +153,21 @@ export default function OnlyPromptPage() {
     <div className="font-manifold bg-inherit">
       <SecondaryNavbar />
       <ScrollIndicator />
+      
+      {/* Main Hero */}
+      {/* <section className="border-b border-white/10 flex items-center md:items-start"> */}
+        <MainHero />
+      {/* </section> */}
 
-      <section className="min-h-screen border-b border-white/10 flex items-center md:items-start">
-        <div className="bg-black relative overflow-hidden w-full">
-          <RetroGrid />
-          <Spotlight />
-          <div className="flex flex-col h-screen items-center justify-center">
-            <div className="flex flex-col items-center">
-              <div className="text-sm sm:text-base md:text-lg font-medium text-center bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-400 pointer-events-none">
-                <span className="uppercase font-extralight text-2xl xs:text-2xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl text-center bg-clip-text text-transparent bg-gradient-to-b from-purple-200 to-purple-800 pointer-events-none">
-                  introducing
-                </span>
-                <br />
-                <div className="flex flex-row gap-2 sm:gap-3 my-6 sm:my-8">
-                  <h3 className="text-5xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-extrabold tracking-tight sm:tracking-tighter text-center bg-clip-text text-transparent bg-gradient-to-b from-orange-200 to-gray-400 pointer-events-none">
-                    ONLYPROMPT
-                  </h3>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section id="mission" className="bg-black text-white py-16 sm:py-20 md:py-24 border-b border-white/10">
-        <FutureOfAI />
-      </section>
-      {/* <section>
-        <Flex>
-          <FlexGroup
-            vertical={true}
-            reverse={true}
-            wrap={true}
-            gap="4"
-            gapX="2"
-            gapY="6"
-            justify="center"
-            align="center"
-          >
-            <FlexCol gap="8" justify="between" align="center">
-              <WhyOnlyPromptBlock />
-              <FairPricingBlock />
-              <RealCostBlock />
-            </FlexCol>
-          </FlexGroup>
-        </Flex>
+      {/* AI Tools Comparison */}
+      {/* <section
+        id="mission"
+        className="bg-black text-white py-16 sm:py-20 md:py-24 border-b border-white/10"
+      >
+        <AIToolsComparison />
       </section> */}
+
+      {/* Features */}
       <section
         ref={capabilitiesSectionRef}
         id="features"
@@ -257,6 +221,7 @@ export default function OnlyPromptPage() {
         </div>
       </section>
 
+      {/* Cost Calculator */}
       <section
         ref={uncannySectionRef}
         id="cost-calculator"
@@ -267,6 +232,7 @@ export default function OnlyPromptPage() {
         </div>
       </section>
 
+      {/* Testimonials */}
       <section
         id="testimonials"
         className="border-b border-white/10 last:border-b-0"
@@ -274,6 +240,7 @@ export default function OnlyPromptPage() {
         <TestimonialsSectionDemo />
       </section>
 
+      {/* Waitlist */}
       <section
         id="waitlist-2"
         className="min-h-screen h-screen border-b border-white/10 flex items-center"
