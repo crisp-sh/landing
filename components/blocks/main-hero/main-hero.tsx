@@ -91,37 +91,41 @@ export default function MainHero() {
     if (!containerRef.current || pillRefs.current.length === 0) return;
     
     // Clear any existing ScrollTriggers to avoid conflicts
-    const allTriggers = ScrollTrigger.getAll();
-    for (const trigger of allTriggers) {
+    const triggers = ScrollTrigger.getAll();
+    for (const trigger of triggers) {
       trigger.kill();
     }
     
     // Check if we're on mobile
     const isMobile = window.innerWidth < 768;
     
-    // Initial setup - ensure elements are in the right state for animation start
-    // Setup for pills - initially just logos with no border or background
+    // Create a separate timeline for the bobbing animations
+    const bobbingTimeline = gsap.timeline({ paused: false });
+    
+    // Setup initial pill states with GPU-accelerated properties
     for (const [index, pill] of pillRefs.current.entries()) {
       if (!pill || index >= scatteredPositions.length) continue;
       
       const toolColor = aiTools[index]?.color || "#ff2222";
       
+      // Use xPercent/yPercent for GPU acceleration instead of left/top
       gsap.set(pill, {
         opacity: 1,
         rotation: scatteredPositions[index].rotation,
-        left: `${scatteredPositions[index].x}%`,
-        top: `${scatteredPositions[index].y}%`,
-        backgroundColor: `${toolColor}33`, // Make much more transparent (33 = 20% opacity)
+        xPercent: scatteredPositions[index].x - 50, // Convert % to xPercent
+        yPercent: scatteredPositions[index].y - 50, // Convert % to yPercent
+        backgroundColor: `${toolColor}33`,
         border: `2px solid ${toolColor}`,
-        borderRadius: "16px", // Pill shape
-        padding: "4px 12px", // Add padding for text
-        width: "auto", // Let it expand for the text
+        borderRadius: "16px",
+        padding: "4px 12px",
+        width: "auto",
         height: isMobile ? "30px" : "36px",
         scale: 1,
         zIndex: 10,
+        force3D: true, // Enable GPU acceleration
       });
       
-      // Set initial state for logos and text inside pills
+      // Set up text and image elements
       const logoImg = pill.querySelector('.logo-image');
       const logoText = pill.querySelector('.logo-text');
       const priceEl = pill.querySelector('.pill-price');
@@ -135,119 +139,59 @@ export default function MainHero() {
           maxHeight: isMobile ? "20px" : "24px",
           position: "static"
         });
-        gsap.set(logoText, { opacity: 1, display: "block" }); // Show the text
+        gsap.set(logoText, { opacity: 1, display: "block" });
         gsap.set(priceEl, { opacity: 0, display: "none" });
       }
       
-      // Create bobbing animation for each pill with offset timing
-      // Use a random seed for more natural motion
+      // Create bobbing animation with offset timing
       const randomDelay = index * 0.2 + Math.random() * 0.5;
-      const floatAmplitude = isMobile ? 10 : 15; // Smaller amplitude on mobile
+      const floatAmplitude = isMobile ? 10 : 15;
       
-      // Create repeating bobbing animation for each pill
-      const bobbingAnimation = gsap.timeline({ repeat: -1, yoyo: true })
-        .to(pill, {
-          y: `-=${floatAmplitude}`, 
-          duration: 1.5 + Math.random() * 0.5,
-          ease: "sine.inOut",
-        })
-        .to(pill, {
-          y: `+=${floatAmplitude}`, 
-          duration: 1.5 + Math.random() * 0.5,
-          ease: "sine.inOut",
-        });
-      
-      // Offset each pill's animation
-      bobbingAnimation.seek(randomDelay);
-      
-      // Store the animation so we can kill it later
-      pill.animation = bobbingAnimation;
+      // Add to the bobbing timeline (using yoyo and repeat for efficiency)
+      pill.animation = bobbingTimeline.to(pill, {
+        yPercent: `-=${floatAmplitude / 2}`, 
+        duration: 1.5 + Math.random() * 0.5,
+        ease: "none", // Linear easing to avoid fighting scroll
+        yoyo: true,
+        repeat: -1,
+      }, randomDelay); // Offset start time
     }
     
-    // Hide badges initially
-    for (const badge of badgeRefs.current) {
-      if (badge) gsap.set(badge, { opacity: 0 });
-    }
-    
-    // Hide cards container initially
-    gsap.set(cardContainerRef.current, {
-      opacity: 0,
-      visibility: "visible",
-    });
-    
-    // Hide grid container but keep it in the flow
-    gsap.set(gridContainerRef.current, {
-      visibility: "visible",
-      opacity: 0,
-    });
-    
-    // Hide heading, tagline, description
+    // Setup initial state for other elements
+    gsap.set(badgeRefs.current, { opacity: 0 });
+    gsap.set(cardContainerRef.current, { opacity: 0, visibility: "visible" });
+    gsap.set(gridContainerRef.current, { visibility: "visible", opacity: 0 });
     gsap.set([taglineRef.current, headingRef.current, descriptionRef.current, pricingTextRef.current, ctaButtonRef.current], {
       opacity: 0,
       y: 20,
     });
+    gsap.set(introTextRef.current, { opacity: 1, y: 0 });
     
-    // Make sure the intro text is visible at the start
-    gsap.set(introTextRef.current, {
-      opacity: 1,
-      y: 0,
-    });
-    
-    // Create the scroll trigger animation with 4 main steps
+    // Create the main pinned timeline
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: isMobile ? "+=230%" : "+=250%", // Increased scroll distance for more leeway, especially on desktop
+        end: isMobile ? "+=230%" : "+=250%",
         pin: true,
-        scrub: 1, // Smoother scrub for more fluid motion
+        scrub: 0.5, // More responsive scrub
         anticipatePin: 1,
-        markers: false, // Set to true for debugging
+        markers: false,
         onEnter: () => {
-          // Stop bobbing animations as soon as scrolling starts
-          for (const [index, pill] of pillRefs.current.entries()) {
-            if (!pill?.animation) continue;
-            
-            const toolColor = aiTools[index]?.color || "#ff2222";
-            
-            // Kill the bobbing animation
-            pill.animation.kill();
-            
-            // Reset any y position changes from the bobbing
+          // Pause bobbing animations on scroll start
+          bobbingTimeline.pause();
+          
+          // Reset any y changes from bobbing
+          for (const pill of pillRefs.current) {
+            if (!pill) continue;
             gsap.set(pill, { 
               y: 0,
-              visibility: "visible" // Ensure pills are visible when scrolling starts
+              visibility: "visible" 
             });
-            
-            // We don't need to add background and border since they're already there
-            // Just fine-tune any transitions needed when scrolling starts
-            gsap.to(pill, {
-              // Subtle adjustments for the transition effect
-              backgroundColor: `${toolColor}66`, // Slightly more opaque during transition (40%)
-              scale: 1.05,
-              duration: 0.3,
-              ease: "power2.out",
-              onComplete: () => {
-                gsap.to(pill, {
-                  scale: 1,
-                  duration: 0.2
-                });
-              }
-            });
-            
-            // Make sure the text is fully visible (in case it wasn't)
-            const logoText = pill.querySelector('.logo-text');
-            if (logoText) {
-              gsap.to(logoText, {
-                opacity: 1,
-                display: "block",
-                duration: 0.3
-              });
-            }
           }
         },
         onLeaveBack: () => {
-          // First fade out all UI elements except pills
+          // First ensure all UI elements are reset
           gsap.to(cardContainerRef.current, {
             opacity: 0,
             duration: 0.2,
@@ -263,92 +207,59 @@ export default function MainHero() {
             ease: "power2.in"
           });
           
-          gsap.to([pricingTextRef.current, ctaButtonRef.current], {
+          gsap.to([pricingTextRef.current, ctaButtonRef.current, taglineRef.current, headingRef.current, descriptionRef.current], {
             opacity: 0, 
-            y: 15,
             duration: 0.2
           });
           
           // Reset badges opacity
           for (const badge of badgeRefs.current) {
-            if (badge) gsap.to(badge, { opacity: 0, duration: 0.2 });
+            if (!badge) continue;
+            gsap.to(badge, { opacity: 0, duration: 0.2 });
           }
           
-          // For each pill, animate in sequence:
-          // 1. Move to center stack
-          // 2. Animate to scattered position
-          // 3. Start bobbing
-          
-          // First, stack all pills in center with a brief duration
-          for (const [index, pill] of pillRefs.current.entries()) {
+          // Reset all pills to initial scattered positions with proper styling
+          for (const [idx, pill] of pillRefs.current.entries()) {
             if (!pill) continue;
             
-            const toolColor = aiTools[index]?.color || "#ff2222";
+            const pos = scatteredPositions[idx];
+            if (!pos) continue;
             
-            // Kill any existing animations
-            if (pill.animation) {
-              pill.animation.kill();
-            }
+            const toolColor = aiTools[idx]?.color || "#ff2222";
             
-            // Reset any previous transforms and prepare for stack animation
-            gsap.set(pill, {
-              opacity: 1,
-              scale: 0.9,
-              rotation: 0,
-              backgroundColor: `${toolColor}33`,
-              border: `2px solid ${toolColor}`,
-              borderRadius: "16px",
-              padding: "4px 12px",
-              width: "auto", 
-              height: isMobile ? "30px" : "36px",
-              zIndex: 10,
-              visibility: "visible" // Ensure pills are visible when scrolling back up
+            // First make sure visibility is set
+            gsap.set(pill, { 
+              visibility: "visible",
+              display: "flex",
+              transform: "none", // Clear any transforms before setting left/top
+              xPercent: 0,
+              yPercent: 0
             });
             
-            // Move all pills to center
+            // Animate back to original scattered position with proper styling
             gsap.to(pill, {
-              left: "50%",
-              top: "50%",
-              x: -50,  // Offset to center
-              y: -50 + (index * 10), // Stack with slight vertical offset
+              // Use original left/top positioning instead of xPercent/yPercent
+              left: `${pos.x}%`,
+              top: `${pos.y}%`,
+              // Reset transforms
+              x: 0,
+              y: 0,
+              rotation: pos.rotation,
+              backgroundColor: `${toolColor}33`, // 20% opacity
+              borderRadius: "16px",
+              border: `2px solid ${toolColor}`,
+              padding: "4px 12px",
+              width: "auto",
+              height: isMobile ? "30px" : "36px",
+              scale: 1, 
+              opacity: 1,
+              zIndex: 10,
+              position: "absolute", // Ensure absolute positioning
               duration: 0.3,
-              ease: "power2.inOut",
-              onComplete: () => {
-                // Then animate to final scattered position
-                gsap.to(pill, {
-                  left: `${scatteredPositions[index].x}%`,
-                  top: `${scatteredPositions[index].y}%`,
-                  x: 0,
-                  y: 0,
-                  rotation: scatteredPositions[index].rotation,
-                  scale: 1,
-                  duration: 0.6,
-                  ease: "back.out(1.2)",
-                  delay: 0.05,
-                  onComplete: () => {
-                    // Start bobbing animation after reaching position
-                    const randomDelay = index * 0.2 + Math.random() * 0.5;
-                    const floatAmplitude = isMobile ? 10 : 15;
-                    
-                    pill.animation = gsap.timeline({ repeat: -1, yoyo: true })
-                      .to(pill, {
-                        y: `-=${floatAmplitude}`,
-                        duration: 1.5 + Math.random() * 0.5,
-                        ease: "sine.inOut",
-                      })
-                      .to(pill, {
-                        y: `+=${floatAmplitude}`,
-                        duration: 1.5 + Math.random() * 0.5,
-                        ease: "sine.inOut",
-                      });
-                    
-                    pill.animation.seek(randomDelay);
-                  }
-                });
-              }
+              force3D: true
             });
             
-            // Ensure text is visible in the pills
+            // Ensure content is correct
             const logoImg = pill.querySelector('.logo-image');
             const logoText = pill.querySelector('.logo-text');
             const priceEl = pill.querySelector('.pill-price');
@@ -378,12 +289,17 @@ export default function MainHero() {
             }
           }
           
-          // Reset intro text
+          // Only resume bobbing once pills are back in position
+          setTimeout(() => {
+            bobbingTimeline.play();
+          }, 400); // Slight delay to ensure positions are set first
+          
+          // Restore intro text visibility
           gsap.to(introTextRef.current, {
             opacity: 1,
             y: 0,
             duration: 0.3,
-            delay: 0.3 // Longer delay to ensure animations have started
+            delay: 0.3
           });
         }
       }
@@ -393,7 +309,7 @@ export default function MainHero() {
     tl.to(introTextRef.current, {
       y: -30,
       opacity: 0,
-      ease: "power1.inOut",
+      ease: "power2.out", // Consistent easing
       duration: 0.15
     }, 0);
     
@@ -401,79 +317,66 @@ export default function MainHero() {
     tl.to(gridContainerRef.current, {
       opacity: 1,
       duration: 0.15,
-      ease: "power1.inOut"
+      ease: "power2.out" // Consistent easing
     }, 0.15);
     
-    // Hide all pills when the header starts to appear
-    for (const pill of pillRefs.current) {
-      if (!pill) continue;
-      tl.to(pill, {
-        opacity: 0,
-        duration: 0.1,
-      }, 0.15);
-    }
-    
-    // Reveal tagline, heading, description in sequence
-    tl.to(taglineRef.current, {
-      opacity: 1,
-      y: 0,
+    // Hide all pills when the header starts to appear - batch operation
+    tl.to(pillRefs.current, {
+      opacity: 0,
       duration: 0.1,
-      ease: "power2.out"
-    }, 0.18);
+      ease: "power2.in" // Consistent easing
+    }, 0.15);
     
-    tl.to(headingRef.current, {
+    // Reveal tagline, heading, description in sequence with consistent easing
+    tl.to([taglineRef.current, headingRef.current, descriptionRef.current], {
       opacity: 1, 
       y: 0,
-      duration: 0.1,
-      ease: "power2.out"
-    }, 0.22);
-    
-    tl.to(descriptionRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 0.1,
-      ease: "power2.out"
-    }, 0.26);
+      duration: 0.15,
+      stagger: 0.05,
+      ease: "power2.out" // Consistent easing
+    }, 0.18);
     
     // STEP 3: Show card grid and prepare for pill transformation (30-40% of scroll progress)
     tl.to(cardContainerRef.current, {
       opacity: 1,
       duration: 0.2,
-      ease: "power2.inOut",
+      ease: "power2.out", // Consistent easing
     }, 0.35);
     
     // After cards appear, bring in the pills from random directions with animation
-    for (const [index, pill] of pillRefs.current.entries()) {
-      if (!pill || index >= aiTools.length) continue;
-      
-      // Create larger random offsets for more dramatic movement (-80px to +80px)
-      const randomX = (Math.random() * 160 - 80);
-      const randomY = (Math.random() * 160 - 80);
-      const randomRotation = Math.random() * 40 - 20; // Random rotation between -20 and +20 degrees
-      
-      // Set initial state with offset
-      tl.set(pill, {
-        x: randomX,
-        y: randomY,
-        rotation: randomRotation,
-        opacity: 0,
-        scale: 0.8 // Start slightly smaller
-      }, 0.37);
-      
-      // Animate to final position with increasing opacity
-      tl.to(pill, {
-        x: 0,
-        y: 0,
-        rotation: scatteredPositions[index].rotation, // Return to scattered rotation
-        opacity: 1,
-        scale: 1,
-        duration: 0.5, // Slightly longer for smoother animation
-        ease: "back.out(1.2)", // Add a slight bounce
-        delay: index * 0.04 // Slightly more staggered
-      }, 0.4);
-    }
+    // Create array of random values for pills beforehand
+    const randomOffsets = pillRefs.current.map(() => ({
+      x: Math.random() * 160 - 80,
+      y: Math.random() * 160 - 80,
+      rotation: Math.random() * 40 - 20
+    }));
     
-    // Calculate final positions for each pill
+    // Set initial positions with batch operation
+    tl.set(pillRefs.current, (index: number) => ({
+      xPercent: scatteredPositions[index]?.x - 50 || 0,
+      yPercent: scatteredPositions[index]?.y - 50 || 0,
+      x: randomOffsets[index].x,
+      y: randomOffsets[index].y,
+      rotation: randomOffsets[index].rotation,
+      opacity: 0,
+      scale: 0.8,
+      force3D: true
+    }), 0.37);
+    
+    // Animate all pills to final positions with staggered timing
+    tl.to(pillRefs.current, {
+      x: 0,
+      y: 0, 
+      opacity: 1,
+      scale: 1,
+      rotation: (index: number) => scatteredPositions[index]?.rotation || 0,
+      duration: 0.5,
+      stagger: 0.04,
+      ease: "back.out(1.2)", // Keep this easing for the bounce effect
+      force3D: true
+    }, 0.4);
+    
+    // Calculate final positions for each pill - using more modern GSAP techniques
     const finalPositions: { [key: number]: { x: number, y: number, width: number, height: number } } = {};
     
     const calculatePositions = () => {
@@ -506,59 +409,57 @@ export default function MainHero() {
     setTimeout(calculatePositions, 100);
     
     // STEP 4: Transform pills directly to their final positions (40-80% of scroll)
-    for (const [index, pill] of pillRefs.current.entries()) {
-      if (!pill || index >= aiTools.length) continue;
-      
-      const toolColor = aiTools[index]?.color || "#ff2222";
-      
-      // Create a sub-timeline for each pill's transformation
-      const pillTimeline = gsap.timeline();
-      
-      // First rotate to 0 and start transformation (40-60% of scroll)
-      tl.to(pill, {
-        rotation: 0,
-        backgroundColor: `${toolColor}cc`, // More opaque version for badge
-        borderRadius: "4px",
-        duration: 0.15,
-        ease: "power2.inOut",
-        opacity: 0.5, // Set to half opacity during transition
-        zIndex: 20, // Medium z-index during transformation
-      }, 0.4 + (index * 0.01));
-      
-      // Change content from logo to price
-      const logoImg = pill.querySelector('.logo-image');
-      const logoText = pill.querySelector('.logo-text');
-      const priceEl = pill.querySelector('.pill-price');
-      
-      if (logoImg && logoText && priceEl) {
-        tl.to(logoImg, { 
-          opacity: 0, 
-          display: "none",
-          duration: 0.1,
-          ease: "power1.in"
-        }, 0.45 + (index * 0.01));
-        
-        tl.to(priceEl, { 
-          opacity: 0.5, // Half opacity to match the pill
-          display: "block",
-          width: "100%",
-          textAlign: "center", 
-          duration: 0.1,
-          ease: "power1.out"
-        }, 0.47 + (index * 0.01));
+    // First rotate all pills to 0 and start transformation (40-60% of scroll)
+    tl.to(pillRefs.current, {
+      rotation: 0,
+      backgroundColor: (index: number) => `${aiTools[index]?.color || "#ff2222"}66`, // 40% opacity
+      borderRadius: "4px",
+      duration: 0.15,
+      ease: "power2.out", // Consistent easing
+      opacity: 0.5, // Half opacity during transition
+      zIndex: 20, // Medium z-index
+      stagger: 0.01, // Slight stagger
+      force3D: true
+    }, 0.4);
+    
+    // Prepare all logos/texts for content change
+    const logoImgs = pillRefs.current.map(pill => pill?.querySelector('.logo-image'));
+    const logoTexts = pillRefs.current.map(pill => pill?.querySelector('.logo-text'));
+    const priceEls = pillRefs.current.map(pill => pill?.querySelector('.pill-price'));
+    
+    // Hide all logos
+    tl.to(logoImgs, { 
+      opacity: 0, 
+      display: "none",
+      duration: 0.1,
+      ease: "power2.in",
+      stagger: 0.01
+    }, 0.45);
+    
+    // Show all prices
+    tl.to(priceEls, { 
+      opacity: 0.5, 
+      display: "block",
+      width: "100%",
+      textAlign: "center", 
+      duration: 0.1,
+      ease: "power2.out",
+      stagger: 0.01
+    }, 0.47);
+    
+    // Move directly to final positions with a callback that uses positions
+    tl.add(() => {
+      // Recalculate positions if needed
+      if (Object.keys(finalPositions).length === 0) {
+        calculatePositions();
       }
       
-      // Move directly to final positions (60-70% of scroll)
-      tl.add(() => {
-        // Skip if positions weren't calculated
-        if (!finalPositions[index]) {
-          calculatePositions(); // Try again
-          return;
-        }
+      // Animate all pills to their badge positions
+      for (const [index, pill] of pillRefs.current.entries()) {
+        if (!pill || !finalPositions[index]) continue;
         
         const pos = finalPositions[index];
         
-        // Animate the pill to the exact badge position
         gsap.to(pill, {
           left: `${pos.x}px`,
           top: `${pos.y}px`,
@@ -566,34 +467,30 @@ export default function MainHero() {
           height: `${pos.height}px`,
           padding: "2px 8px",
           duration: 0.3,
-          ease: "power2.inOut",
+          ease: "power2.out", // Consistent easing
           opacity: 1, // Full opacity for final position
           zIndex: 50, // Highest z-index for final position
+          delay: index * 0.01, // Slight stagger
+          force3D: true
         });
-      }, 0.6);
-    }
+      }
+    }, 0.6);
     
     // Fade in badges, fade out pills (70-80% of scroll)
-    for (const [index, badge] of badgeRefs.current.entries()) {
-      if (!badge) continue;
-      
-      tl.to(badge, {
-        opacity: 1,
-        duration: 0.1,
-        ease: "power2.inOut",
-      }, 0.7 + (index * 0.01));
-    }
+    tl.to(badgeRefs.current, {
+      opacity: 1,
+      duration: 0.1,
+      ease: "power2.out", // Consistent easing
+      stagger: 0.01 // Slight stagger
+    }, 0.7);
     
-    for (const [index, pill] of pillRefs.current.entries()) {
-      if (!pill) continue;
-      
-      tl.to(pill, {
-        opacity: 0,
-        visibility: "hidden", // Completely hide the pill, not just transparent
-        duration: 0.1,
-        ease: "power2.out",
-      }, 0.7 + (index * 0.01)); // Start at the same time as badges appear
-    }
+    tl.to(pillRefs.current, {
+      opacity: 0,
+      visibility: "hidden", // Completely hide the pill, not just transparent
+      duration: 0.1,
+      ease: "power2.out", // Consistent easing
+      stagger: 0.01 // Slight stagger
+    }, 0.7); // Start at the same time as badges appear
     
     // NEW ENDING ANIMATION (80-100% of scroll progress)
     
@@ -606,18 +503,17 @@ export default function MainHero() {
       stagger: 0.03,
     }, 0.8);
     
-    // Fade in pricing text ABOVE the card grid
-    tl.fromTo(pricingTextRef.current, 
+    // Fade in pricing text and CTA button with consistent animation
+    tl.fromTo([pricingTextRef.current, ctaButtonRef.current], 
       { opacity: 0, y: 15 },
-      { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, 
+      { 
+        opacity: 1, 
+        y: 0, 
+        duration: 0.2, 
+        stagger: 0.05,
+        ease: "power2.out" 
+      }, 
       0.9
-    );
-    
-    // Fade in CTA button
-    tl.fromTo(ctaButtonRef.current, 
-      { opacity: 0, y: 15 },
-      { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, 
-      0.95
     );
     
     // Keep card container in fixed position (no vertical movement)
@@ -630,29 +526,35 @@ export default function MainHero() {
     // Add empty animation steps for scrolling leeway
     tl.to({}, { duration: 0.4 }, 1.2); // Empty step just for leeway
     
-    // Handle resize event
+    // Handle resize event with simple debounce
+    let resizeTimeout: NodeJS.Timeout;
     const handleResize = () => {
-      // Recalculate positions
-      calculatePositions();
-      // Refresh scroll trigger
-      ScrollTrigger.refresh(true);
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        // Recalculate positions
+        calculatePositions();
+        // Refresh scroll trigger
+        ScrollTrigger.refresh(true);
+      }, 250);
     };
     
     window.addEventListener("resize", handleResize);
     
     return () => {
       window.removeEventListener("resize", handleResize);
-      // Cleanup all animations
-      for (const pill of pillRefs.current) {
-        if (pill?.animation) {
-          pill.animation.kill();
-        }
-      }
+      clearTimeout(resizeTimeout);
+      
+      // Pause animations instead of killing them
+      bobbingTimeline.pause();
+      
       // Cleanup scroll triggers
       const triggers = ScrollTrigger.getAll();
       for (const trigger of triggers) {
         trigger.kill();
       }
+      
+      // Clear GSAP context if needed
+      gsap.killTweensOf(pillRefs.current);
     };
   }, [isMounted]);
   
@@ -682,6 +584,7 @@ export default function MainHero() {
           justify-content: center;
           align-items: center;
           overflow: hidden;
+          will-change: transform, opacity; /* Promote to GPU layer */
         }
         
         .logo-image {
