@@ -4,10 +4,27 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 interface HoverButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode
+  children: React.ReactNode;
+  textColor?: string;
+  backgroundColor?: string;
+  borderHighlightColor?: string;
+  borderShadowColor?: string;
+  circleStartColor?: string;
+  circleEndColor?: string;
 }
 
-const HoverButton = React.forwardRef<HTMLButtonElement, HoverButtonProps>(({ className, children, ...props }, ref) => {
+const HoverButton = React.forwardRef<HTMLButtonElement, HoverButtonProps>(
+  ({ 
+    className, 
+    children, 
+    textColor,
+    backgroundColor,
+    borderHighlightColor = "rgba(255,255,255,0.2)",
+    borderShadowColor = "rgba(0,0,0,0.5)",
+    circleStartColor = "#a0d9f8",
+    circleEndColor = "#3a5bbf",
+    ...props 
+  }, ref) => {
   const buttonRef = React.useRef<HTMLButtonElement>(null)
   const [isListening, setIsListening] = React.useState(false)
   const [circles, setCircles] = React.useState<
@@ -78,8 +95,10 @@ const HoverButton = React.forwardRef<HTMLButtonElement, HoverButtonProps>(({ cla
       data-cursor-hoverable="true"
       className={cn(
         "relative isolate px-8 py-3 rounded-none",
-        "text-foreground font-medium text-base leading-6",
-        "backdrop-blur-lg bg-[rgba(255,255,255,0.1)]",
+        textColor ? "" : "text-foreground",
+        backgroundColor ? "" : "bg-[rgba(255,255,255,0.1)]",
+        "font-medium text-base leading-6",
+        "backdrop-blur-lg",
         "cursor-pointer overflow-hidden",
         "before:content-[''] before:absolute before:inset-0",
         "before:rounded-[inherit] before:pointer-events-none",
@@ -94,8 +113,11 @@ const HoverButton = React.forwardRef<HTMLButtonElement, HoverButtonProps>(({ cla
       onPointerLeave={handlePointerLeave}
       {...props}
       style={{
-        "--circle-start": "var(--tw-gradient-from, #a0d9f8)",
-        "--circle-end": "var(--tw-gradient-to, #3a5bbf)",
+        "--circle-start": circleStartColor,
+        "--circle-end": circleEndColor,
+        color: textColor,
+        backgroundColor: backgroundColor,
+        ...props.style
       } as React.CSSProperties}
     >
       {circles.map(({ id, x, y, color, fadeState }) => (

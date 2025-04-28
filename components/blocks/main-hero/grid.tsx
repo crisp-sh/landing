@@ -1,6 +1,8 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 
-export function RetroGrid({
+export function Grid({
   className,
   angle = 65,
 }: {
@@ -20,7 +22,6 @@ export function RetroGrid({
         <div
           className={cn(
             "animate-grid",
-
             "[background-repeat:repeat] [background-size:60px_60px] [height:300vh] [inset:0%_0px] [margin-left:-50%] [transform-origin:100%_0_0] [width:600vw]",
 
             // Light Styles

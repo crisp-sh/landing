@@ -1,0 +1,1 @@
+export { default as MainHero } from "./main-hero";
