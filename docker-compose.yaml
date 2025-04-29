@@ -24,7 +24,7 @@ services:
         - "traefik.http.routers.next-app.tls=true"
         - "traefik.http.routers.next-app.tls.certresolver=cloudflare"
         - "traefik.http.services.next-app.loadbalancer.server.port=3000"
-        - "traefik.docker.network=proxy"
+        - "traefik.swarm.network=proxy"
         - "com.crispsh.autodeploy=true"
 
 networks:
